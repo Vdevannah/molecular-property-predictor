@@ -8,6 +8,17 @@ const EXAMPLE_MOLECULES = [
   { name: "Benzene", smiles: "c1ccccc1" },
   { name: "Aspirin", smiles: "CC(=O)Oc1ccccc1C(=O)O" },
   { name: "Caffeine", smiles: "Cn1c(=O)c2c(ncn2C)n(C)c1=O" },
+  { name: "Methanol", smiles: "CO" },
+  { name: "Acetone", smiles: "CC(=O)C" },
+  { name: "Acetic acid", smiles: "CC(=O)O" },
+  { name: "Toluene", smiles: "Cc1ccccc1" },
+  { name: "Phenol", smiles: "Oc1ccccc1" },
+  { name: "Aniline", smiles: "Nc1ccccc1" },
+  { name: "Cyclohexane", smiles: "C1CCCCC1" },
+  { name: "Naphthalene", smiles: "c1ccc2ccccc2c1" },
+  { name: "Ibuprofen", smiles: "CC(C)Cc1ccc(C(C)C(=O)O)cc1" },
+  { name: "Benzoic acid", smiles: "O=C(O)c1ccccc1" },
+  { name: "Acetaminophen", smiles: "CC(=O)Nc1ccc(O)cc1" },
 ];
 
 const DESCRIPTOR_LABELS = {
@@ -20,13 +31,31 @@ const DESCRIPTOR_LABELS = {
 };
 
 const formatValue = (value) => Number(value).toFixed(3);
+const formatError = (value) => value === null || Number.isNaN(value) ? "—" : `${formatValue(value)}`;
+const subscriptDigits = Object.fromEntries(Array.from({ length: 10 }, (_, index) => [String(index), String.fromCodePoint(0x2080 + index)]));
+const formatFormula = (formula) => formula.replace(/[0-9]/g, (digit) => subscriptDigits[digit]);
 
 export default function App() {
   const [smiles, setSmiles] = useState("");
-  const [selectedExample, setSelectedExample] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const selectedExample = useMemo(
+    () => EXAMPLE_MOLECULES.find(
+      (example) => example.smiles.trim() === smiles.trim(),
+    )?.name ?? null,
+    [smiles],
+  );
+
+  const searchableExamples = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    const quickNames = new Set(EXAMPLE_MOLECULES.slice(0, 4).map((example) => example.name));
+    return EXAMPLE_MOLECULES.filter((example) => !quickNames.has(example.name)
+      && (example.name.toLowerCase().includes(term)
+        || example.smiles.toLowerCase().includes(term)));
+  }, [searchTerm]);
 
   const descriptorCards = useMemo(
     () => (result ? Object.entries(result.descriptors) : []),
@@ -59,8 +88,12 @@ export default function App() {
   }
 
   function handleExampleSelect(example) {
-    setSelectedExample(example.name);
     setSmiles(example.smiles);
+    setError("");
+  }
+
+  function handleSmilesChange(event) {
+    setSmiles(event.target.value);
     setError("");
   }
 
@@ -86,7 +119,7 @@ export default function App() {
           <textarea
             id="smiles"
             value={smiles}
-            onChange={(event) => setSmiles(event.target.value)}
+            onChange={handleSmilesChange}
             placeholder="e.g. CCO"
             rows="4"
             spellCheck={false}
@@ -100,8 +133,8 @@ export default function App() {
             <div className="examples-header">
               <h2 id="examples-title">Try an example molecule</h2>
             </div>
-            <div className="example-grid">
-              {EXAMPLE_MOLECULES.map((example) => (
+            <div className="example-grid" role="region" aria-label="Quick-select examples">
+              {EXAMPLE_MOLECULES.slice(0, 4).map((example) => (
                 <button
                   key={example.name}
                   type="button"
@@ -113,6 +146,35 @@ export default function App() {
                   <small>{example.smiles}</small>
                 </button>
               ))}
+            </div>
+          </div>
+
+          <div className="search-section" aria-labelledby="search-title">
+            <div className="search-header">
+              <h2 id="search-title">More molecules</h2>
+            </div>
+            <label htmlFor="molecule-search" className="search-label">Search molecules</label>
+            <input
+              id="molecule-search"
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search by name or SMILES"
+              aria-label="Search molecules"
+            />
+            <div className="search-results" role="region" aria-label="Molecule search results">
+              {searchableExamples.length > 0 ? searchableExamples.map((example) => (
+                <button
+                  key={example.name}
+                  type="button"
+                  className={`search-result ${selectedExample === example.name ? "selected" : ""}`}
+                  aria-pressed={selectedExample === example.name}
+                  onClick={() => handleExampleSelect(example)}
+                >
+                  <span>{example.name}</span>
+                  <small>{example.smiles}</small>
+                </button>
+              )) : <p className="no-results">No matching molecules found.</p>}
             </div>
           </div>
 
@@ -152,6 +214,78 @@ export default function App() {
               generally indicate greater predicted solubility.
             </p>
             <p className="prediction-note">Machine learning estimate — not an experimental measurement.</p>
+          </div>
+
+          <div className="scientific-card">
+            <div className="section-heading-row">
+              <div>
+                <p className="eyebrow">Scientific validation</p>
+                <h3>Experimental vs. Predicted Solubility</h3>
+              </div>
+              <span className="split-label">{result.experimental_reference.phase3_split === "training" ? "Phase 3 training" : result.experimental_reference.phase3_split === "testing" ? "Phase 3 testing" : "Not in Phase 3 split"}</span>
+            </div>
+
+            <div className="scientific-grid">
+              <div className="scientific-stat">
+                <span>Predicted LogS</span>
+                <strong data-testid="scientific-predicted-log-s">{formatValue(result.predicted_log_s)}</strong>
+              </div>
+              <div className="scientific-stat">
+                <span>Experimental LogS</span>
+                <strong>{result.experimental_reference.experimental_log_s === null ? "—" : formatValue(result.experimental_reference.experimental_log_s)}</strong>
+              </div>
+              <div className="scientific-stat">
+                <span>Absolute error</span>
+                <strong>{result.experimental_reference.absolute_error === null ? "—" : formatError(result.experimental_reference.absolute_error)}</strong>
+              </div>
+              <div className="scientific-stat">
+                <span>ESOL source</span>
+                <strong>{result.experimental_reference.esol_source || "Unavailable"}</strong>
+              </div>
+              <div className="scientific-stat">
+                <span>Train/test status</span>
+                <strong>{result.experimental_reference.phase3_split === "training" ? "Training set" : result.experimental_reference.phase3_split === "testing" ? "Held-out test set" : "Not in Phase 3 split"}</strong>
+              </div>
+              <div className="scientific-stat">
+                <span>Molecular formula</span>
+                <strong>{formatFormula(result.molecular_formula)}</strong>
+              </div>
+            </div>
+
+            <div className="experimental-detail">
+              {result.experimental_reference.status === "not_available" ? (
+                <p>No experimental reference available in ESOL.</p>
+              ) : result.experimental_reference.status === "conflicting_measurements" ? (
+                <p>
+                  Multiple ESOL measurements exist for this canonical SMILES: {result.experimental_reference.conflicting_measurements.map((value) => formatValue(value)).join("; ")}. The record is ambiguous and no value was selected.
+                </p>
+              ) : (
+                <p>
+                  Experimental value from {result.experimental_reference.esol_source} for {result.experimental_reference.compound_id}.
+                </p>
+              )}
+            </div>
+
+            <div className="domain-block">
+              <div className="domain-header">
+                <h4>Applicability domain</h4>
+                <span className={result.applicability_domain.status === "Within descriptor ranges" ? "domain-good" : "domain-warning"}>{result.applicability_domain.status}</span>
+              </div>
+              <p>
+                Training-set descriptor ranges: {result.applicability_domain.training_molecules} molecules.
+                {result.applicability_domain.warnings.length > 0
+                  ? ` Warning(s): ${result.applicability_domain.warnings.join(", ")}.`
+                  : " No descriptor warnings."}
+              </p>
+              {result.applicability_domain.warnings.length > 0 ? (
+                <ul className="warning-list">
+                  {result.applicability_domain.warnings.map((descriptor) => (
+                    <li key={descriptor}>{descriptor} is outside the Phase 3 training range.</li>
+                  ))}
+                </ul>
+              ) : null}
+              <p className="domain-note">Within descriptor ranges does not guarantee reliable prediction. This is not calibrated confidence or prediction uncertainty.</p>
+            </div>
           </div>
 
           <div className="structure-section">

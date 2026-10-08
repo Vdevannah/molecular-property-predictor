@@ -6,6 +6,8 @@ A Python-based cheminformatics project that converts chemical structures into nu
 
 The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous solubility measurements for 1,128 molecules.
 
+The dataset contains 1,117 unique canonical structures after stereochemistry-preserving canonicalization. Eleven canonical groups contain duplicates, and six of those groups contain conflicting measured values; those cases are explicitly reported as ambiguous rather than resolved automatically.
+
 ## Project Status
 
 | Phase | Description | Status |
@@ -14,7 +16,7 @@ The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous
 | 2 | RDKit molecular descriptor generation | Complete |
 | 3 | Machine-learning model development | Complete |
 | 4 | Model evaluation and validation | Complete |
-| 5 | FastAPI backend and React/Vite frontend | In development |
+| 5 | FastAPI backend, React/Vite frontend, and scientific validation | Complete |
 | 6 | Documentation, testing, and deployment | Planned |
 
 ## Project Objective
@@ -231,9 +233,10 @@ The evaluation has important limitations:
 - ESOL molecules may not represent the full universe of chemical structures.
 - Feature importance is not causal evidence.
 - Model uncertainty is not explicitly quantified.
+- Descriptor-range membership does not provide calibrated confidence or prediction uncertainty.
 - The evaluation does not prove suitability for a production or regulatory setting.
 
-The Phase 4 teach-back document provides a more accessible explanation of the evaluation methodology and interpretation.
+The Phase 4 teach-back document provides a more accessible explanation of the evaluation methodology and interpretation. The Phase 5 scientific card is intended to support interpretation, not to transform the model into a validated experimental measurement or uncertainty estimator.
 
 ## Phase 5 — Local Development
 
@@ -279,6 +282,19 @@ Selecting an example populates the SMILES input. The user can edit the value bef
 The prediction panel displays the value with the `LogS (log₁₀ mol/L)` label, a short interpretation, and the machine-learning estimate disclaimer. The molecule rendering is responsive and preserves the aspect ratio of the RDKit SVG for small and large structures.
 
 The application preserves the trained Random Forest model, the exact six descriptor order, RDKit validation and canonicalization, the FastAPI endpoint, and the existing scientific disclaimer. The model was trained on the ESOL dataset and predictions may be less reliable outside its training domain.
+
+### Phase 5B — Scientific validation and interpretability
+
+The prediction response extends the model output with scientific metadata that is read only at inference time:
+
+- **Exact ESOL identity matching:** The API matches canonical SMILES exactly and preserves stereochemistry.
+- **Experimental reference:** Returns the selected ESOL value, its source, compound ID, absolute error, and phase-split label when available.
+- **Ambiguity handling:** Duplicate canonical records with conflicting measurements are reported as ambiguous rather than silently selecting one value.
+- **Molecular formula:** RDKit calculates the molecular formula for the canonicalized structure.
+- **Applicability domain:** Descriptor values are compared with the Phase 3 training-set minima and maxima. The result is descriptive and does not quantify prediction confidence.
+- **Split labeling:** Each result states whether the compound is in the Phase 3 training set, held-out test set, or outside that split.
+
+The UI presents this metadata in a scientific validation card immediately below the prediction summary. It still does not mutate, retrain, or replace the saved Random Forest model.
 
 ### Run automated tests
 

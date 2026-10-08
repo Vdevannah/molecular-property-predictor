@@ -120,11 +120,47 @@ User enters SMILES
   -> React displays prediction and structure
 ```
 
-## Scientific limitations
+## Scientific validation and interpretability
+
+Phase 5B extends the prediction response with metadata that helps the user interpret a result without changing the model. The API calculates these values from the validated, canonicalized SMILES and from the ESOL dataset after the prediction is made.
+
+### Experimental reference lookup
+
+A prediction result returns the measured ESOL value only when the canonical SMILES matches exactly and no conflicting measurements exist. The lookup preserves stereochemistry and uses the canonical SMILES as the identity key.
+
+If a canonical structure appears multiple times in the raw ESOL dataset, the API examines the associated measured values:
+
+- One unique value: return that value and its MAE.
+- No matching record: return an unavailable state.
+- Multiple different values: return an ambiguous state and do not pick a value.
+
+This prevents the interface from silently selecting one historical record when the dataset contains a contradiction.
+
+### Train/test split labeling
+
+The API reproduces the exact Phase 3 random split using `random_state=42` and `test_size=0.20`.
+
+A returned result is labeled as:
+
+- Training set
+- Held-out test set
+- Not in Phase 3 split
+
+The label describes membership in the historical development split. It is not an independent validation of the prediction.
+
+### Molecular formula and applicability domain
+
+RDKit calculates the molecular formula for the canonicalized structure. The applicability-domain field compares each model descriptor against the Phase 3 training-set minimum and maximum values.
+
+A model can be inside the descriptor ranges and still have poor predictive accuracy. Conversely, values outside those ranges may be reasonable in some cases. The UI therefore treats the descriptor-range result as descriptive information and explicitly avoids presenting it as calibrated uncertainty.
+
+### Scientific limitations
 
 The Random Forest model was trained on the ESOL dataset and learns statistical relationships between the selected descriptors and measured LogS.
 
-The model does not provide experimental measurements, and predictions may be less reliable outside the chemical space represented by ESOL. The application therefore emphasizes that predicted values are estimates rather than validated measurements.
+The scientific metadata does not add experimental measurements, uncertainty estimates, or causal explanations. Predictions may be less reliable outside the chemical space represented by ESOL, particularly for novel scaffolds, unusual protonation states, or compounds involving interactions not captured by the six descriptors.
+
+The application therefore keeps the prediction and its scientific context separate: the model remains a statistical estimator, while the validation card helps explain the data provenance and descriptor-domain context.
 
 ## Interview questions
 
