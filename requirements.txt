@@ -4,4 +4,7 @@ rdkit==2026.3.6
 scikit-learn==1.9.1
 matplotlib==3.11.2
 joblib==1.6.0
+fastapi==0.117.1
+uvicorn==0.36.1
 pytest==9.1.1
+httpx==0.28.1

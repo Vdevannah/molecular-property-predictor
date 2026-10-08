@@ -14,7 +14,7 @@ The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous
 | 2 | RDKit molecular descriptor generation | Complete |
 | 3 | Machine-learning model development | Complete |
 | 4 | Model evaluation and validation | Complete |
-| 5 | Interactive Streamlit application | Planned |
+| 5 | FastAPI backend and React/Vite frontend | In development |
 | 6 | Documentation, testing, and deployment | Planned |
 
 ## Project Objective
@@ -235,6 +235,62 @@ The evaluation has important limitations:
 
 The Phase 4 teach-back document provides a more accessible explanation of the evaluation methodology and interpretation.
 
+## Phase 5 — Local Development
+
+### Start the FastAPI backend
+
+```bash
+uvicorn src.api:app --host 127.0.0.1 --port 8003 --reload
+```
+
+The backend is available at http://127.0.0.1:8003 and provides the health check at http://127.0.0.1:8003/api/health.
+
+### Start the React/Vite frontend
+
+```bash
+cd frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5175
+```
+
+The frontend is available at http://localhost:5175.
+
+The React application reads the API base URL from `VITE_API_BASE_URL`. The default is `http://127.0.0.1:8003`.
+
+To use a different backend, start the frontend with:
+
+```bash
+VITE_API_BASE_URL=http://127.0.0.1:8004 npm run dev -- --host 127.0.0.1 --port 5175
+```
+
+The backend CORS configuration allows requests from `http://localhost:5175` and `http://127.0.0.1:5175`.
+
+### Example molecules and interface
+
+The React interface includes four selectable example molecules:
+
+- Ethanol — `CCO`
+- Benzene — `c1ccccc1`
+- Aspirin — `CC(=O)Oc1ccccc1C(=O)OC`
+- Caffeine — `Cn1c(=O)c2c(ncn2C)n(C)c1=O`
+
+Selecting an example populates the SMILES input. The user can edit the value before submitting it for prediction. The response is always displayed for the submitted SMILES, rather than merely the selected example.
+
+The prediction panel displays the value with the `LogS (log₁₀ mol/L)` label, a short interpretation, and the machine-learning estimate disclaimer. The molecule rendering is responsive and preserves the aspect ratio of the RDKit SVG for small and large structures.
+
+The application preserves the trained Random Forest model, the exact six descriptor order, RDKit validation and canonicalization, the FastAPI endpoint, and the existing scientific disclaimer. The model was trained on the ESOL dataset and predictions may be less reliable outside its training domain.
+
+### Run automated tests
+
+```bash
+python -m pytest -q
+cd frontend
+npm test -- --run
+npm run build
+```
+
+The model artifacts and generated local outputs remain unchanged by the web application.
+
 ## Technology Stack
 
 - **Python 3.12** — Programming language
@@ -242,8 +298,10 @@ The Phase 4 teach-back document provides a more accessible explanation of the ev
 - **Pandas** — Dataset processing and validation
 - **NumPy** — Numerical operations
 - **scikit-learn** — Supervised regression and model evaluation
+- **FastAPI** — Prediction API
+- **React and Vite** — Interactive frontend
 - **pytest** — Automated testing
-- **Matplotlib** — Planned model evaluation plots
+- **Matplotlib** — Model evaluation plots
 - **Joblib** — Model and feature serialization
 
 ## Project Structure
