@@ -13,7 +13,7 @@ The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous
 | 1 | Project setup and dataset acquisition | Complete |
 | 2 | RDKit molecular descriptor generation | Complete |
 | 3 | Machine-learning model development | Complete |
-| 4 | Model evaluation and validation | Planned |
+| 4 | Model evaluation and validation | Complete |
 | 5 | Interactive Streamlit application | Planned |
 | 6 | Documentation, testing, and deployment | Planned |
 
@@ -177,7 +177,63 @@ The script will:
 python -m pytest -q
 ```
 
-The tests cover feature selection, target validation, non-overlapping training and testing sets, model predictions, metric calculation, model persistence, and invalid input handling.
+The tests cover feature selection, target validation, non-overlapping training and testing sets, model predictions, metric calculation, model persistence, invalid input handling, evaluation plots, and scaffold-aware validation.
+
+## Phase 4 — Model Evaluation and Validation
+
+Phase 4 evaluates the saved Random Forest model using both random and scaffold-aware validation strategies.
+
+### Evaluation workflow
+
+```bash
+python src/evaluate_model.py
+```
+
+The script:
+
+1. Loads the processed ESOL dataset.
+2. Validates required feature and target columns.
+3. Reproduces the Phase 3 random split.
+4. Loads the saved Random Forest and feature-order artifacts.
+5. Calculates MAE, RMSE, and R² for the random split.
+6. Creates actual-versus-predicted, residual, and feature-importance plots.
+7. Builds a scaffold-aware split using RDKit Murcko scaffolds.
+8. Trains a Random Forest on the scaffold-separated training set.
+9. Evaluates the scaffold split and writes `results/phase4_metrics.json`.
+
+### Evaluation results
+
+The current model produces Phase 3-style metrics on the random split, while the scaffold-aware split provides a more conservative estimate of chemical generalization.
+
+| Validation strategy | MAE | RMSE | R² | Molecules |
+|---|---:|---:|---:|---:|
+| Random split | 0.573728 | 0.834945 | 0.852515 | 226 |
+| Scaffold-disjoint split | 0.615514 | 0.880497 | 0.795425 | 226 |
+
+The corrected scaffold-aware validation uses unique canonical groups for acyclic molecules, so unrelated acyclic structures are not treated as one chemical family.
+
+### Generated outputs
+
+Local evaluation artifacts are written to `results/`:
+
+- `actual_vs_predicted.png`
+- `residual_plot.png`
+- `feature_importance.png`
+- `phase4_metrics.json`
+
+The files are generated locally and excluded from Git.
+
+### Scientific limitations
+
+The evaluation has important limitations:
+
+- It uses a single random split and a single scaffold split.
+- ESOL molecules may not represent the full universe of chemical structures.
+- Feature importance is not causal evidence.
+- Model uncertainty is not explicitly quantified.
+- The evaluation does not prove suitability for a production or regulatory setting.
+
+The Phase 4 teach-back document provides a more accessible explanation of the evaluation methodology and interpretation.
 
 ## Technology Stack
 
