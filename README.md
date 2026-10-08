@@ -8,6 +8,24 @@ The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous
 
 The dataset contains 1,117 unique canonical structures after stereochemistry-preserving canonicalization. Eleven canonical groups contain duplicates, and six of those groups contain conflicting measured values; those cases are explicitly reported as ambiguous rather than resolved automatically.
 
+## Application Preview
+
+### Molecular Intelligence — Interactive Application
+
+Enter a molecular SMILES representation or choose from the molecule catalog to generate an aqueous solubility prediction using RDKit molecular descriptors and a scikit-learn Random Forest model.
+
+![Molecular Intelligence dark interface with SMILES input and molecule gallery](docs/images/molecular-intelligence-overview.png)
+
+### Molecular Prediction and Scientific Validation
+
+The dashboard presents predicted LogS, an RDKit-rendered molecular structure, six physicochemical descriptors, and scientific context. Aspirin has no experimental ESOL reference in this dataset; its displayed LogS is a **model prediction, not an experimental measurement**.
+
+![Aspirin solubility prediction with molecular structure, descriptors, and scientific validation](docs/images/molecular-intelligence-prediction.png)
+
+**Model evaluation:** Held-out random split R² = 0.853; scaffold-disjoint split R² = 0.795. These are dataset evaluation metrics, not confidence scores for individual predictions.
+
+**Technical summary:** ESOL (Delaney), 1,128 molecules; RDKit cheminformatics; six molecular descriptors; scikit-learn Random Forest regression; Python and FastAPI backend; React and Vite frontend; exact ESOL identity matching, experimental comparison where available, and descriptor-range assessment.
+
 ## Project Status
 
 | Phase | Description | Status |
