@@ -54,23 +54,27 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CCO");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(fetchMock).toHaveBeenCalledWith("http://127.0.0.1:8003/api/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ smiles: "CCO" }),
     });
-    expect(await screen.findByText("Predicted aqueous solubility")).toBeInTheDocument();
+    expect(await screen.findByText("Estimated aqueous solubility from the trained molecular descriptor model.")).toBeInTheDocument();
     expect(screen.getByTestId("prediction-value")).toHaveTextContent("-0.123");
     expect(screen.getByTestId("scientific-predicted-log-s")).toHaveTextContent("-0.123");
-    expect(screen.getByText("LogS (log₁₀ mol/L)")).toBeInTheDocument();
+    expect(screen.getByText("log₁₀(mol/L)")).toBeInTheDocument();
     expect(screen.getByText("Canonical SMILES")).toBeInTheDocument();
-    expect(screen.getByText("Experimental vs. Predicted Solubility")).toBeInTheDocument();
+    expect(screen.getByText("Experimental vs. predicted solubility")).toBeInTheDocument();
     const formula = screen.getByText("Molecular formula").nextElementSibling;
     expect(formula).toHaveTextContent("C₂H₆O");
     expect(formula).not.toHaveTextContent("C2H6O");
-    expect(screen.getByText("Within descriptor ranges")).toBeInTheDocument();
+
+    const validationCard = screen
+      .getByRole("heading", { name: "Experimental vs. predicted solubility" })
+      .closest("article");
+    expect(within(validationCard).getAllByText("Within descriptor ranges")).toHaveLength(2);
   });
 
   it("formats the aspirin formula with subscripts", async () => {
@@ -82,7 +86,7 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CC(=O)Oc1ccccc1C(=O)O");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(await screen.findByText("C₉H₈O₄")).toBeInTheDocument();
   });
@@ -96,7 +100,7 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CC(C)Cc1ccc(C(C)C(=O)O)cc1");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(await screen.findByText("C₁₃H₁₈O₂")).toBeInTheDocument();
   });
@@ -110,7 +114,7 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CCO");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(await screen.findByText("C₂₁H₂₂N₂O₂")).toBeInTheDocument();
   });
@@ -134,9 +138,32 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CCN");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(await screen.findByText("No experimental reference available in ESOL.")).toBeInTheDocument();
+  });
+
+  it("renders the backend-generated transparent SVG without stripping its canvas", async () => {
+    const user = userEvent.setup();
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        ...predictionResponse,
+        svg: "<svg xmlns=\"http://www.w3.org/2000/svg\"><rect style='opacity:1.0;fill:#00000000;stroke:none' width='500' height='350' /><g data-testid='molecule-svg'><path d='M0 0 L10 10' /></g></svg>",
+      }),
+    });
+
+    render(<App />);
+    await user.type(screen.getByLabelText("SMILES"), "CCO");
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
+
+    const moleculeSvg = await screen.findByTestId("molecule-svg");
+    const structureSvg = moleculeSvg.closest("svg");
+
+    expect(moleculeSvg).toBeInTheDocument();
+    expect(structureSvg.querySelector("rect").getAttribute("style")).toContain("fill:#00000000");
+    expect(structureSvg.innerHTML).toContain('data-testid="molecule-svg"');
+    expect(structureSvg.innerHTML).toContain('d="M0 0 L10 10"');
   });
 
   it("populates the selected example and shows its API prediction", async () => {
@@ -153,7 +180,7 @@ describe("Molecular Property Predictor", () => {
     expect(screen.getByLabelText("SMILES")).toHaveValue("CC(=O)Oc1ccccc1C(=O)O");
     expect(aspirinButton).toHaveAttribute("aria-pressed", "true");
 
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(screen.getByTestId("prediction-value")).toHaveTextContent("-0.123");
     expect(screen.getByTestId("molecule-svg")).toBeInTheDocument();
@@ -215,7 +242,7 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "CCO");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(screen.getByRole("button", { name: "Predicting…" })).toBeDisabled();
 
@@ -235,7 +262,7 @@ describe("Molecular Property Predictor", () => {
 
     render(<App />);
     await user.type(screen.getByLabelText("SMILES"), "invalid");
-    await user.click(screen.getByRole("button", { name: "Predict LogS" }));
+    await user.click(screen.getByRole("button", { name: "Predict Solubility" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Invalid SMILES.");
   });

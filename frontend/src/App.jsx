@@ -35,6 +35,19 @@ const formatError = (value) => value === null || Number.isNaN(value) ? "—" : `
 const subscriptDigits = Object.fromEntries(Array.from({ length: 10 }, (_, index) => [String(index), String.fromCodePoint(0x2080 + index)]));
 const formatFormula = (formula) => formula.replace(/[0-9]/g, (digit) => subscriptDigits[digit]);
 
+function MolecularIcon() {
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="5" className="atom-core" />
+      <circle cx="18" cy="19" r="4.5" className="atom-node" />
+      <circle cx="46" cy="18" r="4.5" className="atom-node" />
+      <circle cx="16" cy="45" r="4.5" className="atom-node" />
+      <circle cx="48" cy="46" r="4.5" className="atom-node" />
+      <path d="M22 22 L30 30 M42 22 L34 30 M20 41 L30 34 M44 41 L34 34" />
+    </svg>
+  );
+}
+
 export default function App() {
   const [smiles, setSmiles] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,23 +112,77 @@ export default function App() {
 
   return (
     <main className="page-shell">
+      <div className="app-glow app-glow-one" aria-hidden="true" />
+      <div className="app-glow app-glow-two" aria-hidden="true" />
+
       <header className="topbar">
         <div className="brand-wrap">
-          <div className="brand-mark" aria-hidden="true">M</div>
+          <div className="brand-mark" aria-hidden="true">
+            <MolecularIcon />
+          </div>
           <div>
-            <p className="eyebrow">Cheminformatics</p>
-            <h1>Molecular Property Predictor</h1>
+            <p className="eyebrow">Cheminformatics platform</p>
+            <h1>Molecular Intelligence</h1>
           </div>
         </div>
-        <p className="header-description">
-          Estimate aqueous solubility from molecular structure using RDKit descriptors
-          and a trained Random Forest model.
-        </p>
+        <div className="header-meta">
+          <span className="tech-badge">RDKit + Machine Learning</span>
+          <p className="header-description">
+            AI-Powered Molecular Property Prediction
+          </p>
+        </div>
       </header>
 
-      <section className="hero">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="section-kicker">Molecular Insight</p>
+          <h2 id="hero-title">From Molecular Structure to Predictive Insight</h2>
+          <p>
+            Explore aqueous solubility predictions powered by molecular descriptors
+            and machine learning.
+          </p>
+          <div className="hero-metrics" aria-label="Scientific platform summary">
+            <div>
+              <strong>1,128</strong>
+              <span>ESOL molecules</span>
+            </div>
+            <div>
+              <strong>6</strong>
+              <span>Descriptors</span>
+            </div>
+            <div>
+              <strong>1</strong>
+              <span>ML model</span>
+            </div>
+          </div>
+        </div>
+        <div className="hero-network" aria-hidden="true">
+          <svg viewBox="0 0 360 220">
+            <path d="M34 151 L96 78 L168 118 L237 67 L326 137" />
+            <path d="M96 78 L128 180 L168 118 L228 154 L326 137" />
+            <path d="M34 151 L128 180 L237 67" />
+            <circle cx="34" cy="151" r="6" />
+            <circle cx="96" cy="78" r="6" />
+            <circle cx="168" cy="118" r="6" />
+            <circle cx="237" cy="67" r="6" />
+            <circle cx="128" cy="180" r="6" />
+            <circle cx="228" cy="154" r="6" />
+            <circle cx="326" cy="137" r="6" />
+          </svg>
+        </div>
+      </section>
+
+      <section className="workspace" aria-label="Molecular prediction workspace">
         <form className="input-panel" onSubmit={handleSubmit}>
-          <label htmlFor="smiles" className="field-label">SMILES</label>
+          <div className="panel-header">
+            <div>
+              <p className="section-kicker">Input workspace</p>
+              <h3>Enter SMILES</h3>
+            </div>
+            <span className="panel-chip">Canonicalized</span>
+          </div>
+
+          <label htmlFor="smiles" className="sr-only">SMILES</label>
           <textarea
             id="smiles"
             value={smiles}
@@ -131,7 +198,7 @@ export default function App() {
 
           <div className="examples-section" aria-labelledby="examples-title">
             <div className="examples-header">
-              <h2 id="examples-title">Try an example molecule</h2>
+              <h3 id="examples-title">Quick select</h3>
             </div>
             <div className="example-grid" role="region" aria-label="Quick-select examples">
               {EXAMPLE_MOLECULES.slice(0, 4).map((example) => (
@@ -151,7 +218,7 @@ export default function App() {
 
           <div className="search-section" aria-labelledby="search-title">
             <div className="search-header">
-              <h2 id="search-title">More molecules</h2>
+              <h3 id="search-title">Molecule catalog</h3>
             </div>
             <label htmlFor="molecule-search" className="search-label">Search molecules</label>
             <input
@@ -178,135 +245,163 @@ export default function App() {
             </div>
           </div>
 
-          <button type="submit" disabled={loading || !smiles.trim()}>
-            {loading ? "Predicting…" : "Predict LogS"}
+          <button type="submit" className="primary-button" disabled={loading || !smiles.trim()}>
+            <span className="button-icon" aria-hidden="true">↗</span>
+            {loading ? "Predicting…" : "Predict Solubility"}
           </button>
           {error ? <p className="message error" role="alert">{error}</p> : null}
         </form>
 
-        <aside className="info-panel">
-          <p className="info-title">What is LogS?</p>
-          <p>
-            LogS is the base-10 logarithm of aqueous molar solubility. Higher values
-            generally indicate greater predicted solubility.
+        <aside className="info-panel" aria-labelledby="logS-title">
+          <div className="info-panel-header">
+            <span className="info-kicker">Property</span>
+            <h3 id="logS-title">LogS</h3>
+          </div>
+          <p className="logS-definition">
+            The base-10 logarithm of aqueous molar solubility. Higher values generally
+            indicate greater predicted solubility.
           </p>
-          <p className="scientific-note">
-            Machine learning estimate — not an experimental measurement.
-          </p>
+          <div className="info-metric">
+            <span>Prediction</span>
+            <strong>Machine learning estimate</strong>
+          </div>
+          <p className="scientific-note">Not an experimental measurement.</p>
+          <div className="capability-list" aria-label="Platform capabilities">
+            <span>RDKit descriptors</span>
+            <span>Random Forest</span>
+            <span>Scientific context</span>
+          </div>
         </aside>
       </section>
 
       {result ? (
         <section className="result-panel" aria-live="polite">
           <div className="prediction-card">
-            <div>
-              <p className="eyebrow">Prediction</p>
-              <h2>Predicted aqueous solubility</h2>
+            <div className="prediction-topline">
+              <span className="section-kicker section-kicker-light">Prediction</span>
+              <span className="signal-dot">Live model output</span>
             </div>
             <div className="prediction-value-wrap">
               <div className="prediction-value" data-testid="prediction-value">
                 {formatValue(result.predicted_log_s)}
               </div>
-              <div className="prediction-label">LogS (log₁₀ mol/L)</div>
+              <div className="prediction-label">log₁₀(mol/L)</div>
             </div>
             <p className="prediction-explanation">
-              LogS is the base-10 logarithm of aqueous molar solubility. Higher values
-              generally indicate greater predicted solubility.
+              Estimated aqueous solubility from the trained molecular descriptor model.
             </p>
-            <p className="prediction-note">Machine learning estimate — not an experimental measurement.</p>
+            <p className="prediction-note">Model prediction — not an experimental measurement.</p>
           </div>
 
-          <div className="scientific-card">
-            <div className="section-heading-row">
-              <div>
-                <p className="eyebrow">Scientific validation</p>
-                <h3>Experimental vs. Predicted Solubility</h3>
+          <div className="science-grid">
+            <article className="scientific-card identity-card">
+              <div className="section-heading-row">
+                <div>
+                  <p className="section-kicker">Molecular identity</p>
+                  <h3>Structure and composition</h3>
+                </div>
+                <span className="status-pill positive">RDKit structure</span>
               </div>
-              <span className="split-label">{result.experimental_reference.phase3_split === "training" ? "Phase 3 training" : result.experimental_reference.phase3_split === "testing" ? "Phase 3 testing" : "Not in Phase 3 split"}</span>
-            </div>
 
-            <div className="scientific-grid">
-              <div className="scientific-stat">
-                <span>Predicted LogS</span>
-                <strong data-testid="scientific-predicted-log-s">{formatValue(result.predicted_log_s)}</strong>
+              <div className="structure-card">
+                <div className="structure-svg-frame">
+                  <div
+                    className="structure-svg"
+                    aria-label="Molecular structure"
+                    dangerouslySetInnerHTML={{ __html: result.svg }}
+                  />
+                </div>
               </div>
-              <div className="scientific-stat">
-                <span>Experimental LogS</span>
-                <strong>{result.experimental_reference.experimental_log_s === null ? "—" : formatValue(result.experimental_reference.experimental_log_s)}</strong>
-              </div>
-              <div className="scientific-stat">
-                <span>Absolute error</span>
-                <strong>{result.experimental_reference.absolute_error === null ? "—" : formatError(result.experimental_reference.absolute_error)}</strong>
-              </div>
-              <div className="scientific-stat">
-                <span>ESOL source</span>
-                <strong>{result.experimental_reference.esol_source || "Unavailable"}</strong>
-              </div>
-              <div className="scientific-stat">
-                <span>Train/test status</span>
-                <strong>{result.experimental_reference.phase3_split === "training" ? "Training set" : result.experimental_reference.phase3_split === "testing" ? "Held-out test set" : "Not in Phase 3 split"}</strong>
-              </div>
-              <div className="scientific-stat">
-                <span>Molecular formula</span>
-                <strong>{formatFormula(result.molecular_formula)}</strong>
-              </div>
-            </div>
 
-            <div className="experimental-detail">
-              {result.experimental_reference.status === "not_available" ? (
-                <p>No experimental reference available in ESOL.</p>
-              ) : result.experimental_reference.status === "conflicting_measurements" ? (
+              <div className="identity-detail">
+                <div>
+                  <span>Canonical SMILES</span>
+                  <code>{result.canonical_smiles}</code>
+                </div>
+                <div>
+                  <span>Molecular formula</span>
+                  <strong>{formatFormula(result.molecular_formula)}</strong>
+                </div>
+              </div>
+            </article>
+
+            <article className="scientific-card validation-card">
+              <div className="section-heading-row">
+                <div>
+                  <p className="section-kicker">Scientific validation</p>
+                  <h3>Experimental vs. predicted solubility</h3>
+                </div>
+                <span className="split-label">
+                  {result.experimental_reference.phase3_split === "training"
+                    ? "Phase 3 training"
+                    : result.experimental_reference.phase3_split === "testing"
+                      ? "Phase 3 testing"
+                      : "Not in Phase 3 split"}
+                </span>
+              </div>
+
+              <div className="scientific-grid">
+                <div className="scientific-stat">
+                  <span>Predicted LogS</span>
+                  <strong data-testid="scientific-predicted-log-s">{formatValue(result.predicted_log_s)}</strong>
+                </div>
+                <div className="scientific-stat">
+                  <span>Experimental LogS</span>
+                  <strong>{result.experimental_reference.experimental_log_s === null ? "—" : formatValue(result.experimental_reference.experimental_log_s)}</strong>
+                </div>
+                <div className="scientific-stat">
+                  <span>Absolute error</span>
+                  <strong>{result.experimental_reference.absolute_error === null ? "—" : formatError(result.experimental_reference.absolute_error)}</strong>
+                </div>
+                <div className="scientific-stat">
+                  <span>ESOL source</span>
+                  <strong>{result.experimental_reference.esol_source || "Unavailable"}</strong>
+                </div>
+                <div className="scientific-stat">
+                  <span>Train/test status</span>
+                  <strong>{result.experimental_reference.phase3_split === "training" ? "Training set" : result.experimental_reference.phase3_split === "testing" ? "Held-out test set" : "Not in Phase 3 split"}</strong>
+                </div>
+                <div className="scientific-stat">
+                  <span>Applicability</span>
+                  <strong>{result.applicability_domain.status}</strong>
+                </div>
+              </div>
+
+              <div className="experimental-detail">
+                {result.experimental_reference.status === "not_available" ? (
+                  <p>No experimental reference available in ESOL.</p>
+                ) : result.experimental_reference.status === "conflicting_measurements" ? (
+                  <p>
+                    Multiple ESOL measurements exist for this canonical SMILES: {result.experimental_reference.conflicting_measurements.map((value) => formatValue(value)).join("; ")}. The record is ambiguous and no value was selected.
+                  </p>
+                ) : (
+                  <p>
+                    Experimental value from {result.experimental_reference.esol_source} for {result.experimental_reference.compound_id}.
+                  </p>
+                )}
+              </div>
+
+              <div className="domain-block">
+                <div className="domain-header">
+                  <h4>Descriptor-range assessment</h4>
+                  <span className={result.applicability_domain.status === "Within descriptor ranges" ? "domain-good" : "domain-warning"}>{result.applicability_domain.status}</span>
+                </div>
                 <p>
-                  Multiple ESOL measurements exist for this canonical SMILES: {result.experimental_reference.conflicting_measurements.map((value) => formatValue(value)).join("; ")}. The record is ambiguous and no value was selected.
+                  Training-set descriptor ranges: {result.applicability_domain.training_molecules} molecules.
+                  {result.applicability_domain.warnings.length > 0
+                    ? ` Warning(s): ${result.applicability_domain.warnings.join(", ")}.`
+                    : " No descriptor warnings."}
                 </p>
-              ) : (
-                <p>
-                  Experimental value from {result.experimental_reference.esol_source} for {result.experimental_reference.compound_id}.
-                </p>
-              )}
-            </div>
-
-            <div className="domain-block">
-              <div className="domain-header">
-                <h4>Applicability domain</h4>
-                <span className={result.applicability_domain.status === "Within descriptor ranges" ? "domain-good" : "domain-warning"}>{result.applicability_domain.status}</span>
+                {result.applicability_domain.warnings.length > 0 ? (
+                  <ul className="warning-list">
+                    {result.applicability_domain.warnings.map((descriptor) => (
+                      <li key={descriptor}>{descriptor} is outside the Phase 3 training range.</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <p className="domain-note">Within descriptor ranges does not guarantee reliable prediction. This is not calibrated confidence or prediction uncertainty.</p>
               </div>
-              <p>
-                Training-set descriptor ranges: {result.applicability_domain.training_molecules} molecules.
-                {result.applicability_domain.warnings.length > 0
-                  ? ` Warning(s): ${result.applicability_domain.warnings.join(", ")}.`
-                  : " No descriptor warnings."}
-              </p>
-              {result.applicability_domain.warnings.length > 0 ? (
-                <ul className="warning-list">
-                  {result.applicability_domain.warnings.map((descriptor) => (
-                    <li key={descriptor}>{descriptor} is outside the Phase 3 training range.</li>
-                  ))}
-                </ul>
-              ) : null}
-              <p className="domain-note">Within descriptor ranges does not guarantee reliable prediction. This is not calibrated confidence or prediction uncertainty.</p>
-            </div>
-          </div>
-
-          <div className="structure-section">
-            <div className="structure-card">
-              <h3>2D structure</h3>
-              <div className="structure-svg-frame">
-                <div
-                  className="structure-svg"
-                  dangerouslySetInnerHTML={{ __html: result.svg }}
-                />
-              </div>
-            </div>
-            <div className="summary-card">
-              <h3>Canonical SMILES</h3>
-              <code>{result.canonical_smiles}</code>
-              <p className="disclaimer">{result.disclaimer}</p>
-              <p className="dataset-note">
-                Trained on the ESOL dataset; predictions may be less reliable outside its
-                training domain.
-              </p>
-            </div>
+            </article>
           </div>
 
           <div className="descriptor-grid">
@@ -322,10 +417,9 @@ export default function App() {
           <div className="limitations">
             <h3>Scientific limitations</h3>
             <p>
-              This model uses six calculated descriptors and does not measure
-              experimental solubility. Predictions may be less reliable for chemical
-              series outside the training data or for molecules with unusual
-              interactions.
+              This model uses six calculated descriptors and does not measure experimental
+              solubility. Predictions may be less reliable for chemical series outside the
+              training data or for molecules with unusual interactions.
             </p>
           </div>
         </section>

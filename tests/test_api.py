@@ -24,7 +24,14 @@ def test_health_endpoint_returns_loaded_status(client: TestClient) -> None:
 
 @pytest.mark.parametrize(
     "origin",
-    ["http://localhost:5175", "http://127.0.0.1:5175"],
+    [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5175",
+        "http://127.0.0.1:5175",
+        "http://localhost:5176",
+        "http://127.0.0.1:5176",
+    ],
 )
 def test_cors_allows_local_vite_frontend(origin: str) -> None:
     client = TestClient(app, headers={"Origin": origin})
@@ -162,6 +169,33 @@ def test_model_unavailable_returns_server_error(monkeypatch: pytest.MonkeyPatch)
     response = client.post("/api/predict", json={"smiles": "CCO"})
     assert response.status_code == 503
     assert "not available" in response.json()["detail"].lower()
+
+
+@pytest.mark.parametrize(
+    ("smiles", "expected_element_colors"),
+    [
+        ("CC(=O)Oc1ccccc1C(=O)O", ["#F4F4EF", "#FF6060"]),
+        ("c1ccccc1", ["#F4F4EF"]),
+        ("Cn1c(=O)c2c(ncn2C)n(C)c1=O", ["#F4F4EF", "#FF6060", "#51A5FF"]),
+        ("CCO", ["#F4F4EF", "#FF6060"]),
+    ],
+)
+def test_svg_generation_has_transparent_background_and_readable_element_colors(
+    smiles: str, expected_element_colors: list[str]
+) -> None:
+    client = TestClient(app)
+    response = client.post("/api/predict", json={"smiles": smiles})
+
+    assert response.status_code == 200
+    svg = response.json()["svg"]
+    assert "<svg" in svg
+    assert "http://www.w3.org/2000/svg" in svg
+    assert "<path" in svg
+    assert svg.rstrip().endswith("</svg>")
+    assert "fill:#00000000" in svg
+    assert "fill:#FFFFFF" not in svg
+    for color in expected_element_colors:
+        assert color in svg
 
 
 def test_svg_generation_is_valid_svg() -> None:

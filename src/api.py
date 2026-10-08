@@ -60,6 +60,20 @@ def _molecule_svg(smiles: str) -> str:
     options.fixedBondLength = 35
     options.addAtomIndices = False
     options.legendFontSize = 12
+    options.clearBackground = True
+    options.setBackgroundColour((0, 0, 0, 0))
+    options.setSymbolColour((0.9, 0.9, 0.9))
+    options.setAtomPalette({
+        6: (0.96, 0.96, 0.94),
+        7: (0.32, 0.65, 1.0),
+        8: (1.0, 0.38, 0.38),
+        9: (0.65, 0.90, 1.0),
+        15: (1.0, 0.65, 0.20),
+        16: (1.0, 0.78, 0.28),
+        17: (0.40, 0.85, 0.40),
+        35: (0.75, 0.35, 0.10),
+        53: (0.55, 0.25, 0.82),
+    })
     drawer.DrawMolecule(molecule)
     drawer.FinishDrawing()
     return drawer.GetDrawingText()
@@ -264,6 +278,8 @@ def create_app(model: Any | None = None) -> FastAPI:
             "http://127.0.0.1:5173",
             "http://localhost:5175",
             "http://127.0.0.1:5175",
+            "http://localhost:5176",
+            "http://127.0.0.1:5176",
         ],
         allow_credentials=True,
         allow_methods=["GET", "POST", "OPTIONS"],
