@@ -1,6 +1,10 @@
 # Local data files
 *.csv
 
+# Generated model and evaluation artifacts
+*.joblib
+results/
+
 # Virtual environments
 .venv/
 venv/
