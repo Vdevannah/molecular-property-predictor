@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "phase": "6D",
+  "title": "Scaffold generalization and robustness of solubility model comparisons",
+  "status": "prespecified; not yet run",
+  "prepared_on": "2026-10-27",
+  "plan_document": "docs/PHASE6D_PLAN.md",
+  "amendment_policy": "Any change after the first benchmark run must increment schema_version and be recorded in docs/PHASE6D_PLAN.md (Amendments). The MD5 of this file is recorded in every run output.",
+
+  "data": {
+    "descriptor_path": "data/esol_descriptors.csv",
+    "descriptor_md5": "1a17c75935da0ab8961410c311558925",
+    "raw_path": "data/esol.csv",
+    "raw_md5": "0c90a51668d446b9e3ab77e67662bd1c",
+    "expected_rows": 1128,
+    "smiles_column": "smiles",
+    "smiles_preprocessing": "strip surrounding whitespace",
+    "feature_columns": ["MolWt", "LogP", "TPSA", "HBD", "HBA", "RotBonds"],
+    "target_column": "measured log solubility in mols per litre",
+    "forbidden_columns": ["ESOL predicted log solubility in mols per litre"],
+    "on_checksum_mismatch": "abort"
+  },
+
+  "grouping": {
+    "identity": {
+      "rule": "RDKit canonical isomeric SMILES of the whitespace-stripped input (src.cross_validation.canonical_identity_group)"
+    },
+    "murcko": {
+      "rule": "Bemis–Murcko scaffold SMILES; acyclic molecules use canonical SMILES (src.cross_validation.scaffold_group, Phase 4 rule)",
+      "expected_groups": 584,
+      "largest_group": {"label": "c1ccccc1", "rows": 254}
+    },
+    "generic": {
+      "rule": "MurckoScaffold.MakeScaffoldGeneric applied to the Bemis–Murcko scaffold; acyclic molecules use canonical SMILES",
+      "expected_groups": 482,
+      "largest_group": {"label": "C1CCCCC1", "rows": 311}
+    }
+  },
+
+  "protocols": {
+    "nonbenzene_scaffold_cv": {
+      "role": "primary",
+      "grouping": "murcko",
+      "test_population": "all molecules whose Murcko group is not c1ccccc1 (874 rows, 583 groups)",
+      "always_in_training": "c1ccccc1",
+      "outer_splitter": "BalancedGroupKFold over non-benzene Murcko groups",
+      "outer_splits": 5,
+      "repeats": 5,
+      "outer_seed": "42 + repeat",
+      "description": "Each non-benzene molecule is predicted once per repeat by a model trained on all benzene molecules plus the other four non-benzene folds."
+    },
+    "benzene_holdout": {
+      "role": "secondary, reported separately",
+      "grouping": "murcko",
+      "test_population": "Murcko group c1ccccc1 (254 rows)",
+      "training_population": "all non-benzene molecules (874 rows)",
+      "repeats": 1,
+      "description": "Single deterministic split; repeating it would only duplicate an identical fold."
+    },
+    "generic_block_holdout": {
+      "role": "exploratory robustness",
+      "grouping": "generic",
+      "test_population": "generic group C1CCCCC1 (311 rows)",
+      "training_population": "all other molecules (817 rows)",
+      "repeats": 1
+    },
+    "generic_nonblock_scaffold_cv": {
+      "role": "exploratory robustness",
+      "grouping": "generic",
+      "test_population": "all molecules outside generic group C1CCCCC1 (817 rows, 481 groups)",
+      "always_in_training": "C1CCCCC1",
+      "outer_splits": 5,
+      "repeats": 5,
+      "outer_seed": "42 + repeat"
+    },
+    "composite_out_of_fold": {
+      "role": "descriptive only",
+      "definition": "sqrt((sum of benzene-holdout squared errors + sum over non-benzene molecules of repeat-averaged squared errors) / 1128)",
+      "label_in_reports": "Composite out-of-fold result (benzene holdout + non-benzene scaffold CV); not a single cross-validation estimate",
+      "inference": "none"
+    }
+  },
+
+  "inner_cv": {
+    "splits": 5,
+    "splitter": "BalancedGroupKFold over the outer-training groups, excluding the protocol's block group",
+    "block_group_handling": "the protocol's block group (benzene or generic C1CCCCC1), when present in outer training, is placed in every inner training fold and never in an inner validation fold",
+    "seed": "42 + 1000 * (repeat + 1) + outer_fold",
+    "splits_passed_as": "explicit list of (train_index, test_index) so that validation-fold sizes are known",
+    "selection_metric": "molecule-weighted pooled RMSE = sqrt(sum_k n_k * RMSE_k^2 / sum_k n_k), equal to sqrt(total squared error / total validation molecules)",
+    "selection_implementation": "GridSearchCV(scoring='neg_root_mean_squared_error', refit=<callable selecting argmin pooled RMSE>)",
+    "tie_breaking": "lowest candidate index in ParameterGrid order",
+    "parallelism": "GridSearchCV n_jobs=-1; every estimator n_jobs=1"
+  },
+
+  "models": {
+    "baseline": {"estimator": "DummyRegressor", "params": {"strategy": "mean"}, "grid": null},
+    "linear_regression_reference": {"estimator": "Pipeline(StandardScaler, LinearRegression)", "params": {}, "grid": null},
+    "random_forest_reference": {
+      "estimator": "RandomForestRegressor",
+      "params": {"n_estimators": 200, "random_state": 42, "n_jobs": 1},
+      "grid": null,
+      "note": "identical to the production configuration"
+    },
+    "lasso": {
+      "estimator": "Pipeline(StandardScaler, Lasso)",
+      "params": {"lasso__max_iter": 100000},
+      "grid": {"lasso__alpha": [1e-05, 3e-05, 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0]}
+    },
+    "random_forest_tuned": {
+      "estimator": "RandomForestRegressor",
+      "params": {"n_estimators": 500, "max_depth": null, "random_state": 42, "n_jobs": 1},
+      "grid": {"max_features": [1.0, 0.5, 0.33], "min_samples_leaf": [1, 3, 5]}
+    },
+    "xgboost": {
+      "estimator": "XGBRegressor",
+      "params": {"subsample": 0.8, "objective": "reg:squarederror", "tree_method": "hist", "random_state": 42, "n_jobs": 1},
+      "grid": {
+        "n_estimators": [200, 500, 1000],
+        "max_depth": [2, 3, 4],
+        "learning_rate": [0.03, 0.1],
+        "min_child_weight": [1, 5]
+      }
+    }
+  },
+
+  "metrics": {
+    "reported": ["RMSE", "MAE", "R2", "mean_signed_error", "n_molecules", "n_groups"],
+    "per_repeat_pooled_rmse": "sqrt(mean over test molecules of squared error) for each repeat",
+    "repeat_averaged_rmse": "sqrt(mean over molecules of (mean over repeats of squared error)); each molecule contributes once",
+    "fold_averaged_rmse": "unweighted mean of outer-fold RMSE values; reported for continuity with Phase 6C",
+    "r2_policy": "reported for whole protocols only; not reported within scaffold families"
+  },
+
+  "statistics": {
+    "primary_contrast": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "data_variant": "S0",
+      "statistic": "repeat_averaged_rmse(random_forest_reference) - repeat_averaged_rmse(xgboost)",
+      "sign_convention": "positive means XGBoost has lower RMSE"
+    },
+    "secondary_contrasts": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "pairs": [
+        ["random_forest_reference", "random_forest_tuned"],
+        ["random_forest_tuned", "xgboost"],
+        ["lasso", "random_forest_reference"]
+      ],
+      "multiplicity": "Holm adjustment across the secondary contrasts"
+    },
+    "exploratory_contrasts": "all remaining model pairs, every other protocol, every family and every sensitivity variant; intervals reported without significance claims",
+    "bootstrap": {
+      "method": "scaffold-cluster percentile bootstrap",
+      "resampling_unit": "protocol grouping label (Murcko or generic group) of test molecules",
+      "unit_of_observation": "molecule, with squared errors averaged over repeats before resampling",
+      "replicates": 10000,
+      "seed": 20261027,
+      "interval": "95% percentile",
+      "p_value": "two-sided percentile bootstrap p = min(1, 2 * min(P(delta* <= 0), P(delta* >= 0)))",
+      "single_split_protocols": "benzene_holdout and generic_block_holdout use a molecule-level bootstrap within the held-out block, conditional on the single training set; reported as descriptive"
+    },
+    "practical_equivalence": {
+      "delta_logS": 0.05,
+      "status": "provisional",
+      "decision_rule": [
+        {"condition": "95% CI entirely within (-delta, +delta) and includes 0", "label": "practically equivalent at delta = 0.05, conditional on the bootstrap assumptions"},
+        {"condition": "95% CI entirely within (-delta, +delta) and excludes 0", "label": "detectable difference smaller than delta"},
+        {"condition": "95% CI excludes 0 and lies entirely beyond +delta or -delta", "label": "difference larger than delta"},
+        {"condition": "95% CI excludes 0 and crosses +delta or -delta", "label": "difference detected; magnitude relative to delta uncertain"},
+        {"condition": "otherwise", "label": "inconclusive"}
+      ],
+      "applies_to": "primary and secondary contrasts only"
+    },
+    "phase6c_continuity_test": {
+      "method": "Nadeau–Bengio corrected resampled t-test on distinct outer folds",
+      "role": "continuity only; not used for conclusions"
+    }
+  },
+
+  "families": {
+    "grouping": "murcko",
+    "data_variant": "S0",
+    "named_min_size": 10,
+    "named": [
+      "c1ccccc1",
+      "c1ccc(-c2ccccc2)cc1",
+      "c1ccc2ccccc2c1",
+      "O=C1CC(=O)NC(=O)N1",
+      "O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "c1ncncn1",
+      "c1ccncc1",
+      "c1ccc(Cc2ccccc2)cc1",
+      "C1CCCCC1"
+    ],
+    "aggregate": {
+      "acyclic": {"definition": "no rings", "expected_rows": 317},
+      "cyclic_small_groups": {"definition": "cyclic, Murcko group size 2-9", "expected_rows": 212},
+      "cyclic_singletons": {"definition": "cyclic, Murcko group size 1", "expected_rows": 194}
+    },
+    "expected_named_rows": 405,
+    "min_n_for_intervals": 20,
+    "interval_method": "molecule bootstrap within named families; cluster bootstrap by Murcko or identity group within aggregate families",
+    "reported": ["n", "RMSE", "MAE", "mean_signed_error", "target_mean", "target_sd", "target_min", "target_max", "paired RF-reference minus XGBoost RMSE (exploratory)"]
+  },
+
+  "sensitivity": {
+    "variants": {
+      "S0": {"description": "all 1,128 rows (primary)"},
+      "S1": {
+        "description": "remove the structurally indistinguishable hexitol pair",
+        "remove_compound_ids": ["mannitol", "Sorbitol"],
+        "canonical_smiles": "OCC(O)C(O)C(O)C(O)CO",
+        "expected_rows": 1126
+      },
+      "S2": {
+        "description": "collapse each identity-duplicate group to one row with the mean target; drop groups whose target range exceeds 0.5 LogS",
+        "conflict_threshold_logS": 0.5,
+        "expected_groups_collapsed": 10,
+        "expected_groups_dropped": 1,
+        "expected_rows": 1116,
+        "requirement": "descriptor values must be identical within each collapsed group; abort otherwise"
+      }
+    },
+    "applies_to_protocols": ["nonbenzene_scaffold_cv", "benzene_holdout"],
+    "subset_rescoring": "S0 predictions are also scored on the S1 and S2 molecule subsets",
+    "robustness_criterion": "the primary contrast receives the same decision-rule label under S0, S1 and S2"
+  },
+
+  "model_seed_check": {
+    "models": ["random_forest_reference", "xgboost"],
+    "additional_random_states": [43, 44, 45],
+    "retuning": false,
+    "xgboost_params": "per-outer-fold hyperparameters selected in S0",
+    "protocols": ["nonbenzene_scaffold_cv", "benzene_holdout"],
+    "reported": "primary-contrast statistic for each of random_state 42-45 and its range"
+  },
+
+  "grid_boundary_check": {
+    "definition": "selected value equals the minimum or maximum of a numeric grid dimension with at least two values",
+    "flag_threshold_fraction_of_outer_folds": 0.5,
+    "action_if_flagged": "report only; grids are not extended within Phase 6D"
+  },
+
+  "exploratory_analyses": {
+    "error_floor": "within-group target variance of rows sharing identical six-descriptor vectors; floor RMSE = sqrt(within-group sum of squares / 1128)",
+    "descriptor_distance": "Euclidean distance from each test molecule to its nearest outer-training molecule in descriptor space standardized on the outer-training fold; Spearman correlation with absolute error per model",
+    "structural_similarity": "maximum Tanimoto similarity (Morgan radius 2, 2048 bits) of each test molecule to its outer-training set; summarized by family, with acyclic molecules reported separately"
+  },
+
+  "runtime": {
+    "feasibility_estimate": "reports/phase6d/feasibility_estimate.json",
+    "benchmark_before_full_run": true,
+    "approval_threshold_wall_minutes": 60,
+    "action_if_exceeded": "stop and report; do not reduce folds, repeats or grids without approval"
+  },
+
+  "outputs": {
+    "large_outputs_dir": "results/phase6d/<run_id>/",
+    "run_id": "UTC timestamp + first 8 characters of this config's MD5",
+    "overwrite_policy": "refuse if the run directory exists",
+    "tracked_outputs_dir": "reports/phase6d/",
+    "tracked_format": "JSON only (CSV files are ignored by .gitignore)",
+    "environment_capture": "pip freeze and library versions written to each run"
+  },
+
+  "protected_files_md5": {
+    "models/solubility_model.joblib": "695cf080ae4b921a6b407b75a8a8f757",
+    "models/feature_columns.joblib": "17cb1fd096ed63e941c96cdfaa4a697c",
+    "results/phase3_metrics.json": "c8f48e0431c60bff9b88124a1961298b",
+    "results/phase4_metrics.json": "5bd3212ee1f7c779ad94dae0c2fe0ddd",
+    "results/phase6c/config.json": "54edd39204ffbac6f01355b8fc5c41fe",
+    "results/phase6c/fold_metrics.csv": "c096eef70848c51174c0136924dcac27",
+    "results/phase6c/fold_assignments.csv": "899103943c210fca835736dc3f053116",
+    "results/phase6c/paired_comparisons.csv": "35d98502c3fc3e410caf3957dcd8b065",
+    "results/phase6c/summary.csv": "1685deda43e1996ceddd3ce51a58d25e",
+    "results/phase6c/benchmark.json": "4c4660c70f2ff4d77d26d46f8e60ecbc",
+    "check": "verified before and after every run; abort on mismatch before writing outputs"
+  },
+
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.3.6",
+    "system_dependency": "libomp (macOS) for XGBoost",
+    "pending_change": "pin scipy==1.18.1 in requirements.txt during implementation"
+  }
+}

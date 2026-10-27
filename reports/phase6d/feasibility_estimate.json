@@ -1,0 +1,15 @@
+{
+  "prepared_on": "2026-10-27",
+  "method": "Single-thread fit time of every grid candidate measured on real ESOL rows (inner training n=800, refit n=950, median of 2 fits), multiplied by fit counts per outer fold, then divided by the effective parallel speed-up calibrated against the measured Phase 6C wall time.",
+  "machine": "8-core Apple Silicon, GridSearchCV n_jobs=-1",
+  "cpu_seconds_per_outer_fold": {"phase6c_grids": 26.3, "phase6d_grids": 27.6},
+  "phase6d_cpu_seconds_per_outer_fold_by_model": {"lasso": 0.08, "random_forest_tuned": 17.64, "xgboost": 9.63, "baseline_linear_rf_reference": 0.29},
+  "calibration": {"predicted_phase6c_cpu_seconds": 787.9, "measured_phase6c_wall_seconds": 188.3, "effective_parallel_speedup": 4.18},
+  "fits_per_outer_fold": {"lasso": 56, "random_forest_tuned": 46, "xgboost": 181, "fixed_models": 3},
+  "outer_folds": {"per_grouping_scenario": "1 block holdout + 25 non-block CV folds", "scenarios": ["S0 Murcko", "S1", "S2", "generic (S0)"], "total": 104},
+  "model_seed_check_cpu_seconds": 32.3,
+  "estimated_total_cpu_seconds": 2907,
+  "estimated_wall_minutes": {"model_fitting": 11.6, "primary_S0_only": 3.0, "planning_range_including_bootstrap_and_similarity": "12-20"},
+  "approval_threshold_wall_minutes": 60,
+  "assumptions": ["Parallel efficiency matches Phase 6C.", "Refit cost uses the slowest candidate (upper bound).", "Bootstrap (10,000 replicates, vectorized) and Morgan-fingerprint similarity add about 1-2 minutes."]
+}
