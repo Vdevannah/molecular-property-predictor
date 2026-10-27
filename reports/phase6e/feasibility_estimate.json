@@ -1,0 +1,28 @@
+{
+  "prepared_on": "2026-10-27",
+  "machine": "8-core Apple Silicon, single-threaded measurements",
+  "method": "Refit every Murcko S0 fold model (25 nonbenzene CV folds + benzene holdout) from Phase 6D selected hyperparameters, compare with stored out-of-fold predictions, and time sampled units of each planned diagnostic; extrapolated to the configured repeats and units.",
+  "refit_reproduction": {
+    "max_abs_prediction_difference": {"random_forest_reference": 1.8e-15, "random_forest_tuned": 8.9e-16, "xgboost": 1.8e-15, "lasso": 1.8e-15},
+    "gate_tolerance": 1e-09,
+    "result": "pass"
+  },
+  "raw_and_descriptor_rows_aligned": true,
+  "production_model_phase3_test_rmse": 0.8349452807229858,
+  "treeshap_additivity_max_error": 1.43e-05,
+  "estimated_seconds_serial": {
+    "refits_all_models_26_folds": 26.1,
+    "permutation_importance_30_repeats_12_units": {"random_forest_reference": 112.0, "xgboost": 8.0},
+    "drop_column_12_units": {"random_forest_reference": 104.7, "xgboost": 15.0},
+    "treeshap": 0.5,
+    "tree_spread": 0.3,
+    "ale_upper_bound": 278.6,
+    "production_model_permutation": 8.9
+  },
+  "estimated_total_minutes": {"serial_upper_bound": 9.2, "planning_range_including_bootstrap_and_figures": "6-12"},
+  "approval_threshold_minutes": 60,
+  "notes": [
+    "The ALE estimate assumes every training row is predicted twice per bin; the real ALE predicts only rows inside each bin, so it is an upper bound.",
+    "Fold-level work can be parallelised across folds without nested threading because every estimator uses n_jobs=1."
+  ]
+}

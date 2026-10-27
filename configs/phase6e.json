@@ -1,0 +1,795 @@
+{
+  "schema_version": 1,
+  "phase": "6E",
+  "title": "Scientific interpretation and model diagnostics",
+  "status": "prespecified; not yet run",
+  "prepared_on": "2026-10-27",
+  "plan_document": "docs/PHASE6E_PLAN.md",
+  "amendment_policy": "Any change after the first benchmark run must increment schema_version and be recorded in docs/PHASE6E_PLAN.md (Amendments). The MD5 of this file is recorded in every run output.",
+  "role": "Diagnostic and descriptive only. No model selection, no confirmatory tests, and no revision of Phase 6D decision labels.",
+  "inputs": {
+    "phase6d_config": "configs/phase6d.json",
+    "phase6d_run_dir": "results/phase6d/20261027T154454Z_d02c301c",
+    "phase6d_files_used": [
+      "fold_metrics.csv",
+      "oof_predictions.csv.gz",
+      "fold_assignments.csv.gz",
+      "neighbour_statistics.csv",
+      "family_metrics.csv",
+      "protocol_metrics.csv"
+    ],
+    "descriptor_data": "data/esol_descriptors.csv",
+    "raw_data": "data/esol.csv",
+    "raw_alignment": "rows aligned by position; Compound ID and smiles must match exactly in every row; abort otherwise (verified in feasibility benchmark)",
+    "access": "read-only; every input is checksum-verified before and after the run"
+  },
+  "scope": {
+    "scenario": "murcko_S0",
+    "protocols": {
+      "nonbenzene_scaffold_cv": {
+        "role": "primary diagnostic population",
+        "molecules": 874,
+        "outer_folds": 25
+      },
+      "benzene_holdout": {
+        "role": "separate diagnostic population",
+        "molecules": 254,
+        "outer_folds": 1
+      }
+    },
+    "reporting_rule": "Statistics are always computed and reported per protocol. Figures that show both protocols use distinct marker shapes and state each protocol's statistics separately; any combined display is labelled 'composite out-of-fold (descriptive)'. No statistic is pooled across protocols.",
+    "models": {
+      "refit_and_reproduce": [
+        "random_forest_reference",
+        "random_forest_tuned",
+        "xgboost",
+        "lasso"
+      ],
+      "residual_and_calibration": [
+        "random_forest_reference",
+        "random_forest_tuned",
+        "xgboost",
+        "lasso"
+      ],
+      "feature_importance": [
+        "random_forest_reference",
+        "xgboost"
+      ],
+      "linear_reference_coefficients": [
+        "lasso"
+      ]
+    },
+    "excluded": "data variants S1/S2, generic-scaffold scenario, model-seed refits (already reported in Phase 6D)"
+  },
+  "refit": {
+    "folds": "src.scaffold_evaluation.scenario_inputs(dataset, 'murcko_S0', phase6d_config): cv_folds and holdout_folds (exact Phase 6D training and test indices)",
+    "estimators": "src.scaffold_evaluation.build_model_specs(phase6d_config) (exact preprocessing pipelines and fixed parameters)",
+    "hyperparameters": "selected_params recorded per outer fold in Phase 6D fold_metrics.csv; never re-tuned",
+    "seeds": "random_state as configured in configs/phase6d.json (42)",
+    "reproduction_check": {
+      "compare_to": "Phase 6D oof_predictions.csv.gz (model_seed 42)",
+      "max_abs_difference": 1e-09,
+      "on_mismatch": "abort before any diagnostic is computed"
+    },
+    "feasibility_result": "max absolute difference 1.8e-15 across all 4 models and 26 folds"
+  },
+  "per_molecule_aggregation": {
+    "error_metrics": "repeat-averaged squared error per molecule, RMSE = sqrt(mean over molecules) (Phase 6D definition)",
+    "residual_and_calibration_plots": "per-molecule mean prediction over the 5 repeats; signed residual = mean prediction - observed",
+    "benzene_holdout": "single prediction per molecule"
+  },
+  "uncertainty": {
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20261027,
+    "interval": "95% percentile",
+    "nonbenzene_scaffold_cv_clusters": "Murcko group (scaffold-cluster bootstrap)",
+    "benzene_holdout_clusters": "molecule (conditional on one training set; descriptive)",
+    "small_families": "families with n < 20 receive no intervals and no inferential statements"
+  },
+  "calibration": {
+    "regression": "OLS of observed on per-molecule mean prediction, per protocol: slope and intercept with bootstrap intervals",
+    "binned": {
+      "nonbenzene_scaffold_cv": "deciles of predicted LogS",
+      "benzene_holdout": "quintiles of predicted LogS"
+    },
+    "shrinkage": "OLS slope of signed residual on observed LogS, per protocol (distinct from calibration)"
+  },
+  "residuals": {
+    "quantiles": [
+      0.01,
+      0.05,
+      0.25,
+      0.5,
+      0.75,
+      0.95,
+      0.99
+    ],
+    "shape_statistics": "scipy.stats skew and kurtosis (Fisher, bias=False)",
+    "qq_reference": "normal distribution with the residuals' mean and sd",
+    "bias_bins": {
+      "by": [
+        "predicted",
+        "observed",
+        "MolWt",
+        "LogP",
+        "TPSA",
+        "HBD",
+        "HBA",
+        "RotBonds"
+      ],
+      "bins": 10,
+      "method": "quantile bins; duplicate edges dropped for integer descriptors (pandas.qcut duplicates='drop')"
+    }
+  },
+  "extreme_errors": {
+    "reference_model": "random_forest_reference",
+    "top_k_by_abs_residual": 25,
+    "also_include_abs_residual_above": 2.0,
+    "threshold_models": [
+      "random_forest_reference",
+      "random_forest_tuned",
+      "xgboost"
+    ],
+    "columns": [
+      "protocol",
+      "Compound ID",
+      "smiles",
+      "family",
+      "observed",
+      "prediction per model",
+      "ESOL equation prediction",
+      "nearest training Tanimoto",
+      "nearest training compound",
+      "descriptor distance",
+      "target outside training-fold range",
+      "LogP outside training-fold range",
+      "identity-duplicate group",
+      "identical-descriptor group"
+    ],
+    "policy": "flag only; no data are corrected, removed or re-curated"
+  },
+  "feature_importance": {
+    "permutation": {
+      "repeats": 30,
+      "seed": 6105,
+      "seed_derivation": "numpy.random.SeedSequence([6105, protocol_index, repeat, fold, unit_index, permutation_repeat]) so results do not depend on execution order or parallelism; protocol_index 0 = nonbenzene_scaffold_cv, 1 = benzene_holdout, 2 = production model",
+      "scope": "permute within each outer test fold and predict with that fold's refit model",
+      "pooled_metric": "For permutation repeat p, collect prediction-level squared errors for every test molecule; RMSE_p = sqrt(mean over molecules of the repeat-averaged squared error). Importance_p = RMSE_p - RMSE_unpermuted (same pooling). Report the mean and sd over p.",
+      "not_used": "weighted average of fold-level RMSE differences",
+      "fold_variability": "per outer fold: fold RMSE permuted minus unpermuted; reported separately as median, IQR and range across folds",
+      "interval": "scaffold-cluster bootstrap of the pooled importance using per-molecule squared errors averaged over permutation repeats (nonbenzene CV); molecule bootstrap for the benzene holdout (descriptive)",
+      "rank_stability": "fraction of outer folds in which each feature or group ranks first"
+    },
+    "groups": {
+      "primary": {
+        "polarity_hbonding": [
+          "TPSA",
+          "HBA",
+          "HBD"
+        ],
+        "size_flexibility": [
+          "MolWt",
+          "RotBonds"
+        ],
+        "lipophilicity": [
+          "LogP"
+        ]
+      },
+      "sensitivity": {
+        "size_lipophilicity": [
+          "MolWt",
+          "LogP"
+        ],
+        "polarity_hbonding": [
+          "TPSA",
+          "HBA",
+          "HBD"
+        ],
+        "flexibility": [
+          "RotBonds"
+        ]
+      },
+      "basis": "Phase 6E descriptor correlations: TPSA-HBA 0.90/0.93, TPSA-HBD 0.76/0.66, MolWt-HBA 0.56, MolWt-LogP 0.48/0.54 (Pearson/Spearman)",
+      "joint_permutation": "all features in a group permuted with one shared row permutation"
+    },
+    "drop_column": {
+      "units": "each single feature, each primary group and each sensitivity group",
+      "refit": "same training rows, Phase 6D selected hyperparameters (not re-tuned), same seeds",
+      "pooled_metric": "pooled RMSE without the unit minus pooled RMSE with all features, from prediction-level squared errors",
+      "fold_variability": "reported separately, as for permutation importance"
+    },
+    "impurity": {
+      "random_forest_reference": "feature_importances_ (mean decrease in impurity)",
+      "xgboost": "importance_type='total_gain'",
+      "aggregation": "mean and sd across fold models",
+      "role": "continuity with Phase 4 only"
+    },
+    "treeshap": {
+      "model": "xgboost",
+      "method": "Booster.predict(DMatrix, pred_contribs=True); path-dependent TreeSHAP",
+      "additivity_tolerance": 0.0001,
+      "additivity_note": "XGBoost computes contributions in float32; the feasibility run measured a maximum deviation of 1.4e-5",
+      "summary": "mean |SHAP| per feature over per-molecule repeat-averaged contributions, per protocol",
+      "dependence_features": [
+        "LogP",
+        "MolWt",
+        "TPSA"
+      ]
+    },
+    "lasso_coefficients": "standardized coefficients per fold; median, IQR and sign consistency across folds",
+    "ale": {
+      "models": [
+        "random_forest_reference",
+        "xgboost",
+        "lasso"
+      ],
+      "data": "each fold model evaluated on its own outer-training rows",
+      "bins": 20,
+      "integer_features": "edges at unique values when a feature has fewer than 20 distinct values in the training rows",
+      "centering": "mean-centred over the training rows",
+      "aggregation": "median and 10th-90th percentile band across the 25 nonbenzene CV fold models; benzene-holdout model drawn separately"
+    }
+  },
+  "descriptor_reference": {
+    "MolWt": {
+      "rdkit": "Descriptors.MolWt (average molecular weight)",
+      "general_expectation": "larger molecules tend to be less soluble"
+    },
+    "LogP": {
+      "rdkit": "Descriptors.MolLogP: Crippen (calculated atom-contribution octanol-water partition coefficient; not measured)",
+      "general_expectation": "higher lipophilicity tends to lower aqueous solubility",
+      "known_limitation": "calculation error varies by chemotype"
+    },
+    "TPSA": {
+      "rdkit": "Descriptors.TPSA (topological polar surface area)",
+      "general_expectation": "more polar surface tends to raise solubility, other things equal"
+    },
+    "HBD": {
+      "rdkit": "Descriptors.NumHDonors (RDKit H-bond donor count)",
+      "general_expectation": "H-bond donors can raise water interaction but also crystal lattice strength"
+    },
+    "HBA": {
+      "rdkit": "Descriptors.NumHAcceptors (RDKit H-bond acceptor count)",
+      "general_expectation": "H-bond acceptors tend to raise water interaction"
+    },
+    "RotBonds": {
+      "rdkit": "Descriptors.NumRotatableBonds",
+      "general_expectation": "flexibility is associated with weaker crystal packing in some series"
+    },
+    "not_represented": [
+      "crystal-lattice energy / melting point",
+      "ionization and pH",
+      "stereochemistry and molecular symmetry",
+      "substitution pattern (positional isomers collide)"
+    ],
+    "verification": "RDKit function names must match src/descriptors.py at run time",
+    "language": "general expectations are background physical chemistry, stated as context, not as findings of this analysis"
+  },
+  "families": {
+    "definition": "Phase 6D families (configs/phase6d.json, families section)",
+    "focus": {
+      "triazine": {
+        "murcko": "c1ncncn1",
+        "n": 16,
+        "phase6d_observation": "all models over-predict by about 1.5 LogS"
+      },
+      "pyridine": {
+        "murcko": "c1ccncc1",
+        "n": 14,
+        "phase6d_observation": "all models under-predict by about 1.1 LogS"
+      },
+      "biphenyl": {
+        "murcko": "c1ccc(-c2ccccc2)cc1",
+        "n": 39,
+        "phase6d_observation": "Lasso RMSE lower than both tree models"
+      }
+    },
+    "small_family_policy": "n < 20: molecule-level tables and descriptive statistics only; no intervals, no claims of established effects",
+    "shared_bias_check": "mean signed error of every model and of the ESOL equation, per family",
+    "extrapolation_indicators": {
+      "neighbours_k": 10,
+      "neighbour_space": "six descriptors standardized on the outer-training rows",
+      "indicators": [
+        "observed below the outer-training minimum target",
+        "observed below the minimum target of the k nearest training neighbours",
+        "LogP above the outer-training maximum",
+        "any descriptor outside the outer-training range"
+      ]
+    },
+    "hypothesis_policy": "Each chemical explanation is labelled a hypothesis and paired with the diagnostic that could contradict it. Shared biases are evidence for further investigation, not proof of a mechanism. Hypotheses requiring data absent from ESOL (e.g. melting points) are stated as untestable here."
+  },
+  "esol_equation_comparator": {
+    "column": "ESOL predicted log solubility in mols per litre",
+    "source": "data/esol.csv",
+    "role": "in-sample descriptive comparator: the ESOL equation was fitted on this dataset, so its errors are optimistic and it is not independent validation",
+    "never_used_as": "feature, training target or evaluation reference for model selection",
+    "outputs": [
+      "overall RMSE and mean signed error per protocol population",
+      "per-family RMSE and mean signed error"
+    ]
+  },
+  "acyclic": {
+    "fingerprint": {
+      "type": "Morgan",
+      "radius": 2,
+      "bits": 2048
+    },
+    "similarity_bins": [
+      [
+        0.0,
+        0.4
+      ],
+      [
+        0.4,
+        0.6
+      ],
+      [
+        0.6,
+        0.8
+      ],
+      [
+        0.8,
+        1.0
+      ],
+      "exactly 1.0"
+    ],
+    "bin_rule": "half-open [lower, upper); molecules with similarity exactly 1.0 form their own bin",
+    "nearest_neighbour_record": "compound ID, SMILES and target of the most similar outer-training molecule (ties broken by lowest row_id); averaged over repeats only for similarity values",
+    "homologue_heuristic": "molecular formulas of test molecule and nearest neighbour differ by exactly one CH2 (C +/-1 and H +/-2, no other element change)",
+    "comparison": "acyclic vs cyclic within nonbenzene scaffold CV"
+  },
+  "distance_reliability": {
+    "descriptor_distance": "Euclidean distance to nearest outer-training molecule after standardizing on outer-training rows (Phase 6D definition); recomputed values must match Phase 6D neighbour_statistics.csv within 1e-9",
+    "bins": "quintiles of per-molecule repeat-averaged distance, per protocol",
+    "similarity_bins": "as acyclic.similarity_bins",
+    "selective_prediction": {
+      "coverage_fractions": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "ordering": "ascending descriptor distance; ties broken by row_id"
+    },
+    "range_flag": "any descriptor outside its outer-training min-max range; RMSE of flagged vs unflagged molecules, per protocol"
+  },
+  "representation_floor": {
+    "definition": "For rows grouped by identical six-descriptor vectors (rounded to 6 decimals), floor RMSE = sqrt(sum of within-group squared deviations from the group mean target / 1128). It is the lowest RMSE any function of these six descriptors could reach on this dataset.",
+    "scope_statement": "A dataset-specific limitation of the six-descriptor representation of ESOL. It is not a universal irreducible error of aqueous solubility and not an estimate of measurement noise.",
+    "expected": {
+      "floor_rmse": 0.14399468090673567,
+      "groups": 115,
+      "rows": 304,
+      "tolerance": 1e-12
+    },
+    "listing": "top 15 groups by within-group target sd, with compound IDs and SMILES",
+    "measurement_noise": "not estimated: identity duplicates are not treated as independent replicates (6 of 10 non-conflicting pairs have identical values, suggesting repeated entries)"
+  },
+  "interval_diagnostics": {
+    "label": "Exploratory empirical diagnostics. Observed coverage is reported; no coverage guarantee is claimed. A formally justified conformal procedure is not implemented.",
+    "levels": [
+      0.8,
+      0.9,
+      0.95
+    ],
+    "tree_spread": {
+      "model": "random_forest_reference",
+      "sd": "standard deviation of individual tree predictions",
+      "interval": "prediction +/- z_level * sd, z from the standard normal",
+      "also_report": "Spearman correlation of sd with absolute error"
+    },
+    "cross_fold_residual": {
+      "model": [
+        "random_forest_reference",
+        "xgboost"
+      ],
+      "half_width": "for repeat r and outer fold k: numpy.quantile(|residuals of molecules in the other folds of repeat r|, level, method='higher')",
+      "evaluation": "coverage indicator for each molecule in fold k, averaged over repeats per molecule"
+    },
+    "shift_check": {
+      "calibration_set": "absolute residuals of per-molecule mean nonbenzene CV predictions (874)",
+      "evaluation_set": "benzene holdout predictions (254)",
+      "label": "exploratory check under chemical shift"
+    },
+    "breakdown": [
+      "overall per protocol",
+      "family",
+      "descriptor-distance quintile"
+    ],
+    "assumptions_to_state": "exchangeability of scaffold groups (not established); dependence among molecules within scaffolds; residuals from different fold models"
+  },
+  "production_model": {
+    "path": "models/solubility_model.joblib",
+    "access": "loaded read-only; never re-saved",
+    "evaluation_split": "Phase 3 random split: src.train_model.split_dataset(test_size=0.20, random_state=42)",
+    "reproduction_check": {
+      "expected_test_rmse": 0.8349452807229858,
+      "tolerance": 1e-09,
+      "on_mismatch": "abort"
+    },
+    "diagnostics": [
+      "permutation importance (single and primary/sensitivity groups; same repeats and seed)",
+      "drop-column importance (in-memory refits of the production configuration on the Phase 3 training rows)",
+      "impurity importance",
+      "tree-spread interval diagnostics on the Phase 3 test set"
+    ],
+    "label": "Random-split diagnostics of the deployed model; not evidence of scaffold generalization"
+  },
+  "figures": {
+    "directory": "docs/images/phase6e/",
+    "format": {
+      "type": "PNG",
+      "dpi": 150,
+      "backend": "Agg",
+      "metadata": {
+        "Software": null
+      },
+      "deterministic": "two runs must produce byte-identical files"
+    },
+    "size_budget_mb": 5,
+    "style": {
+      "surface": "#fcfcfb",
+      "primary_ink": "#0b0b0b",
+      "secondary_ink": "#52514e",
+      "muted_ink": "#898781",
+      "gridline": "#e1e0d9",
+      "axis": "#c3c2b7",
+      "font_size": 9,
+      "line_width": 2,
+      "marker_min_size_px": 8,
+      "model_colors": {
+        "random_forest_reference": "#2a78d6",
+        "xgboost": "#eb6834",
+        "lasso": "#1baf7a"
+      },
+      "model_colors_validation": "dataviz validator, light mode, all pairs: PASS (CVD 9.2, normal-vision 24.0); aqua below 3:1 contrast, so every figure carries a legend and direct labels",
+      "protocol_markers": {
+        "nonbenzene_scaffold_cv": "o",
+        "benzene_holdout": "^"
+      },
+      "focus_family_encoding": {
+        "triazine": {
+          "color": "#2a78d6",
+          "marker": "s"
+        },
+        "pyridine": {
+          "color": "#eb6834",
+          "marker": "D"
+        },
+        "biphenyl": {
+          "color": "#1baf7a",
+          "marker": "v"
+        },
+        "other": {
+          "color": "#898781",
+          "marker": "o"
+        }
+      },
+      "color_meaning_rule": "Model colors are constant across all model figures. Family colors are used only in F13, which shows no model series; its legend states the mapping.",
+      "diverging": {
+        "negative": "#2a78d6",
+        "midpoint": "#f0efec",
+        "positive": "#e34948"
+      },
+      "every_figure_states": [
+        "protocol(s)",
+        "n molecules",
+        "out-of-fold or in-sample"
+      ]
+    },
+    "items": [
+      {
+        "id": "F1",
+        "file": "docs/images/phase6e/F01_observed_vs_predicted.png",
+        "size_inches": [
+          10,
+          3.6
+        ],
+        "content": "Observed vs predicted LogS for RF reference, XGBoost, Lasso; identity line and +/-1 LogS guides; per-protocol RMSE in each panel",
+        "encoding": "model panels; protocol by marker"
+      },
+      {
+        "id": "F2",
+        "file": "docs/images/phase6e/F02_calibration.png",
+        "size_inches": [
+          8,
+          3.6
+        ],
+        "content": "Binned calibration (deciles/quintiles) with calibration slope and intercept intervals, per protocol",
+        "encoding": "model colors; protocol panels"
+      },
+      {
+        "id": "F3",
+        "file": "docs/images/phase6e/F03_residual_distributions.png",
+        "size_inches": [
+          10,
+          6
+        ],
+        "content": "Residual histograms and normal Q-Q plots per model, per protocol",
+        "encoding": "model colors"
+      },
+      {
+        "id": "F4",
+        "file": "docs/images/phase6e/F04_residual_vs_predicted_and_observed.png",
+        "size_inches": [
+          10,
+          6
+        ],
+        "content": "Residual vs predicted (calibration) and vs observed (shrinkage) with binned means and intervals",
+        "encoding": "model colors; protocol panels"
+      },
+      {
+        "id": "F5",
+        "file": "docs/images/phase6e/F05_bias_by_descriptor.png",
+        "size_inches": [
+          10,
+          6
+        ],
+        "content": "Binned mean signed residual vs each descriptor (nonbenzene CV)",
+        "encoding": "model colors; small multiples by descriptor"
+      },
+      {
+        "id": "F6",
+        "file": "docs/images/phase6e/F06_descriptor_correlations.png",
+        "size_inches": [
+          7,
+          3.4
+        ],
+        "content": "Pearson and Spearman correlation matrices of the six descriptors",
+        "encoding": "diverging blue-gray-red, annotated values"
+      },
+      {
+        "id": "F7",
+        "file": "docs/images/phase6e/F07_permutation_importance.png",
+        "size_inches": [
+          10,
+          4.2
+        ],
+        "content": "Pooled permutation importance (single and grouped) with bootstrap intervals and fold dispersion, per model, per protocol",
+        "encoding": "model colors; correlation caveat in caption"
+      },
+      {
+        "id": "F8",
+        "file": "docs/images/phase6e/F08_drop_column_importance.png",
+        "size_inches": [
+          10,
+          4.2
+        ],
+        "content": "Pooled drop-column importance (single and grouped), per model, per protocol",
+        "encoding": "model colors"
+      },
+      {
+        "id": "F9",
+        "file": "docs/images/phase6e/F09_importance_method_comparison.png",
+        "size_inches": [
+          8,
+          4
+        ],
+        "content": "Rank comparison: impurity/gain, permutation, drop-column, mean |TreeSHAP|",
+        "encoding": "model colors; rank table-style dot plot"
+      },
+      {
+        "id": "F10",
+        "file": "docs/images/phase6e/F10_ale_curves.png",
+        "size_inches": [
+          10,
+          6
+        ],
+        "content": "ALE curves for six descriptors: median and 10-90% band across folds, data rug",
+        "encoding": "model colors; small multiples by descriptor"
+      },
+      {
+        "id": "F11",
+        "file": "docs/images/phase6e/F11_family_forest_plot.png",
+        "size_inches": [
+          8,
+          6
+        ],
+        "content": "Family RMSE and mean signed error with intervals (n >= 20 only), n labels, small families marked descriptive",
+        "encoding": "model colors; benzene from holdout, labelled"
+      },
+      {
+        "id": "F12",
+        "file": "docs/images/phase6e/F12_family_residuals.png",
+        "size_inches": [
+          10,
+          4.5
+        ],
+        "content": "Residual strip plots by family",
+        "encoding": "model colors; focus families annotated"
+      },
+      {
+        "id": "F13",
+        "file": "docs/images/phase6e/F13_logs_vs_logp_families.png",
+        "size_inches": [
+          7,
+          5
+        ],
+        "content": "Observed LogS vs LogP, focus families highlighted (no model series)",
+        "encoding": "focus_family_encoding"
+      },
+      {
+        "id": "F14",
+        "file": "docs/images/phase6e/F14_biphenyl_residual_vs_logp.png",
+        "size_inches": [
+          7,
+          4.5
+        ],
+        "content": "Biphenyl family residual vs LogP for RF reference, XGBoost, Lasso, with extrapolation indicators",
+        "encoding": "model colors; descriptive (n = 39)"
+      },
+      {
+        "id": "F15",
+        "file": "docs/images/phase6e/F15_similarity_acyclic_vs_cyclic.png",
+        "size_inches": [
+          8,
+          4
+        ],
+        "content": "RMSE by Tanimoto-similarity bin, acyclic vs cyclic (nonbenzene CV)",
+        "encoding": "model colors; ring status by marker"
+      },
+      {
+        "id": "F16",
+        "file": "docs/images/phase6e/F16_distance_reliability.png",
+        "size_inches": [
+          10,
+          4
+        ],
+        "content": "Binned RMSE vs descriptor distance and selective-prediction curves, per protocol",
+        "encoding": "model colors"
+      },
+      {
+        "id": "F17",
+        "file": "docs/images/phase6e/F17_representation_floor.png",
+        "size_inches": [
+          7,
+          4
+        ],
+        "content": "Within-group target spread for identical-descriptor groups, with the 0.144 floor marked",
+        "encoding": "single series"
+      },
+      {
+        "id": "F18",
+        "file": "docs/images/phase6e/F18_interval_coverage.png",
+        "size_inches": [
+          10,
+          4.5
+        ],
+        "content": "Observed coverage of tree-spread and cross-fold residual intervals at 80/90/95% by family and distance quintile (exploratory)",
+        "encoding": "model colors; nominal levels as reference lines"
+      },
+      {
+        "id": "F19",
+        "file": "docs/images/phase6e/F19_production_model_importance.png",
+        "size_inches": [
+          8,
+          4
+        ],
+        "content": "Production RF permutation and drop-column importance on the Phase 3 random split",
+        "encoding": "single model color; labelled random split"
+      }
+    ]
+  },
+  "tables": {
+    "directory": "reports/phase6e/",
+    "format": "JSON (CSV is ignored by .gitignore); Markdown renderings in docs/PHASE6E_REPORT.md",
+    "items": {
+      "T1_calibration.json": "calibration slope/intercept, shrinkage slope, per model and protocol",
+      "T2_extreme_errors.json": "extreme-error molecules",
+      "T3_feature_importance.json": "all importance methods, pooled values, intervals, fold dispersion, rank stability",
+      "T4_descriptor_reference.json": "chemical interpretation table with observed ALE direction and importance rank",
+      "T5_family_diagnostics.json": "family metrics, extrapolation indicators, shared-bias check, ESOL comparator",
+      "T6_focus_family_molecules.json": "triazine, pyridine and biphenyl molecule-level tables",
+      "T7_similarity_distance.json": "similarity and distance bins, selective prediction, range flag",
+      "T8_representation_floor.json": "floor value and top groups",
+      "T9_interval_coverage.json": "observed coverage by method, level, protocol, family and distance bin",
+      "T10_production_model.json": "production-model diagnostics",
+      "summary.json": "run id, config MD5, input checksums, environment, runtime, refit reproduction result"
+    }
+  },
+  "outputs": {
+    "large_outputs_dir": "results/phase6e/<run_id>/",
+    "run_id": "UTC timestamp + first 8 characters of this config's MD5",
+    "overwrite_policy": "refuse if the run directory exists; figures and tables are written only after all checks pass; a reproducibility re-run writes figures and tables to an alternative directory",
+    "contents": [
+      "refit predictions",
+      "per-fold and per-repeat permutation results",
+      "drop-column predictions",
+      "TreeSHAP values",
+      "ALE grids",
+      "tree-spread values",
+      "interval half-widths and coverage indicators",
+      "nearest-neighbour records",
+      "run_info.json",
+      "config_snapshot.json",
+      "pip_freeze.txt"
+    ]
+  },
+  "language_rules": [
+    "Describe what models rely on, never what causes solubility.",
+    "Chemical explanations are hypotheses paired with a contradicting diagnostic.",
+    "Shared biases across models or with the ESOL equation are evidence for further investigation, not proof of a mechanism.",
+    "Families with n < 20 are described, never treated as established effects.",
+    "Benzene holdout and nonbenzene scaffold CV are reported separately.",
+    "Interval coverage is observed, not guaranteed.",
+    "The representation floor is a dataset-specific limitation of six descriptors, not universal irreducible error.",
+    "Phase 6D decision labels are quoted, never strengthened."
+  ],
+  "runtime": {
+    "feasibility": "reports/phase6e/feasibility_estimate.json",
+    "benchmark_before_full_run": true,
+    "approval_threshold_wall_minutes": 60,
+    "action_if_exceeded": "stop and report"
+  },
+  "protected_files_md5": {
+    "models/solubility_model.joblib": "695cf080ae4b921a6b407b75a8a8f757",
+    "models/feature_columns.joblib": "17cb1fd096ed63e941c96cdfaa4a697c",
+    "results/phase3_metrics.json": "c8f48e0431c60bff9b88124a1961298b",
+    "results/phase4_metrics.json": "5bd3212ee1f7c779ad94dae0c2fe0ddd",
+    "data/esol.csv": "0c90a51668d446b9e3ab77e67662bd1c",
+    "data/esol_descriptors.csv": "1a17c75935da0ab8961410c311558925",
+    "configs/phase6d.json": "d02c301c5b840ecb9874417a2423c833",
+    "requirements.txt": "d74f89621e8fd58297a9ff9c01cece65",
+    "results/phase6c/benchmark.json": "4c4660c70f2ff4d77d26d46f8e60ecbc",
+    "results/phase6c/config.json": "54edd39204ffbac6f01355b8fc5c41fe",
+    "results/phase6c/fold_assignments.csv": "899103943c210fca835736dc3f053116",
+    "results/phase6c/fold_metrics.csv": "c096eef70848c51174c0136924dcac27",
+    "results/phase6c/paired_comparisons.csv": "35d98502c3fc3e410caf3957dcd8b065",
+    "results/phase6c/summary.csv": "1685deda43e1996ceddd3ce51a58d25e",
+    "results/phase6d/20261027T154454Z_d02c301c/bootstrap_distributions.npz": "2aab49bd965affccc6147f36e13eba6d",
+    "results/phase6d/20261027T154454Z_d02c301c/boundary_report.csv": "5331047eef36b761ebbc2dae5ae28daf",
+    "results/phase6d/20261027T154454Z_d02c301c/config_snapshot.json": "d02c301c5b840ecb9874417a2423c833",
+    "results/phase6d/20261027T154454Z_d02c301c/contrasts.csv": "666b32e736742e6380aaf3ba0cd8403a",
+    "results/phase6d/20261027T154454Z_d02c301c/family_metrics.csv": "405fa7d38b9387c675a59b89c2c4956e",
+    "results/phase6d/20261027T154454Z_d02c301c/fold_assignments.csv.gz": "733aa5caffc825078406def79dd91547",
+    "results/phase6d/20261027T154454Z_d02c301c/fold_metrics.csv": "d0c6f6da966964ee3f25c036128d933c",
+    "results/phase6d/20261027T154454Z_d02c301c/inner_cv_results.csv.gz": "c0244cdbf682145dbf5ce835908f7003",
+    "results/phase6d/20261027T154454Z_d02c301c/neighbour_statistics.csv": "c7e8dda16e008889829cc360b8cd8918",
+    "results/phase6d/20261027T154454Z_d02c301c/oof_predictions.csv.gz": "19f2c74383b81dd95dfe1f481e9869c9",
+    "results/phase6d/20261027T154454Z_d02c301c/pip_freeze.txt": "ba2fc2abbef730e530e0d6b9b316f6ef",
+    "results/phase6d/20261027T154454Z_d02c301c/protocol_metrics.csv": "caf1acd3c361a99787b623aed46a9506",
+    "results/phase6d/20261027T154454Z_d02c301c/run_info.json": "1c1386bc6bd247bc17fe7df4e5a3efd0",
+    "reports/phase6d/benchmark.json": "342b152267ac41f0d6e7813097ae4694",
+    "reports/phase6d/boundary_report.json": "d99ea18133daf425f143a6ca7547c35e",
+    "reports/phase6d/contrasts.json": "50ab1cb0cf5aaf9493f0e812a6c015fd",
+    "reports/phase6d/exploratory.json": "b2ec59112c1d2fd5a40c60b4bf265dc8",
+    "reports/phase6d/families.json": "18aa258485b53da53998fe1e2c9e3702",
+    "reports/phase6d/feasibility_estimate.json": "532d7232581f68be76bf1ce538102183",
+    "reports/phase6d/model_seed_check.json": "f256905db2d25e70e2dab0cf08812c48",
+    "reports/phase6d/sensitivity.json": "97d190de7fecb6bf81f104f530a22986",
+    "reports/phase6d/summary.json": "83fa9597ecad09a9003b10301e552c22",
+    "src/api.py": "10f24eb7477e11c6b9e63767ad7ce77f",
+    "src/cross_validation.py": "100c648e17e241a169f25f551909821a",
+    "src/descriptors.py": "e5d364988d2bced44a9e5713cea3cd55",
+    "src/evaluate_model.py": "66bd358cd11cf93af45c6e479ead10b9",
+    "src/model_experiments.py": "e4bb4c563fe70913acb05b807fbed335",
+    "src/scaffold_evaluation.py": "db373e63a9d7fb66bb68d865f8db3e7e",
+    "src/train_model.py": "9b4489ab8fba302077e1718e650efdae",
+    "frontend/src/App.jsx": "f318a4f51d70a5ccf28c06be57d4f5bc",
+    "frontend/src/App.test.jsx": "34910f6eaa04ecd96979ea490dd1c3c1",
+    "frontend/src/main.jsx": "75ec5ea3b3246a28e621c778837c2378",
+    "frontend/src/styles.css": "7efec3ac8a33c2b5d8a565913227724a",
+    "frontend/src/test/setup.js": "3709e3aa95abf0544678f0f2d9b46702",
+    "frontend/package.json": "d3bc41572f6a54fce2daf73a842020b7",
+    "frontend/package-lock.json": "c750ff8325d294eaa849e7e26c299b31",
+    "frontend/index.html": "60861a9733ae66c75312247164f35435",
+    "frontend/vitest.config.js": "8d541a83d6721fe0c143e22b77cc0e52"
+  },
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.3.6",
+    "matplotlib": "3.11.2",
+    "new_dependencies": "none"
+  }
+}
