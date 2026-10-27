@@ -1,479 +1,237 @@
 # Molecular Property Predictor
 
-**Cheminformatics | RDKit | Python | Molecular Descriptors | Machine Learning**
+**Cheminformatics · RDKit · scikit-learn · XGBoost · FastAPI · React**
 
-A Python-based cheminformatics project that converts chemical structures into numerical molecular descriptors to support the development of machine-learning models for predicting aqueous solubility.
+Molecular Property Predictor predicts aqueous solubility (LogS, log₁₀ mol/L) from molecular structure. It has two parts:
 
-The project uses the **ESOL (Delaney) dataset**, containing experimental aqueous solubility measurements for 1,128 molecules.
+1. **A deployed application.** A FastAPI backend and React frontend turn a SMILES string into six RDKit descriptors and a Random Forest prediction. The response adds an experimental comparison when the molecule is in ESOL, plus descriptive applicability-domain information.
+2. **A validation and diagnostics study.** A prespecified experimental design asks how well descriptor-based models generalize to **chemical scaffolds they have not seen**, and then characterizes where and why they fail.
 
-The dataset contains 1,117 unique canonical structures after stereochemistry-preserving canonicalization. Eleven canonical groups contain duplicates, and six of those groups contain conflicting measured values; those cases are explicitly reported as ambiguous rather than resolved automatically.
+All results come from a single public dataset, ESOL, and are evaluated by internal cross-validation only. **There is no external validation.**
 
-## Application Preview
+## Project summary
 
-### Molecular Intelligence — Interactive Application
+| | |
+|---|---|
+| Data | ESOL (Delaney), 1,128 molecules; target: measured LogS |
+| Features | 6 RDKit descriptors: MolWt, LogP, TPSA, HBD, HBA, RotBonds |
+| Deployed model | Random Forest (200 trees), trained once on a Phase 3 random split |
+| Experimental models | Mean baseline, Lasso, linear regression, Random Forest (production configuration and tuned), XGBoost |
+| Validation | Random split → single scaffold split → grouped nested cross-validation → scaffold-held-out cross-validation with a separate benzene holdout, scaffold-cluster bootstrap and a prespecified practical-equivalence margin |
+| Diagnostics | Calibration, residuals, permutation / drop-column / TreeSHAP / ALE, scaffold-family bias, similarity and descriptor-space distance, representation floor, exploratory interval coverage |
+| Engineering | 145 backend tests and 12 frontend tests; configuration-driven, checksum-verified experiments |
 
-Enter a molecular SMILES representation or choose from the molecule catalog to generate an aqueous solubility prediction using RDKit molecular descriptors and a scikit-learn Random Forest model.
+## Deployed model vs experimental models
 
-![Molecular Intelligence dark interface with SMILES input and molecule gallery](docs/images/molecular-intelligence-overview.png)
-
-### Molecular Prediction and Scientific Validation
-
-The dashboard presents predicted LogS, an RDKit-rendered molecular structure, six physicochemical descriptors, and scientific context. Aspirin has no experimental ESOL reference in this dataset; its displayed LogS is a **model prediction, not an experimental measurement**.
-
-![Aspirin solubility prediction with molecular structure, descriptors, and scientific validation](docs/images/molecular-intelligence-prediction.png)
-
-**Model evaluation:** Held-out random split R² = 0.853; scaffold-disjoint split R² = 0.795. These are dataset evaluation metrics, not confidence scores for individual predictions.
-
-**Technical summary:** ESOL (Delaney), 1,128 molecules; RDKit cheminformatics; six molecular descriptors; scikit-learn Random Forest regression; Python and FastAPI backend; React and Vite frontend; exact ESOL identity matching, experimental comparison where available, and descriptor-range assessment.
-
-## Project Status
-
-| Phase | Description | Status |
+| | Deployed model (served by the app) | Experimental models (Phases 6B–6E) |
 |---|---|---|
-| 1 | Project setup and dataset acquisition | Complete |
-| 2 | RDKit molecular descriptor generation | Complete |
-| 3 | Machine-learning model development | Complete |
-| 4 | Model evaluation and validation | Complete |
-| 5 | FastAPI backend, React/Vite frontend, and scientific validation | Complete |
-| 6 | Documentation, testing, and deployment | Planned |
+| What | `RandomForestRegressor(n_estimators=200, random_state=42)` | Lasso, linear regression, XGBoost, tuned Random Forest, and the production configuration retrained per fold |
+| Training data | Phase 3 random split: 902 training molecules | Refitted inside each cross-validation fold |
+| Reported performance | Held-out random split (226 molecules): RMSE 0.835, R² 0.853 | Scaffold-grouped cross-validation (below) |
+| Status | `models/solubility_model.joblib`, used by `src/api.py` | Offline analysis only. **None has been deployed or has replaced the Phase 3 model.** |
 
-## Project Objective
+Phase 6 evaluated the *same configuration* as the deployed model under scaffold-grouped validation. It did not retrain, modify or replace the deployed model.
 
-Aqueous solubility is an important physicochemical property in pharmaceutical discovery and chemical development.
+## Application
 
-The goal is to develop a machine-learning pipeline that predicts experimental aqueous solubility (**LogS**) from molecular structure.
+![Molecular Intelligence interface with SMILES input and molecule gallery](docs/images/molecular-intelligence-overview.png)
 
-The completed Phase 2 workflow is:
+![Aspirin prediction with structure, descriptors and scientific validation card](docs/images/molecular-intelligence-prediction.png)
 
-**SMILES → RDKit molecule → Molecular descriptors → Processed dataset**
+For a submitted SMILES string, the app returns:
+- the predicted LogS;
+- an RDKit structure drawing, molecular formula and the six descriptors;
+- the ESOL experimental value when the canonical structure is in ESOL (conflicting duplicates are reported as ambiguous, not resolved);
+- whether the molecule was in the Phase 3 training or test split;
+- a descriptor-range check against the training data.
 
-The numerical descriptors will serve as input features for regression models developed in Phase 3.
+The prediction is a model estimate, not a measurement. The range check is descriptive and is **not a confidence measure**: in Phase 6E it flagged only 15 of 874 cross-validation molecules.
+
+### How the application works
+
+```text
+SMILES ──► FastAPI  POST /api/predict
+             ├─ RDKit: parse, canonicalize, molecular formula, SVG drawing
+             ├─ six descriptors, in the saved feature order (models/feature_columns.joblib)
+             ├─ Random Forest prediction (models/solubility_model.joblib)
+             ├─ ESOL lookup by canonical SMILES (stereochemistry preserved)
+             └─ descriptor-range check against the Phase 3 training set
+          ◄── JSON ──► React/Vite dashboard (prediction, structure, descriptors, validation card)
+```
+
+The API loads the saved model read-only and never retrains it. `GET /api/health` reports whether the model is loaded. The frontend reads its backend address from `VITE_API_BASE_URL` (default `http://127.0.0.1:8003`).
+
+## Scientific motivation
+
+Aqueous solubility affects formulation, bioavailability and environmental fate. Descriptor-based models can estimate it cheaply. However, random train/test splits put close analogues on both sides of the split and overstate how well a model handles **new chemistry**. This project therefore treats *validation design* as the main object of study: grouping by molecular identity and by Bemis–Murcko scaffold, tuning only inside training folds, and reporting uncertainty with stated assumptions.
 
 ## Dataset
 
-**Source:** ESOL (Delaney) dataset, distributed through DeepChem.
+**ESOL (Delaney)**, as distributed by DeepChem. The download is pinned to DeepChem commit [`108af21`](https://github.com/deepchem/deepchem/blob/108af2176a5f876c2df1df922baadb02d647c826/datasets/delaney-processed.csv) and checked by checksum (see [Reproducibility](docs/REPRODUCIBILITY.md)).
 
-Dataset URL:
+- **Size:** 1,128 molecules and 1,117 unique canonical structures. 11 structures appear twice; 6 of those pairs have differing values. The largest difference (1.03 LogS) is mannitol vs sorbitol, stereoisomers whose SMILES omit stereochemistry.
+- **Target:** `measured log solubility in mols per litre`.
+- **Excluded column:** ESOL's own predicted solubility is never used as a feature. It is used only as an in-sample comparator in Phase 6E.
 
-[https://raw.githubusercontent.com/deepchem/deepchem/master/datasets/delaney-processed.csv](https://raw.githubusercontent.com/deepchem/deepchem/master/datasets/delaney-processed.csv)
+## Molecular descriptors
 
-The dataset contains:
-
-- 1,128 chemical compounds
-- SMILES molecular representations
-- Experimental aqueous solubility measurements
-- Additional chemical descriptors and existing ESOL predictions
-
-**Prediction target:** `measured log solubility in mols per litre`
-
-LogS represents the base-10 logarithm of molar aqueous solubility.
-
-The existing ESOL-predicted solubility column is excluded from model inputs to avoid data leakage.
-
-## Phase 2 — Molecular Descriptor Generation
-
-RDKit converts each SMILES string into a molecular object and calculates six descriptors.
-
-| Descriptor | Meaning | Chemical relevance |
+| Descriptor | RDKit function | Represents |
 |---|---|---|
-| MolWt | Molecular weight | Molecular size |
-| LogP | Calculated octanol/water partition coefficient | Lipophilicity |
-| TPSA | Topological polar surface area | Molecular polarity |
-| HBD | Hydrogen-bond donor count | Hydrogen-bonding capacity |
-| HBA | Hydrogen-bond acceptor count | Hydrogen-bonding capacity |
-| RotBonds | Rotatable bond count | Molecular flexibility |
+| MolWt | `Descriptors.MolWt` | Molecular size |
+| LogP | `Descriptors.MolLogP` (Crippen, *calculated*) | Lipophilicity |
+| TPSA | `Descriptors.TPSA` (N and O contributions by default) | Polar surface area |
+| HBD / HBA | `Descriptors.NumHDonors` / `Descriptors.NumHAcceptors` | Hydrogen-bonding capacity |
+| RotBonds | `Descriptors.NumRotatableBonds` | Flexibility |
 
-These descriptors provide a compact numerical representation of molecular structure.
+These six descriptors cannot represent crystal-lattice energy or melting point, ionization and pH, stereochemistry, or substitution pattern (positional isomers often share identical descriptors).
 
-### Implementation
+## Validation design
 
-The `src/descriptors.py` module:
+| Phase | Design | Document |
+|---|---|---|
+| 3–4 | Single random 80/20 split; single Murcko scaffold split | [Phase 3](docs/PHASE3_TEACHBACK.md), [Phase 4](docs/PHASE4_TEACHBACK.md) |
+| 6A | Data-quality and leakage audit; reproduction of baselines | [6A report](docs/PHASE6A_REPORT.md) |
+| 6B | Lasso and XGBoost added outside the production workflow | [6B report](docs/PHASE6B_REPORT.md) |
+| 6C | Nested 5×5 cross-validation, 3 repeats, grouped by identity and by scaffold | [6C report](docs/PHASE6C_REPORT.md) |
+| 6D | Prespecified experimental design: non-benzene scaffold CV (5 folds × 5 repeats; benzene always in training) and a **separate** benzene holdout; molecule-weighted tuning; scaffold-cluster bootstrap; δ = 0.05 LogS equivalence margin; duplicate sensitivity analysis | [6D plan](docs/PHASE6D_PLAN.md), [6D report](docs/PHASE6D_REPORT.md) |
+| 6E | Prespecified diagnostics of the Phase 6D models | [6E plan](docs/PHASE6E_PLAN.md), [6E report](docs/PHASE6E_REPORT.md) |
 
-1. Loads the ESOL dataset using Pandas.
-2. Converts SMILES strings into RDKit molecular objects.
-3. Calculates six molecular descriptors.
-4. Validates structures and required values.
-5. Excludes invalid or incomplete records.
-6. Exports the processed dataset to `data/esol_descriptors.csv`.
+## Key results
 
-### Phase 2 Results
+RMSE in LogS units. All cross-validation numbers are out-of-fold.
 
-| Metric | Result |
-|---|---:|
-| Input molecules | 1,128 |
-| Successfully processed | 1,128 |
-| Excluded molecules | 0 |
-| Molecular descriptors | 6 |
-| Automated tests | 4 passed |
-| Missing required values | 0 |
+| Evaluation | RF (production config) | XGBoost | Lasso | Source |
+|---|---|---|---|---|
+| Random split, single (Phase 3) | 0.835 | — | — | Phase 3 |
+| Scaffold split, single (Phase 4) | 0.880 | — | — | Phase 4 |
+| Scaffold-grouped nested CV, 15 folds (Phase 6C) | 0.821 | 0.802 | 1.025 | Phase 6C |
+| **Non-benzene scaffold CV**, 874 molecules (Phase 6D, primary) | **0.837** | **0.828** | **1.057** | Phase 6D |
+| Benzene holdout, 254 molecules (Phase 6D, separate protocol) | 0.783 | 0.745 | 0.887 | Phase 6D |
 
-All 1,128 ESOL molecules were successfully processed during Phase 2 validation.
+**Primary comparison (Phase 6D).** RMSE(RF) − RMSE(XGBoost) = **0.009 LogS** (95% scaffold-cluster bootstrap interval −0.016 to 0.035). Under the prespecified rule this is *practically equivalent at δ = 0.05 LogS*.
+- **Conditions:** this holds only for that margin, and only if the bootstrap's assumptions hold (independent, exchangeable scaffold groups; uncertainty conditional on the fitted models). A margin of 0.03 would make the result inconclusive.
+- **Robustness:** the label held under the duplicate-sensitivity variants, and Δ stayed between 0.008 and 0.011 across model seeds.
+- **Lasso:** about 0.22 LogS worse than the RF (interval 0.131 to 0.305).
 
-These results describe descriptor generation and data quality, **not machine-learning predictive accuracy**.
+## Findings
 
-## Phase 3 — Machine Learning Model Development
+![Observed vs predicted LogS on unseen scaffolds](docs/images/phase6e/F01_observed_vs_predicted.png)
 
-Phase 3 introduces supervised regression using scikit-learn.
+**Figure 1.** Out-of-fold predictions for non-benzene scaffold CV (874 molecules, mean over 5 repeats; circles) and the benzene holdout (254 molecules; triangles). RMSE is reported separately for each protocol: RF 0.837 / 0.783, XGBoost 0.828 / 0.745, Lasso 1.057 / 0.887. Dashed lines mark ±1 LogS.
 
-The workflow is:
+![Permutation importance](docs/images/phase6e/F07_permutation_importance.png)
 
-**Molecular descriptors → training/testing split → baseline model → Random Forest → initial evaluation**
+**Figure 2.** Pooled permutation importance, computed from prediction-level squared errors with 95% bootstrap intervals; gray dots are per-fold values.
+- **LogP ranks first in every fold** (RMSE increase about 2.0 LogS when shuffled).
+- **Its information is largely shared with other descriptors.** Dropping LogP and refitting costs only 0.34–0.36 LogS, while dropping MolWt and LogP together costs about 1.2.
+- **Correlated descriptors share credit**, so importance describes what the models rely on, not chemical causation.
 
-### Features and target
+![Scaffold-family error and bias](docs/images/phase6e/F11_family_forest_plot.png)
 
-The model uses the following ordered feature columns:
+**Figure 3.** RMSE and mean signed error by scaffold family; intervals are shown only for n ≥ 20.
+- **Triazines** (n = 16, mostly s-triazine herbicides) are over-predicted by about 1.4–1.5 LogS.
+- **Pyridines** (n = 14) are under-predicted by about 1.1–1.6 LogS by every model.
+- Both families are **descriptive observations**, not established effects. A missing melting-point (crystal-lattice) term for the triazines is a hypothesis that ESOL cannot test.
 
-- MolWt
-- LogP
-- TPSA
-- HBD
-- HBA
-- RotBonds
+![Biphenyl residuals vs LogP](docs/images/phase6e/F14_biphenyl_residual_vs_logp.png)
 
-The target is:
+**Figure 4.** Biphenyls (n = 39, descriptive): tree-model residuals grow with LogP.
+- **Beyond the training range** (4 molecules, e.g. decachlorobiphenyl, LogS −11.6): RMSE is 2.50 (RF) and 2.39 (XGBoost) vs 0.40 (Lasso). Tree models cannot predict outside the targets they were trained on; a linear model extrapolates.
+- **Within the training range** (the other 35): RMSE is 0.94 / 0.72 / 0.70.
 
-- `measured log solubility in mols per litre`
+![Reliability vs descriptor-space distance](docs/images/phase6e/F16_distance_reliability.png)
 
-The ESOL-predicted LogS values are not used as model inputs or targets.
+**Figure 5.** Error vs distance to the nearest training molecule in standardized descriptor space.
+- **Random Forest RMSE rises across distance quintiles,** from 0.51 to 1.25 (non-benzene CV).
+- **Keeping only the closest 10% of molecules** gives RMSE 0.47, against 0.84 for all.
+- **Distance ranks reliability for the tree models but not for Lasso.**
 
-### Training and testing split
+The [Phase 6E report](docs/PHASE6E_REPORT.md) also covers calibration and shrinkage, extreme errors, acyclic molecules and close analogues, the representation floor, and exploratory interval coverage. All 19 figures are in [`docs/images/phase6e/`](docs/images/phase6e/).
 
-The dataset is split using `train_test_split`:
+## Limitations
 
-- `test_size=0.20`
-- `random_state=42`
+- **Single dataset.** ESOL combines heterogeneous literature measurements with unrecorded temperature, pH and polymorph, and no per-measurement uncertainty. It is dominated by pesticides and environmental chemicals. No external validation was performed.
+- **Representation.** 304 molecules share an identical six-descriptor vector with another molecule. This sets a **dataset-specific floor of 0.144 LogS RMSE** for any model on these descriptors. It is not a universal limit on solubility error, and not a measure of measurement noise. LogP is itself a calculated estimate.
+- **Generalization.** Assessed by scaffold-grouped cross-validation within ESOL only. Acyclic molecules (28% of the data) are grouped only by exact identity, and 12.3% of them have a training neighbour with an identical fingerprint, so their accuracy reflects close analogues in training.
+- **Chemical-family biases.** Triazines, pyridines and highly chlorinated aromatics are poorly predicted. The family diagnostics are descriptive.
+- **Uncertainty.** The bootstrap intervals rest on stated assumptions. The per-prediction interval diagnostics in Phase 6E are exploratory, **not calibrated prediction intervals**: their coverage drops to about 0.3–0.4 at nominal 90% for triazines and pyridines. The application shows no uncertainty.
+- **Interpretation.** Importance, TreeSHAP and ALE describe these models on ESOL. They are not chemical mechanisms.
 
-The training set trains the models, while the held-out test set provides an initial estimate of generalization.
+## What this project does not claim
 
-### Models
+- **No external validation.** All performance numbers come from held-out data *within* ESOL.
+- **No calibrated prediction intervals**, and the application reports no per-prediction uncertainty.
+- **No causal chemical interpretation.** Feature importance and effect curves describe model behaviour.
+- **No production-grade deployment.** The application runs locally for demonstration; it has no authentication, monitoring or scaling.
+- **No transfer to other properties or materials.** ESOL solubility results are not evidence about other molecular or materials properties.
 
-Two models are trained:
+## Testing
 
-1. **Baseline:** `DummyRegressor(strategy="mean")`
-2. **Main model:** `RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1)`
+| Suite | Command | Count | Covers |
+|---|---|---|---|
+| Backend | `python -m pytest -q` | 145 tests in 8 modules | Descriptors, training, evaluation, API, experimental models, cross-validation splitters and leakage checks, scaffold protocols and bootstrap, diagnostics and the refit check |
+| Frontend | `cd frontend && npm test` | 12 tests | Prediction flow, example and catalog selection, formula formatting, structure rendering, experimental-reference display, loading and error states |
+| Build | `cd frontend && npm run build` | — | Production bundle |
 
-The model configuration is intentionally simple. Hyperparameter tuning is not included in this phase.
+Two backend tests need the original, Git-ignored experiment artifacts, so on a fresh clone both are skipped with an explanatory message (details in [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md#5-tests)).
 
-### Initial evaluation
-
-Predictions for the held-out test set are evaluated using:
-
-- Mean Absolute Error (MAE)
-- Root Mean Squared Error (RMSE)
-- R² score
-
-The results are saved to `results/phase3_metrics.json`.
-
-These metrics provide an initial model comparison. They do not constitute comprehensive validation or scientific approval; Phase 4 will address broader evaluation.
-
-### Model artifacts
-
-The trained Random Forest and feature-column order are saved using Joblib:
-
-- `models/solubility_model.joblib`
-- `models/feature_columns.joblib`
-
-The feature order is preserved to ensure that later predictions use the correct descriptor sequence.
-
-### Run Phase 3
-
-```bash
-python src/train_model.py
-```
-
-The script will:
-
-1. Load `data/esol_descriptors.csv`.
-2. Validate required columns and finite numeric values.
-3. Split the dataset.
-4. Train the baseline and Random Forest models.
-5. Calculate MAE, RMSE, and R².
-6. Save metrics to `results/phase3_metrics.json`.
-7. Save model artifacts in `models/`.
-
-### Run automated tests
-
-```bash
-python -m pytest -q
-```
-
-The tests cover feature selection, target validation, non-overlapping training and testing sets, model predictions, metric calculation, model persistence, invalid input handling, evaluation plots, and scaffold-aware validation.
-
-## Phase 4 — Model Evaluation and Validation
-
-Phase 4 evaluates the saved Random Forest model using both random and scaffold-aware validation strategies.
-
-### Evaluation workflow
-
-```bash
-python src/evaluate_model.py
-```
-
-The script:
-
-1. Loads the processed ESOL dataset.
-2. Validates required feature and target columns.
-3. Reproduces the Phase 3 random split.
-4. Loads the saved Random Forest and feature-order artifacts.
-5. Calculates MAE, RMSE, and R² for the random split.
-6. Creates actual-versus-predicted, residual, and feature-importance plots.
-7. Builds a scaffold-aware split using RDKit Murcko scaffolds.
-8. Trains a Random Forest on the scaffold-separated training set.
-9. Evaluates the scaffold split and writes `results/phase4_metrics.json`.
-
-### Evaluation results
-
-The current model produces Phase 3-style metrics on the random split, while the scaffold-aware split provides a more conservative estimate of chemical generalization.
-
-| Validation strategy | MAE | RMSE | R² | Molecules |
-|---|---:|---:|---:|---:|
-| Random split | 0.573728 | 0.834945 | 0.852515 | 226 |
-| Scaffold-disjoint split | 0.615514 | 0.880497 | 0.795425 | 226 |
-
-The corrected scaffold-aware validation uses unique canonical groups for acyclic molecules, so unrelated acyclic structures are not treated as one chemical family.
-
-### Generated outputs
-
-Local evaluation artifacts are written to `results/`:
-
-- `actual_vs_predicted.png`
-- `residual_plot.png`
-- `feature_importance.png`
-- `phase4_metrics.json`
-
-The files are generated locally and excluded from Git.
-
-### Scientific limitations
-
-The evaluation has important limitations:
-
-- It uses a single random split and a single scaffold split.
-- ESOL molecules may not represent the full universe of chemical structures.
-- Feature importance is not causal evidence.
-- Model uncertainty is not explicitly quantified.
-- Descriptor-range membership does not provide calibrated confidence or prediction uncertainty.
-- The evaluation does not prove suitability for a production or regulatory setting.
-
-The Phase 4 teach-back document provides a more accessible explanation of the evaluation methodology and interpretation. The Phase 5 scientific card is intended to support interpretation, not to transform the model into a validated experimental measurement or uncertainty estimator.
-
-## Phase 5 — Local Development
-
-### Start the FastAPI backend
-
-```bash
-uvicorn src.api:app --host 127.0.0.1 --port 8003 --reload
-```
-
-The backend is available at http://127.0.0.1:8003 and provides the health check at http://127.0.0.1:8003/api/health.
-
-### Start the React/Vite frontend
-
-```bash
-cd frontend
-npm install
-npm run dev -- --host 127.0.0.1 --port 5175
-```
-
-The frontend is available at http://localhost:5175.
-
-The React application reads the API base URL from `VITE_API_BASE_URL`. The default is `http://127.0.0.1:8003`.
-
-To use a different backend, start the frontend with:
-
-```bash
-VITE_API_BASE_URL=http://127.0.0.1:8004 npm run dev -- --host 127.0.0.1 --port 5175
-```
-
-The backend CORS configuration allows requests from `http://localhost:5175` and `http://127.0.0.1:5175`.
-
-### Example molecules and interface
-
-The React interface includes four selectable example molecules:
-
-- Ethanol — `CCO`
-- Benzene — `c1ccccc1`
-- Aspirin — `CC(=O)Oc1ccccc1C(=O)OC`
-- Caffeine — `Cn1c(=O)c2c(ncn2C)n(C)c1=O`
-
-Selecting an example populates the SMILES input. The user can edit the value before submitting it for prediction. The response is always displayed for the submitted SMILES, rather than merely the selected example.
-
-The prediction panel displays the value with the `LogS (log₁₀ mol/L)` label, a short interpretation, and the machine-learning estimate disclaimer. The molecule rendering is responsive and preserves the aspect ratio of the RDKit SVG for small and large structures.
-
-The application preserves the trained Random Forest model, the exact six descriptor order, RDKit validation and canonicalization, the FastAPI endpoint, and the existing scientific disclaimer. The model was trained on the ESOL dataset and predictions may be less reliable outside its training domain.
-
-### Phase 5B — Scientific validation and interpretability
-
-The prediction response extends the model output with scientific metadata that is read only at inference time:
-
-- **Exact ESOL identity matching:** The API matches canonical SMILES exactly and preserves stereochemistry.
-- **Experimental reference:** Returns the selected ESOL value, its source, compound ID, absolute error, and phase-split label when available.
-- **Ambiguity handling:** Duplicate canonical records with conflicting measurements are reported as ambiguous rather than silently selecting one value.
-- **Molecular formula:** RDKit calculates the molecular formula for the canonicalized structure.
-- **Applicability domain:** Descriptor values are compared with the Phase 3 training-set minima and maxima. The result is descriptive and does not quantify prediction confidence.
-- **Split labeling:** Each result states whether the compound is in the Phase 3 training set, held-out test set, or outside that split.
-
-The UI presents this metadata in a scientific validation card immediately below the prediction summary. It still does not mutate, retrain, or replace the saved Random Forest model.
-
-### Run automated tests
-
-```bash
-python -m pytest -q
-cd frontend
-npm test -- --run
-npm run build
-```
-
-The model artifacts and generated local outputs remain unchanged by the web application.
-
-## Technology Stack
-
-- **Python 3.12** — Programming language
-- **RDKit** — Molecular structure parsing and descriptor calculation
-- **Pandas** — Dataset processing and validation
-- **NumPy** — Numerical operations
-- **scikit-learn** — Supervised regression and model evaluation
-- **FastAPI** — Prediction API
-- **React and Vite** — Interactive frontend
-- **pytest** — Automated testing
-- **Matplotlib** — Model evaluation plots
-- **Joblib** — Model and feature serialization
-
-## Project Structure
-
-```text
-molecular-property-predictor/
-├── data/
-│   ├── esol.csv                 # Local only; Git ignored
-│   └── esol_descriptors.csv     # Generated; Git ignored
-├── src/
-│   ├── descriptors.py
-│   └── train_model.py
-├── tests/
-│   ├── test_descriptors.py
-│   └── test_train_model.py
-├── docs/
-│   ├── PHASE2_TEACHBACK.md
-│   └── PHASE3_TEACHBACK.md
-├── models/
-├── results/
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
-
-## Installation
-
-Clone the repository:
+## Quick start
 
 ```bash
 git clone https://github.com/Vdevannah/molecular-property-predictor.git
 cd molecular-property-predictor
-```
+python3.12 -m venv .venv && source .venv/bin/activate
+python -m pip install -r requirements.txt      # macOS: brew install libomp (needed by XGBoost)
 
-Create and activate a virtual environment:
-
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-## Download the Dataset
-
-CSV files are intentionally excluded from GitHub.
-
-Create the local data directory and download the ESOL dataset:
-
-```bash
 mkdir -p data
+curl -L https://raw.githubusercontent.com/deepchem/deepchem/108af2176a5f876c2df1df922baadb02d647c826/datasets/delaney-processed.csv -o data/esol.csv
+python src/descriptors.py      # data/esol_descriptors.csv
+python src/train_model.py      # models/solubility_model.joblib (the deployed model)
+python -m pytest -q            # fresh clone: 143 passed, 2 skipped (see docs/REPRODUCIBILITY.md)
 
-curl -L \
-  https://raw.githubusercontent.com/deepchem/deepchem/master/datasets/delaney-processed.csv \
-  -o data/esol.csv
+uvicorn src.api:app --host 127.0.0.1 --port 8003           # backend
+cd frontend && npm ci && npm run dev -- --host 127.0.0.1 --port 5175   # frontend (Node ^20.19 or >=22.12)
 ```
 
-Verify the dataset:
+Checksum verification, the experiment commands for Phases 4–6E, expected values and exactly what can and cannot be replayed are in **[docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)**.
 
-```bash
-python -c "import pandas as pd; print(pd.read_csv('data/esol.csv').shape)"
-```
+## Reproducibility at a glance
 
-Expected shape:
+| Level | What it means here |
+|---|---|
+| **Auditable** | Reports, figures and a tracked evidence bundle ([`reports/evidence/`](reports/evidence/): out-of-fold predictions, fold assignments and metrics; byte-for-byte copies) can be inspected without running code. [`reports/ARTIFACT_MANIFEST.json`](reports/ARTIFACT_MANIFEST.json) lists SHA-256 checksums for every untracked artifact. |
+| **Numerically reproducible** | In a tested fresh clone, the data, descriptors and deployed model were byte-identical. Phases 3–6C reproduced the reported numbers (byte-identical, or differing only in the last floating-point digit or in timing fields). Phases 6D and 6E were each run twice in the original environment, with identical results apart from timing fields. |
+| **Exact replay** | The Phase 6D and 6E configurations verify checksums of their original inputs, including Phase 6C files that contain timings and, for 6E, the canonical Phase 6D run directory. **A fresh clone cannot run Phase 6D or 6E unchanged** without those original artifacts. |
+
+## Repository structure
 
 ```text
-(1128, 10)
+molecular-property-predictor/
+├── src/
+│   ├── descriptors.py          # SMILES → six RDKit descriptors
+│   ├── train_model.py          # Phase 3: deployed Random Forest
+│   ├── evaluate_model.py       # Phase 4: random and scaffold split evaluation
+│   ├── api.py                  # FastAPI application
+│   ├── model_experiments.py    # Phase 6B: experimental models
+│   ├── cross_validation.py     # Phase 6C: grouped nested cross-validation
+│   ├── scaffold_evaluation.py  # Phase 6D: scaffold generalization
+│   └── model_diagnostics.py    # Phase 6E: diagnostics and figures
+├── tests/                      # 8 pytest modules (145 tests)
+├── frontend/                   # React + Vite application (12 tests)
+├── configs/                    # Prespecified Phase 6D and 6E configurations
+├── reports/                    # Tracked JSON results, evidence bundle, artifact manifest
+├── docs/                       # Phase reports, plans, reproducibility guide, figures
+├── data/, models/, results/    # Local, regenerated, Git-ignored (see manifest)
+├── requirements.txt
+└── LICENSE                     # MIT
 ```
 
-## Generate Molecular Descriptors
+## Technology
 
-Run:
-
-```bash
-python src/descriptors.py
-```
-
-The script generates:
-
-`data/esol_descriptors.csv`
-
-The output contains the compound ID, SMILES, measured LogS, and six calculated descriptors.
-
-## Data and Git Policy
-
-CSV files are not tracked in this repository.
-
-The `.gitignore` should include:
-
-```gitignore
-*.csv
-.venv/
-venv/
-__pycache__/
-*.pyc
-.pytest_cache/
-.DS_Store
-```
-
-Datasets are downloaded or regenerated locally using the documented commands.
-
-## Scientific Considerations
-
-Molecular descriptors summarize selected structural and physicochemical characteristics, but they do not fully represent molecular behavior.
-
-Aqueous solubility is influenced by factors including lipophilicity, polarity, hydrogen bonding, crystal packing, and ionization.
-
-The planned machine-learning model will learn statistical relationships between the selected descriptors and measured LogS.
-
-Future evaluation will examine predictive accuracy and limitations, including how well the model generalizes to molecules outside the training set.
-
-## Next Steps — Phase 4
-
-Phase 4 will introduce comprehensive model evaluation and validation.
-
-Planned tasks include:
-
-- Cross-validation
-- Multiple regression models
-- Model comparison
-- Hyperparameter tuning
-- Feature importance analysis
-- Training and testing diagnostics
-- External validation
-- Uncertainty estimation
+Python 3.12 · RDKit 2026.3.6 · pandas · NumPy · scikit-learn 1.9.1 · XGBoost 3.4.1 · SciPy · Matplotlib · FastAPI · Uvicorn · React 19 · Vite 7 · pytest · Vitest
 
 ## Author
 
-**Vijayarajan Devannah, Ph.D.**
+**Vijayarajan Devannah, Ph.D.** · Organic Chemistry · Cheminformatics · Data Science
 
-Organic Chemistry | Cheminformatics | Python | Data Engineering & Analytics
-
-[GitHub Repository](https://github.com/Vdevannah/molecular-property-predictor)
-
----
-
-**Current milestone:** Phase 3 development is implemented; Phase 4 validation is the next development phase.
+[GitHub repository](https://github.com/Vdevannah/molecular-property-predictor) · Licensed under the [MIT License](LICENSE)

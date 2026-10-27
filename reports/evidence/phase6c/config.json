@@ -1,0 +1,215 @@
+{
+  "dataset": {
+    "path": "data/esol_descriptors.csv",
+    "md5": "1a17c75935da0ab8961410c311558925",
+    "rows": 1128,
+    "feature_columns": [
+      "MolWt",
+      "LogP",
+      "TPSA",
+      "HBD",
+      "HBA",
+      "RotBonds"
+    ],
+    "target_column": "measured log solubility in mols per litre",
+    "filtering": "none; all rows including duplicate measurements are retained"
+  },
+  "groups": {
+    "random_grouped": {
+      "n_groups": 1117,
+      "largest_groups": {
+        "CCC1(CCC(C)C)C(=O)NC(=O)NC1=O": 2,
+        "CC12CCC(CC1)C(C)(C)O2": 2,
+        "Brc1ccc2ccccc2c1": 2,
+        "CC12CCC3C(CCC4CC(O)CCC43C)C1CCC2=O": 2,
+        "OCC(O)C(O)C(O)C(O)CO": 2
+      },
+      "singleton_groups": 1106
+    },
+    "scaffold": {
+      "n_groups": 584,
+      "largest_groups": {
+        "c1ccccc1": 254,
+        "c1ccc(-c2ccccc2)cc1": 39,
+        "c1ccc2ccccc2c1": 22,
+        "O=C1CC(=O)NC(=O)N1": 21,
+        "O=C1C=C2CCC3C4CCCC4CCC3C2CC1": 17
+      },
+      "singleton_groups": 509
+    }
+  },
+  "cross_validation": {
+    "protocols": [
+      "random_grouped",
+      "scaffold"
+    ],
+    "outer_splits": 5,
+    "inner_splits": 5,
+    "repeats": 3,
+    "splitter": "BalancedGroupKFold (largest group first to lightest fold, seeded tie-breaks)",
+    "outer_seed": "42 + repeat",
+    "inner_seed": "42 + 1000 * (repeat + 1) + fold",
+    "scoring": "neg_root_mean_squared_error",
+    "paired_test": "Nadeau\u2013Bengio corrected resampled t-test, 95% interval"
+  },
+  "models": {
+    "baseline": {
+      "estimator": "DummyRegressor",
+      "base_params": {
+        "constant": "None",
+        "quantile": "None",
+        "strategy": "'mean'"
+      },
+      "param_grid": null
+    },
+    "random_forest_reference": {
+      "estimator": "RandomForestRegressor",
+      "base_params": {
+        "bootstrap": "True",
+        "ccp_alpha": "0.0",
+        "criterion": "'squared_error'",
+        "max_depth": "None",
+        "max_features": "1.0",
+        "max_leaf_nodes": "None",
+        "max_samples": "None",
+        "min_impurity_decrease": "0.0",
+        "min_samples_leaf": "1",
+        "min_samples_split": "2",
+        "min_weight_fraction_leaf": "0.0",
+        "monotonic_cst": "None",
+        "n_estimators": "200",
+        "n_jobs": "1",
+        "oob_score": "False",
+        "random_state": "42",
+        "verbose": "0",
+        "warm_start": "False"
+      },
+      "param_grid": null
+    },
+    "lasso": {
+      "estimator": "Pipeline",
+      "base_params": {
+        "memory": "None",
+        "steps": "[('scaler', StandardScaler()), ('lasso', Lasso(alpha=0.01, max_iter=10000))]",
+        "transform_input": "None",
+        "verbose": "False"
+      },
+      "param_grid": {
+        "lasso__alpha": [
+          0.001,
+          0.01,
+          0.1,
+          1.0
+        ]
+      }
+    },
+    "random_forest_tuned": {
+      "estimator": "RandomForestRegressor",
+      "base_params": {
+        "bootstrap": "True",
+        "ccp_alpha": "0.0",
+        "criterion": "'squared_error'",
+        "max_depth": "None",
+        "max_features": "1.0",
+        "max_leaf_nodes": "None",
+        "max_samples": "None",
+        "min_impurity_decrease": "0.0",
+        "min_samples_leaf": "1",
+        "min_samples_split": "2",
+        "min_weight_fraction_leaf": "0.0",
+        "monotonic_cst": "None",
+        "n_estimators": "200",
+        "n_jobs": "1",
+        "oob_score": "False",
+        "random_state": "42",
+        "verbose": "0",
+        "warm_start": "False"
+      },
+      "param_grid": {
+        "n_estimators": [
+          200,
+          500
+        ],
+        "max_depth": [
+          null,
+          10,
+          20
+        ],
+        "min_samples_leaf": [
+          1,
+          3
+        ]
+      }
+    },
+    "xgboost": {
+      "estimator": "XGBRegressor",
+      "base_params": {
+        "objective": "'reg:squarederror'",
+        "base_score": "None",
+        "booster": "None",
+        "callbacks": "None",
+        "colsample_bylevel": "None",
+        "colsample_bynode": "None",
+        "colsample_bytree": "None",
+        "device": "None",
+        "early_stopping_rounds": "None",
+        "enable_categorical": "True",
+        "eval_metric": "None",
+        "feature_types": "None",
+        "feature_weights": "None",
+        "gamma": "None",
+        "grow_policy": "None",
+        "importance_type": "None",
+        "interaction_constraints": "None",
+        "learning_rate": "0.05",
+        "max_bin": "None",
+        "max_cat_threshold": "None",
+        "max_cat_to_onehot": "None",
+        "max_delta_step": "None",
+        "max_depth": "6",
+        "max_leaves": "None",
+        "min_child_weight": "None",
+        "missing": "nan",
+        "monotone_constraints": "None",
+        "multi_strategy": "None",
+        "n_estimators": "300",
+        "n_jobs": "1",
+        "num_parallel_tree": "None",
+        "random_state": "42",
+        "reg_alpha": "None",
+        "reg_lambda": "None",
+        "sampling_method": "None",
+        "scale_pos_weight": "None",
+        "subsample": "0.8",
+        "tree_method": "'hist'",
+        "validate_parameters": "None",
+        "verbosity": "None"
+      },
+      "param_grid": {
+        "n_estimators": [
+          200,
+          500
+        ],
+        "max_depth": [
+          3,
+          6
+        ],
+        "learning_rate": [
+          0.05,
+          0.1
+        ]
+      }
+    }
+  },
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.03.6",
+    "platform": "macOS-26.5.1-arm64-arm-64bit"
+  },
+  "runtime_seconds": 176.9,
+  "n_jobs": -1
+}

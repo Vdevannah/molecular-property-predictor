@@ -1,0 +1,41 @@
+{
+  "dataset": {
+    "training_molecules": 902,
+    "testing_molecules": 226,
+    "feature_columns": [
+      "MolWt",
+      "LogP",
+      "TPSA",
+      "HBD",
+      "HBA",
+      "RotBonds"
+    ],
+    "target_column": "measured log solubility in mols per litre",
+    "split": "Phase 3 random split",
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "note": "Single-split sanity check with untuned hyperparameters; not a model comparison.",
+  "metrics": {
+    "baseline": {
+      "MAE": 1.731819270843553,
+      "RMSE": 2.1742746139518645,
+      "R2": -0.00014102710018626397
+    },
+    "random_forest": {
+      "MAE": 0.5737279134580393,
+      "RMSE": 0.8349452807229858,
+      "R2": 0.8525147865037742
+    },
+    "lasso": {
+      "MAE": 0.8365950877719195,
+      "RMSE": 1.1077416960997581,
+      "R2": 0.740397148303845
+    },
+    "xgboost": {
+      "MAE": 0.5624141144874482,
+      "RMSE": 0.8221825313142102,
+      "R2": 0.8569891648125797
+    }
+  }
+}

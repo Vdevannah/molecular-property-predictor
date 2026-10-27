@@ -1,0 +1,29 @@
+{
+  "dataset": {
+    "training_molecules": 902,
+    "testing_molecules": 226,
+    "feature_columns": [
+      "MolWt",
+      "LogP",
+      "TPSA",
+      "HBD",
+      "HBA",
+      "RotBonds"
+    ],
+    "target_column": "measured log solubility in mols per litre",
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "metrics": {
+    "baseline": {
+      "MAE": 1.731819270843553,
+      "RMSE": 2.1742746139518645,
+      "R2": -0.00014102710018626397
+    },
+    "random_forest": {
+      "MAE": 0.5737279134580393,
+      "RMSE": 0.8349452807229858,
+      "R2": 0.8525147865037742
+    }
+  }
+}

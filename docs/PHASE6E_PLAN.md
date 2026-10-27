@@ -287,4 +287,4 @@ Tables are JSON because `.gitignore` excludes CSV.
 
 ## Amendments
 
-None yet.
+**Erratum (recorded 2026-10-27, Phase 6F).** Section 10, and the descriptive text of `representation_floor.measurement_noise` in `configs/phase6e.json`, state that "6 of the 10 non-conflicting pairs have exactly identical values". The correct count is **5 of 10**: of the 11 identity-duplicate groups, 5 have identical values and 6 differ, one of them the excluded hexitol pair. The conclusion is unchanged: identity duplicates are not treated as independent replicates, and measurement noise is not estimated. The frozen configuration was deliberately left unmodified because its MD5 (`e5e48d78…`) is recorded in every Phase 6E run output; this erratum supersedes its descriptive text.

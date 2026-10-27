@@ -238,3 +238,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Phase 6F evidence bundle: byte-for-byte copies of selected results (see reports/ARTIFACT_MANIFEST.json)
+!reports/evidence/**/*.csv

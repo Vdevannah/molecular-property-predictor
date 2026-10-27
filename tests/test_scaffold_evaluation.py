@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 from pathlib import Path
 
@@ -126,10 +127,80 @@ def test_checksum_mismatch_aborts(tmp_path):
         verify_checksums({"artifact.bin": "0" * 32}, root=tmp_path)
 
 
+# Protected files that the documented setup regenerates (`python src/train_model.py`); every
+# other protected entry is a historical experiment artifact that a fresh clone does not contain.
+SETUP_ARTIFACTS = frozenset({"models/solubility_model.joblib", "models/feature_columns.joblib", "results/phase3_metrics.json"})
+
+
+def check_protected_artifacts(expected: dict, root: Path) -> None:
+    """Skip when no historical artifact exists, fail when only some exist, else verify every checksum."""
+    historical = [path for path in expected if path != "check" and path not in SETUP_ARTIFACTS]
+    present = [path for path in historical if (root / path).exists()]
+    if not present:
+        pytest.skip(
+            "Original Phase 4 and Phase 6C experiment artifacts are Git-ignored and not included in a "
+            "fresh clone; see docs/REPRODUCIBILITY.md."
+        )
+    missing = sorted(set(historical) - set(present))
+    if missing:
+        pytest.fail(f"Incomplete historical experiment artifacts; missing: {', '.join(missing)}")
+    verify_checksums(expected, root=root)
+
+
 def test_protected_files_match_committed_checksums(config):
-    if not (PROJECT_ROOT / "models" / "solubility_model.joblib").exists():
-        pytest.skip("Production artifacts not available")
-    verify_checksums(config["protected_files_md5"])
+    check_protected_artifacts(config["protected_files_md5"], PROJECT_ROOT)
+
+
+def test_setup_artifacts_are_listed_in_protected_files(config):
+    assert SETUP_ARTIFACTS <= set(config["protected_files_md5"])
+
+
+@pytest.fixture
+def protected_tree(tmp_path) -> tuple[Path, dict, dict]:
+    files = {"models/model.bin": b"model", "results/phase4.json": b"phase4", "results/phase6c/summary.csv": b"summary"}
+    expected = {path: hashlib.md5(content).hexdigest() for path, content in files.items()}
+    expected["check"] = "verified before and after every run"
+    return tmp_path, expected, files
+
+
+def _write(root: Path, files: dict, paths: list[str]) -> None:
+    for path in paths:
+        (root / path).parent.mkdir(parents=True, exist_ok=True)
+        (root / path).write_bytes(files[path])
+
+
+def test_protected_check_skips_when_no_historical_artifact_exists(protected_tree, monkeypatch):
+    root, expected, files = protected_tree
+    monkeypatch.setattr(f"{__name__}.SETUP_ARTIFACTS", frozenset({"models/model.bin"}))
+    with pytest.raises(pytest.skip.Exception, match="fresh clone"):
+        check_protected_artifacts(expected, root)
+    _write(root, files, ["models/model.bin"])  # setup artifact alone (fresh clone after setup) still skips
+    with pytest.raises(pytest.skip.Exception, match="fresh clone"):
+        check_protected_artifacts(expected, root)
+
+
+def test_protected_check_fails_when_historical_artifacts_are_partial(protected_tree, monkeypatch):
+    root, expected, files = protected_tree
+    monkeypatch.setattr(f"{__name__}.SETUP_ARTIFACTS", frozenset({"models/model.bin"}))
+    _write(root, files, ["models/model.bin", "results/phase4.json"])
+    with pytest.raises(pytest.fail.Exception, match="results/phase6c/summary.csv"):
+        check_protected_artifacts(expected, root)
+
+
+def test_protected_check_fails_on_checksum_mismatch(protected_tree, monkeypatch):
+    root, expected, files = protected_tree
+    monkeypatch.setattr(f"{__name__}.SETUP_ARTIFACTS", frozenset({"models/model.bin"}))
+    _write(root, files, list(files))
+    (root / "models/model.bin").write_bytes(b"retrained")
+    with pytest.raises(RuntimeError, match="models/model.bin"):
+        check_protected_artifacts(expected, root)
+
+
+def test_protected_check_passes_when_all_checksums_match(protected_tree, monkeypatch):
+    root, expected, files = protected_tree
+    monkeypatch.setattr(f"{__name__}.SETUP_ARTIFACTS", frozenset({"models/model.bin"}))
+    _write(root, files, list(files))
+    check_protected_artifacts(expected, root)
 
 
 def test_run_directory_is_never_overwritten(tmp_path):

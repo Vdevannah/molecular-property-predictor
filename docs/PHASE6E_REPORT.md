@@ -191,6 +191,8 @@ Mean signed error is predicted − observed. Benzene comes from its holdout; all
 
 Measurement noise was not estimated, because the identity duplicates are not independent replicates.
 
+> **Erratum (Phase 6F):** the plan and the frozen configuration text describe the identity duplicates as "6 of 10 non-conflicting pairs" with identical values; the correct count is **5 of 10**. See `docs/PHASE6E_PLAN.md`, Amendments. No result in this report depends on that count.
+
 ## 9. Interval diagnostics (exploratory; observed coverage only, no guarantee)
 
 ![Interval coverage](images/phase6e/F18_interval_coverage.png)

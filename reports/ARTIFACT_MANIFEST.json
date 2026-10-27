@@ -1,0 +1,684 @@
+{
+  "description": "Inventory of local experimental artifacts that are excluded from Git (plus the three tracked Phase 4 plots under results/). Tracked byte-for-byte copies of selected files live in reports/evidence/ and are listed under tracked_copy with identical checksums.",
+  "created_on": "2026-10-27",
+  "repository_commit_at_creation": "8d74f0ea41676370d8b461320340400520f2f4cb",
+  "dataset_source": {
+    "url": "https://raw.githubusercontent.com/deepchem/deepchem/108af2176a5f876c2df1df922baadb02d647c826/datasets/delaney-processed.csv",
+    "deepchem_commit": "108af2176a5f876c2df1df922baadb02d647c826",
+    "verification": "Downloaded on 2026-10-27; byte-identical (SHA-256 and MD5) to data/esol.csv used in all phases, and to the file on DeepChem master at that date."
+  },
+  "canonical_runs": {
+    "results/phase6d/20261027T154454Z_d02c301c": "canonical Phase 6D run; input to Phase 6E; summarized in reports/phase6d/",
+    "results/phase6d/20261027T155812Z_d02c301c": "independent reproducibility run; numerically identical to the canonical run apart from timing fields",
+    "results/phase6e/20261027T190303Z_e5e48d78": "canonical Phase 6E run; source of reports/phase6e/ and docs/images/phase6e/",
+    "results/phase6e/20261027T190450Z_e5e48d78": "independent reproducibility run; identical tables, figures and large outputs apart from run metadata"
+  },
+  "reproducibility_levels": {
+    "auditable": "Files in reports/ (including reports/evidence/) and docs/images/ are committed and can be inspected without running code.",
+    "numerically_reproducible": "Tested in a fresh clone: data, descriptors and the deployed model were byte-identical; Phases 3, 4, 6B and 6C reproduced the reported numbers (byte-identical, or differing only in the last floating-point digit or in timing fields). Phases 6D and 6E were each run twice in the original environment with identical results apart from timing fields.",
+    "exact_replay": "configs/phase6d.json and configs/phase6e.json verify MD5 checksums of their original inputs (Phase 3/4 metrics, Phase 6C outputs with timing fields and, for Phase 6E, the canonical Phase 6D run directory). Phases 6D and 6E therefore run unchanged only against these original artifacts; on a fresh clone they stop by design."
+  },
+  "verify": "python -c \"import hashlib,json; m=json.load(open('reports/ARTIFACT_MANIFEST.json')); bad=[f['path'] for f in m['files'] if __import__('pathlib').Path(f['path']).exists() and hashlib.sha256(open(f['path'],'rb').read()).hexdigest()!=f['sha256']]; print('mismatches:', bad)\"",
+  "files": [
+    {
+      "path": "data/esol.csv",
+      "bytes": 96699,
+      "sha256": "8c06a76f0c6487d29ab0f903e6a7a7139f189ab3c1178f159c8be8964602f189",
+      "md5": "0c90a51668d446b9e3ab77e67662bd1c",
+      "git": "ignored",
+      "generated_by": "curl -L <pinned DeepChem URL> -o data/esol.csv (see docs/REPRODUCIBILITY.md)",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "data/esol_descriptors.csv",
+      "bytes": 99985,
+      "sha256": "29b8aeb7c3366290970f0bd54403c9ad6b1a3d188496676a5aaf7c9aa61eeda1",
+      "md5": "1a17c75935da0ab8961410c311558925",
+      "git": "ignored",
+      "generated_by": "python src/descriptors.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "models/feature_columns.joblib",
+      "bytes": 61,
+      "sha256": "c7fc9b266509f8138f7ec54c89b50c01ac4ef38c62f96d3b28c360958c35bd0e",
+      "md5": "17cb1fd096ed63e941c96cdfaa4a697c",
+      "git": "ignored",
+      "generated_by": "python src/train_model.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "models/solubility_model.joblib",
+      "bytes": 14780977,
+      "sha256": "a560e70685e821711d3350b280c7d21c59bee23eef9dde3be0f65c276e199508",
+      "md5": "695cf080ae4b921a6b407b75a8a8f757",
+      "git": "ignored",
+      "generated_by": "python src/train_model.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/actual_vs_predicted.png",
+      "bytes": 280341,
+      "sha256": "bee57d0e799718ab8e61ee54c030a8387ea87ff9882dfc908c160cb8446cf2ea",
+      "md5": "261ee36d98d5f7a08357cf340d898a18",
+      "git": "tracked",
+      "generated_by": "python src/evaluate_model.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/feature_importance.png",
+      "bytes": 82391,
+      "sha256": "9e7a2910efb4cf5bec6df399474fd7103852d447e0fae50598708bea64024b86",
+      "md5": "948a1eb2d29818b900125e301f0b5453",
+      "git": "tracked",
+      "generated_by": "python src/evaluate_model.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase3_metrics.json",
+      "bytes": 586,
+      "sha256": "4fff7c0063f870edb5b419827a8c1a74b7347bc5606e83ba2864a963fe8b1971",
+      "md5": "c8f48e0431c60bff9b88124a1961298b",
+      "git": "ignored",
+      "generated_by": "python src/train_model.py",
+      "tracked_copy": "reports/evidence/phase3/phase3_metrics.json",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase4_metrics.json",
+      "bytes": 17025,
+      "sha256": "0846f36c39ca3f9c0b22ec68de213c0c2e9fad8f658f6a31c015a2c8f8caf41a",
+      "md5": "5bd3212ee1f7c779ad94dae0c2fe0ddd",
+      "git": "ignored",
+      "generated_by": "python src/evaluate_model.py",
+      "tracked_copy": "reports/evidence/phase4/phase4_metrics.json",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6b_holdout_metrics.json",
+      "bytes": 957,
+      "sha256": "705444675e2e349d2ee0043e9759d614ac1ab66d9e6a9a3561842d813b3cd005",
+      "md5": "c36924e07d10233bcadf02d5c9b679d5",
+      "git": "ignored",
+      "generated_by": "python src/model_experiments.py",
+      "tracked_copy": "reports/evidence/phase6b/phase6b_holdout_metrics.json",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6c/benchmark.json",
+      "bytes": 473,
+      "sha256": "6e1452f763c139e24769704977320be9792c4ed19f6b5293ca59fb58a6c4a8e6",
+      "md5": "4c4660c70f2ff4d77d26d46f8e60ecbc",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py --benchmark",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains timings"
+    },
+    {
+      "path": "results/phase6c/config.json",
+      "bytes": 5623,
+      "sha256": "0ab5ab649e1a0fc4dbf5ad823185a4533ab0e5512ab13438c7031712fddd3ac5",
+      "md5": "54edd39204ffbac6f01355b8fc5c41fe",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py",
+      "tracked_copy": "reports/evidence/phase6c/config.json",
+      "byte_reproducibility_note": "contains runtime_seconds"
+    },
+    {
+      "path": "results/phase6c/fold_assignments.csv",
+      "bytes": 270376,
+      "sha256": "f63a9e37a13a39a1b9e360c5ba164c0bf7f583cf51b97178778c196ccaa11c83",
+      "md5": "899103943c210fca835736dc3f053116",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6c/fold_metrics.csv",
+      "bytes": 25389,
+      "sha256": "9d696089aada7c3475765004bdc9d95b9583301532a2e92e2e968d1652161038",
+      "md5": "c096eef70848c51174c0136924dcac27",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py",
+      "tracked_copy": "reports/evidence/phase6c/fold_metrics.csv",
+      "byte_reproducibility_note": "contains fit_seconds (timing) column"
+    },
+    {
+      "path": "results/phase6c/paired_comparisons.csv",
+      "bytes": 8049,
+      "sha256": "0d57589fb67030d17d91aa6438fe0f88428799e343357159d3cb30ca5ce28429",
+      "md5": "35d98502c3fc3e410caf3957dcd8b065",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py",
+      "tracked_copy": "reports/evidence/phase6c/paired_comparisons.csv",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6c/summary.csv",
+      "bytes": 3063,
+      "sha256": "bd551488b9bb5cc718c1d769ccd47c88ea3df0e934763439d8a36d603916fb5c",
+      "md5": "1685deda43e1996ceddd3ce51a58d25e",
+      "git": "ignored",
+      "generated_by": "python src/cross_validation.py",
+      "tracked_copy": "reports/evidence/phase6c/summary.csv",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/bootstrap_distributions.npz",
+      "bytes": 8874594,
+      "sha256": "5a7efb3179ff3efbee900292f5e7468f483df510722b1388ac87b548b33eec21",
+      "md5": "2aab49bd965affccc6147f36e13eba6d",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/boundary_report.csv",
+      "bytes": 5581,
+      "sha256": "8e881950b7c1a2768d07a95069fd1747ad605781a1cf40d1f572967fa73ddfba",
+      "md5": "5331047eef36b761ebbc2dae5ae28daf",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/config_snapshot.json",
+      "bytes": 14070,
+      "sha256": "4f35fafc6aef248a674233b7631b3f0e6ea120b129f4da6f47748430886222cd",
+      "md5": "d02c301c5b840ecb9874417a2423c833",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/contrasts.csv",
+      "bytes": 25579,
+      "sha256": "67725c2ad61b6ea5fcb5f202eff60d3c75949bfb1a57075ab2f7d29188e7e460",
+      "md5": "666b32e736742e6380aaf3ba0cd8403a",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/family_metrics.csv",
+      "bytes": 13367,
+      "sha256": "5bf5f03018cd149a51e2563753ec6524fb37eb79a9cec28e38d203398d69e88a",
+      "md5": "405fa7d38b9387c675a59b89c2c4956e",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/fold_assignments.csv.gz",
+      "bytes": 111565,
+      "sha256": "bcf80b6592b1b13b992ee975322baa3bd166aa8905ae1cf1a0acd41c7bb2a824",
+      "md5": "733aa5caffc825078406def79dd91547",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": "reports/evidence/phase6d/20261027T154454Z_d02c301c/fold_assignments.csv.gz",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/fold_metrics.csv",
+      "bytes": 139565,
+      "sha256": "78abf974d0815020c6b8de30a80207ece5451b92d154f455e9f70a709fb82603",
+      "md5": "d0c6f6da966964ee3f25c036128d933c",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": "reports/evidence/phase6d/20261027T154454Z_d02c301c/fold_metrics.csv",
+      "byte_reproducibility_note": "contains fit_seconds (timing) column"
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/inner_cv_results.csv.gz",
+      "bytes": 418354,
+      "sha256": "6a961b34bb020bdcc29b3d1c3d1127c8882667e81c763c56a20f61562c57531c",
+      "md5": "c0244cdbf682145dbf5ce835908f7003",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/neighbour_statistics.csv",
+      "bytes": 65851,
+      "sha256": "3c9e7d58c15d2cb28190b3afea207f98a05f17bf953e2b077d0536023edc82a5",
+      "md5": "c7e8dda16e008889829cc360b8cd8918",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": "reports/evidence/phase6d/20261027T154454Z_d02c301c/neighbour_statistics.csv",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/oof_predictions.csv.gz",
+      "bytes": 1759653,
+      "sha256": "1b4678ed3a7262cdbfbfdaf34861b25b892604234cfe93f2ebd823a68d65a31f",
+      "md5": "19f2c74383b81dd95dfe1f481e9869c9",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": "reports/evidence/phase6d/20261027T154454Z_d02c301c/oof_predictions.csv.gz",
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/pip_freeze.txt",
+      "bytes": 665,
+      "sha256": "adb808be3b6d3d09ef3e1a81646256f1cb5cac3b492d695cb10c562ceb8fbdaa",
+      "md5": "ba2fc2abbef730e530e0d6b9b316f6ef",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "environment-dependent"
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/protocol_metrics.csv",
+      "bytes": 11438,
+      "sha256": "85989403a849dd4caaa2418ba93b71eba7ea25017570aef6845c2a1498aca4e9",
+      "md5": "caf1acd3c361a99787b623aed46a9506",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T154454Z_d02c301c/run_info.json",
+      "bytes": 540,
+      "sha256": "934556c7f1cde6affbae5c2e5c9b21beb6fbe9e5e62a0b06e344f6f544e21171",
+      "md5": "1c1386bc6bd247bc17fe7df4e5a3efd0",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains runtime and run identifier"
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/bootstrap_distributions.npz",
+      "bytes": 8874594,
+      "sha256": "5a7efb3179ff3efbee900292f5e7468f483df510722b1388ac87b548b33eec21",
+      "md5": "2aab49bd965affccc6147f36e13eba6d",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/boundary_report.csv",
+      "bytes": 5581,
+      "sha256": "8e881950b7c1a2768d07a95069fd1747ad605781a1cf40d1f572967fa73ddfba",
+      "md5": "5331047eef36b761ebbc2dae5ae28daf",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/config_snapshot.json",
+      "bytes": 14070,
+      "sha256": "4f35fafc6aef248a674233b7631b3f0e6ea120b129f4da6f47748430886222cd",
+      "md5": "d02c301c5b840ecb9874417a2423c833",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/contrasts.csv",
+      "bytes": 25579,
+      "sha256": "67725c2ad61b6ea5fcb5f202eff60d3c75949bfb1a57075ab2f7d29188e7e460",
+      "md5": "666b32e736742e6380aaf3ba0cd8403a",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/family_metrics.csv",
+      "bytes": 13367,
+      "sha256": "5bf5f03018cd149a51e2563753ec6524fb37eb79a9cec28e38d203398d69e88a",
+      "md5": "405fa7d38b9387c675a59b89c2c4956e",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/fold_assignments.csv.gz",
+      "bytes": 111565,
+      "sha256": "dbc380a9ee8d570c87ec01958222b2d14101df16cd6e2813d7e2ff0c5ed9529c",
+      "md5": "25d2062c5f69f44974986712af86a1fb",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/fold_metrics.csv",
+      "bytes": 139585,
+      "sha256": "c45ee8f23272a5f76d0e1f6e8d5407fe21b0df0c14a38bcee937a62287448869",
+      "md5": "e6a467742801eb843d8d168484835c47",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains fit_seconds (timing) column"
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/inner_cv_results.csv.gz",
+      "bytes": 418354,
+      "sha256": "0302e98f66951af86652cfa371866a363ec61330f0bb9efa5ec8624ccbae6e3d",
+      "md5": "5abadedde55785d01e65e0efa3216ef7",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/neighbour_statistics.csv",
+      "bytes": 65851,
+      "sha256": "3c9e7d58c15d2cb28190b3afea207f98a05f17bf953e2b077d0536023edc82a5",
+      "md5": "c7e8dda16e008889829cc360b8cd8918",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/oof_predictions.csv.gz",
+      "bytes": 1759653,
+      "sha256": "6924d208d431c397822cda6b2babb20b3c226013e542760e12d8e70cde1f5d37",
+      "md5": "b46cb1f8b9848032944b1551a6fd5dbb",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/pip_freeze.txt",
+      "bytes": 665,
+      "sha256": "adb808be3b6d3d09ef3e1a81646256f1cb5cac3b492d695cb10c562ceb8fbdaa",
+      "md5": "ba2fc2abbef730e530e0d6b9b316f6ef",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "environment-dependent"
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/protocol_metrics.csv",
+      "bytes": 11438,
+      "sha256": "85989403a849dd4caaa2418ba93b71eba7ea25017570aef6845c2a1498aca4e9",
+      "md5": "caf1acd3c361a99787b623aed46a9506",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6d/20261027T155812Z_d02c301c/run_info.json",
+      "bytes": 540,
+      "sha256": "282e08f531cfb35c87cd313ccc58744c741d22ab225a662b8fb7713ef44cd74e",
+      "md5": "24e1435506d19a9666d353b0d2c112cb",
+      "git": "ignored",
+      "generated_by": "python src/scaffold_evaluation.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains runtime and run identifier"
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/config_snapshot.json",
+      "bytes": 33577,
+      "sha256": "251c37d96c55fa22e706a79a376ee923de02773cf4e47b598c95e7311af7623d",
+      "md5": "e5e48d78ee4b7c9d4bca2830edbf24e6",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/importance_benzene_holdout_random_forest_reference.npz",
+      "bytes": 502009,
+      "sha256": "dc0616a43f283d3b6841e031e977a068555a7e9bac45d871cdd9f850b8d93b66",
+      "md5": "f2e595b726cfac510dac9ead7350fc35",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/importance_benzene_holdout_xgboost.npz",
+      "bytes": 484043,
+      "sha256": "15b2c0edbe021bd72696203a07b601c490934978b3a00609af21e43ed3a23fcd",
+      "md5": "284876738cf184499b97fe708fbde29a",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/importance_nonbenzene_scaffold_cv_random_forest_reference.npz",
+      "bytes": 12434621,
+      "sha256": "77ddb6bac6813226e7b1c69ead394186394f0f03e0dc950bde89b65797d6e12a",
+      "md5": "81c4cfd5a335a49edf66da5c30c2dc77",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/importance_nonbenzene_scaffold_cv_xgboost.npz",
+      "bytes": 12447414,
+      "sha256": "3bcb4a9494d8c60eba5b1b8ffbbf04c415139ba1d8f36509c466804524b9c8d9",
+      "md5": "bec22f06ad67c996534525d8b75d9306",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/interval_coverage.csv",
+      "bytes": 22504,
+      "sha256": "a9f52ae971843c636c7a6c51c77174d1ed48251dfbad271fd6322b80e57256b9",
+      "md5": "5ce9c97775c8bb2eb001a596eb74053f",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/neighbour_records.csv.gz",
+      "bytes": 76365,
+      "sha256": "e4f15f0924970df3d13095a8733e9ebf59b5c5a87d8f09a23a1fa0b34d1d1d47",
+      "md5": "5323dae89061e3830eeac0db2a940e19",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/pip_freeze.txt",
+      "bytes": 665,
+      "sha256": "adb808be3b6d3d09ef3e1a81646256f1cb5cac3b492d695cb10c562ceb8fbdaa",
+      "md5": "ba2fc2abbef730e530e0d6b9b316f6ef",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "environment-dependent"
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/refit_predictions_and_tree_spread.csv.gz",
+      "bytes": 107274,
+      "sha256": "dea8975495ea82c24ea84745ddbdb95d1f85e0313ad4bd7493f12075576c7f84",
+      "md5": "5cf00d5261727cee6459492425f4434d",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/run_info.json",
+      "bytes": 1712,
+      "sha256": "e216826fe62110b9a553f681293e3b6c8671452f481e8193e01734a20a4272c5",
+      "md5": "73529c7671abb4d7bfe59507eae0fc41",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains runtime and run identifier"
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/treeshap_benzene_holdout.npz",
+      "bytes": 6276,
+      "sha256": "80629f7d3be9b30bc7874b6262aa9009c81d7ad4f1580a70d002234a1cbc8244",
+      "md5": "4cc6bceb645f0d6fccac153cac4203da",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190303Z_e5e48d78/treeshap_nonbenzene_scaffold_cv.npz",
+      "bytes": 31181,
+      "sha256": "08c4b7a1c3b4a605baf4bfad3013583e639bb04c7211cb6071980907cd0991a0",
+      "md5": "8c6fbe8f2e1914c2081cff643d1678cd",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/config_snapshot.json",
+      "bytes": 33577,
+      "sha256": "251c37d96c55fa22e706a79a376ee923de02773cf4e47b598c95e7311af7623d",
+      "md5": "e5e48d78ee4b7c9d4bca2830edbf24e6",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/importance_benzene_holdout_random_forest_reference.npz",
+      "bytes": 502009,
+      "sha256": "dc0616a43f283d3b6841e031e977a068555a7e9bac45d871cdd9f850b8d93b66",
+      "md5": "f2e595b726cfac510dac9ead7350fc35",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/importance_benzene_holdout_xgboost.npz",
+      "bytes": 484043,
+      "sha256": "15b2c0edbe021bd72696203a07b601c490934978b3a00609af21e43ed3a23fcd",
+      "md5": "284876738cf184499b97fe708fbde29a",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/importance_nonbenzene_scaffold_cv_random_forest_reference.npz",
+      "bytes": 12434621,
+      "sha256": "77ddb6bac6813226e7b1c69ead394186394f0f03e0dc950bde89b65797d6e12a",
+      "md5": "81c4cfd5a335a49edf66da5c30c2dc77",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/importance_nonbenzene_scaffold_cv_xgboost.npz",
+      "bytes": 12447414,
+      "sha256": "3bcb4a9494d8c60eba5b1b8ffbbf04c415139ba1d8f36509c466804524b9c8d9",
+      "md5": "bec22f06ad67c996534525d8b75d9306",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/interval_coverage.csv",
+      "bytes": 22504,
+      "sha256": "a9f52ae971843c636c7a6c51c77174d1ed48251dfbad271fd6322b80e57256b9",
+      "md5": "5ce9c97775c8bb2eb001a596eb74053f",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/neighbour_records.csv.gz",
+      "bytes": 76365,
+      "sha256": "527f0f5c732c5c1086099d747332cbd7ff82db3054459bd67cceb00e2948dcca",
+      "md5": "de03a54750a757744d47636b263aaf0e",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/pip_freeze.txt",
+      "bytes": 665,
+      "sha256": "adb808be3b6d3d09ef3e1a81646256f1cb5cac3b492d695cb10c562ceb8fbdaa",
+      "md5": "ba2fc2abbef730e530e0d6b9b316f6ef",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "environment-dependent"
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/refit_predictions_and_tree_spread.csv.gz",
+      "bytes": 107274,
+      "sha256": "25a04195bba6baa5164267d0834e870d6dd8f4507763708e207a2a2d52a23075",
+      "md5": "a7dec529bf5eca38663d3b24c8c9556c",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/run_info.json",
+      "bytes": 1712,
+      "sha256": "7e56d51075cd63808f318e54fb55acf53695e1389d73f7b7a3d9671e0e72be52",
+      "md5": "6830e264bd5bd283f757ec56d9d78b9a",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": "contains runtime and run identifier"
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/treeshap_benzene_holdout.npz",
+      "bytes": 6276,
+      "sha256": "80629f7d3be9b30bc7874b6262aa9009c81d7ad4f1580a70d002234a1cbc8244",
+      "md5": "4cc6bceb645f0d6fccac153cac4203da",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/phase6e/20261027T190450Z_e5e48d78/treeshap_nonbenzene_scaffold_cv.npz",
+      "bytes": 31181,
+      "sha256": "08c4b7a1c3b4a605baf4bfad3013583e639bb04c7211cb6071980907cd0991a0",
+      "md5": "8c6fbe8f2e1914c2081cff643d1678cd",
+      "git": "ignored",
+      "generated_by": "python src/model_diagnostics.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    },
+    {
+      "path": "results/residual_plot.png",
+      "bytes": 215448,
+      "sha256": "b8c1da1ef7a00688ee7267c7a4207c80edf8e76e6d5ad0d4bbfded2ef4b532b7",
+      "md5": "44e4601f7140371054e3ac958d2f6946",
+      "git": "tracked",
+      "generated_by": "python src/evaluate_model.py",
+      "tracked_copy": null,
+      "byte_reproducibility_note": null
+    }
+  ]
+}
