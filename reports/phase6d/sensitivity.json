@@ -1,0 +1,142 @@
+{
+  "rows": [
+    {
+      "variant": "S0",
+      "protocol": "nonbenzene_scaffold_cv",
+      "rows": 1128,
+      "rmse_by_model": {
+        "baseline": 2.258234,
+        "lasso": 1.057145,
+        "linear_regression_reference": 1.056748,
+        "random_forest_reference": 0.837097,
+        "random_forest_tuned": 0.83205,
+        "xgboost": 0.828189
+      },
+      "primary_delta": 0.008907915668100563,
+      "ci_lower": -0.015555606719547081,
+      "ci_upper": 0.034751813123339415,
+      "decision_label": "practically equivalent at delta",
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.008907915668100563,
+        "ci_lower": -0.015555606719547081,
+        "ci_upper": 0.034751813123339415
+      }
+    },
+    {
+      "variant": "S0",
+      "protocol": "benzene_holdout",
+      "rows": 1128,
+      "rmse_by_model": {
+        "baseline": 1.470527,
+        "lasso": 0.886533,
+        "linear_regression_reference": 0.892251,
+        "random_forest_reference": 0.782713,
+        "random_forest_tuned": 0.784682,
+        "xgboost": 0.744795
+      },
+      "primary_delta": 0.0379184467985082,
+      "ci_lower": -0.007933775257024005,
+      "ci_upper": 0.08723278937260955,
+      "decision_label": null,
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.0379184467985082,
+        "ci_lower": -0.007933775257024005,
+        "ci_upper": 0.08723278937260955
+      }
+    },
+    {
+      "variant": "S1",
+      "protocol": "nonbenzene_scaffold_cv",
+      "rows": 1126,
+      "rmse_by_model": {
+        "baseline": 2.257374,
+        "lasso": 1.066062,
+        "linear_regression_reference": 1.06535,
+        "random_forest_reference": 0.839415,
+        "random_forest_tuned": 0.834653,
+        "xgboost": 0.846951
+      },
+      "primary_delta": -0.007535583211224162,
+      "ci_lower": -0.033574931987370354,
+      "ci_upper": 0.017926187304942977,
+      "decision_label": "practically equivalent at delta",
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.009181582517027831,
+        "ci_lower": -0.01567617558601652,
+        "ci_upper": 0.03541975787595223
+      }
+    },
+    {
+      "variant": "S1",
+      "protocol": "benzene_holdout",
+      "rows": 1126,
+      "rmse_by_model": {
+        "baseline": 1.472003,
+        "lasso": 0.888368,
+        "linear_regression_reference": 0.890303,
+        "random_forest_reference": 0.776581,
+        "random_forest_tuned": 0.79206,
+        "xgboost": 0.757601
+      },
+      "primary_delta": 0.018979887905806403,
+      "ci_lower": -0.025769164459144237,
+      "ci_upper": 0.06873896190479284,
+      "decision_label": null,
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.0379184467985082,
+        "ci_lower": -0.007933775257024005,
+        "ci_upper": 0.08723278937260955
+      }
+    },
+    {
+      "variant": "S2",
+      "protocol": "nonbenzene_scaffold_cv",
+      "rows": 1116,
+      "rmse_by_model": {
+        "baseline": 2.257899,
+        "lasso": 1.058974,
+        "linear_regression_reference": 1.059012,
+        "random_forest_reference": 0.838943,
+        "random_forest_tuned": 0.833888,
+        "xgboost": 0.847172
+      },
+      "primary_delta": -0.008228830947059618,
+      "ci_lower": -0.04588971386913534,
+      "ci_upper": 0.028871492056973078,
+      "decision_label": "practically equivalent at delta",
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.009181582517027831,
+        "ci_lower": -0.01567617558601652,
+        "ci_upper": 0.03541975787595223
+      }
+    },
+    {
+      "variant": "S2",
+      "protocol": "benzene_holdout",
+      "rows": 1116,
+      "rmse_by_model": {
+        "baseline": 1.47228,
+        "lasso": 0.89303,
+        "linear_regression_reference": 0.895088,
+        "random_forest_reference": 0.772489,
+        "random_forest_tuned": 0.783243,
+        "xgboost": 0.73582
+      },
+      "primary_delta": 0.03666887785568451,
+      "ci_lower": -0.009042924947770956,
+      "ci_upper": 0.08764481515129217,
+      "decision_label": null,
+      "s0_rescored_on_variant_molecules": {
+        "delta": 0.0379184467985082,
+        "ci_lower": -0.007933775257024005,
+        "ci_upper": 0.08723278937260955
+      }
+    }
+  ],
+  "robustness_criterion_met": true,
+  "labels": {
+    "S0": "practically equivalent at delta",
+    "S1": "practically equivalent at delta",
+    "S2": "practically equivalent at delta"
+  }
+}

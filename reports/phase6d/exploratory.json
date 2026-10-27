@@ -1,0 +1,39 @@
+{
+  "error_floor": {
+    "rows_sharing_descriptor_vector": 304,
+    "groups_sharing_descriptor_vector": 115,
+    "floor_rmse": 0.14399468090673567
+  },
+  "descriptor_distance_spearman_with_abs_error": {
+    "baseline": 0.013088997469903883,
+    "lasso": -0.07765246830926141,
+    "linear_regression_reference": -0.07842883337035556,
+    "random_forest_reference": 0.3383097362099781,
+    "random_forest_tuned": 0.3241286329771299,
+    "xgboost": 0.2919591751402482
+  },
+  "similarity_acyclic_vs_cyclic": [
+    {
+      "acyclic": false,
+      "count": 811.0,
+      "mean": 0.45275634546047794,
+      "std": 0.15454719162837335,
+      "min": 0.15492957746478872,
+      "10%": 0.2702702702702703,
+      "50%": 0.4431372549019608,
+      "90%": 0.6399999999999999,
+      "max": 1.0
+    },
+    {
+      "acyclic": true,
+      "count": 317.0,
+      "mean": 0.5880941608032518,
+      "std": 0.2246632354227764,
+      "min": 0.049523809523809526,
+      "10%": 0.33166666666666667,
+      "50%": 0.5384615384615384,
+      "90%": 1.0,
+      "max": 1.0
+    }
+  ]
+}

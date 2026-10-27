@@ -1,0 +1,38 @@
+{
+  "n_jobs": -1,
+  "measured_seconds": {
+    "murcko_S0": {
+      "cv_fold_seconds": 9.309483542107046,
+      "holdout_seconds": 6.065707083093002,
+      "seed_refit_seconds_per_fold_per_seed": 0.34108241694048047,
+      "elapsed": 15.736489209113643
+    },
+    "generic_S0": {
+      "cv_fold_seconds": 6.488307582912967,
+      "holdout_seconds": 5.934198916889727,
+      "seed_refit_seconds_per_fold_per_seed": 0.6036827908828855,
+      "elapsed": 13.043863166123629
+    }
+  },
+  "estimated_seconds": {
+    "per_murcko_scenario": 238.80279563576914,
+    "generic_scenario": 168.1418884897139,
+    "model_seed_check": 26.604428521357477,
+    "total_model_fitting": 911.1547039183788
+  },
+  "estimated_total_minutes": 15.18591173197298,
+  "approval_threshold_minutes": 60,
+  "within_threshold": true,
+  "config_md5": "d02c301c5b840ecb9874417a2423c833",
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.03.6",
+    "platform": "macOS-26.5.1-arm64-arm-64bit"
+  },
+  "run_at_utc": "2026-10-27T15:44:44.227148+00:00"
+}
