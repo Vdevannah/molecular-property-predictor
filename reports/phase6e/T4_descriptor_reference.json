@@ -1,0 +1,96 @@
+{
+  "note": "general expectations are background physical chemistry, stated as context, not as findings of this analysis",
+  "not_represented": [
+    "crystal-lattice energy / melting point",
+    "ionization and pH",
+    "stereochemistry and molecular symmetry",
+    "substitution pattern (positional isomers collide)"
+  ],
+  "descriptors": {
+    "MolWt": {
+      "rdkit": "Descriptors.MolWt (average molecular weight)",
+      "general_expectation": "larger molecules tend to be less soluble",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": -0.9532467532467532,
+        "xgboost": -0.835064935064935,
+        "lasso": -1.0
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 2,
+        "xgboost": 2
+      },
+      "lasso_median_standardized_coefficient_cv": -0.48062593391006436
+    },
+    "LogP": {
+      "rdkit": "Descriptors.MolLogP: Crippen (calculated atom-contribution octanol-water partition coefficient; not measured)",
+      "general_expectation": "higher lipophilicity tends to lower aqueous solubility",
+      "known_limitation": "calculation error varies by chemotype",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": -1.0,
+        "xgboost": -1.0,
+        "lasso": -1.0
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 1,
+        "xgboost": 1
+      },
+      "lasso_median_standardized_coefficient_cv": -1.6604575168594626
+    },
+    "TPSA": {
+      "rdkit": "Descriptors.TPSA (topological polar surface area)",
+      "general_expectation": "more polar surface tends to raise solubility, other things equal",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": -0.8785714285714284,
+        "xgboost": -0.8464285714285712,
+        "lasso": -1.0
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 3,
+        "xgboost": 3
+      },
+      "lasso_median_standardized_coefficient_cv": -0.48349882132279753
+    },
+    "HBD": {
+      "rdkit": "Descriptors.NumHDonors (RDKit H-bond donor count)",
+      "general_expectation": "H-bond donors can raise water interaction but also crystal lattice strength",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": 0.9999999999999999,
+        "xgboost": 0.9757575757575757,
+        "lasso": -0.9999999999999999
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 6,
+        "xgboost": 6
+      },
+      "lasso_median_standardized_coefficient_cv": -0.10276538982412148
+    },
+    "HBA": {
+      "rdkit": "Descriptors.NumHAcceptors (RDKit H-bond acceptor count)",
+      "general_expectation": "H-bond acceptors tend to raise water interaction",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": -0.43119952806910306,
+        "xgboost": 0.6774953874381728,
+        "lasso": 1.0
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 5,
+        "xgboost": 4
+      },
+      "lasso_median_standardized_coefficient_cv": 0.34897544103109046
+    },
+    "RotBonds": {
+      "rdkit": "Descriptors.NumRotatableBonds",
+      "general_expectation": "flexibility is associated with weaker crystal packing in some series",
+      "observed_ale_direction_spearman_cv": {
+        "random_forest_reference": 0.8684210526315789,
+        "xgboost": 0.46491228070175433,
+        "lasso": 1.0
+      },
+      "permutation_rank_cv": {
+        "random_forest_reference": 4,
+        "xgboost": 5
+      },
+      "lasso_median_standardized_coefficient_cv": 0.02623587483682685
+    }
+  }
+}

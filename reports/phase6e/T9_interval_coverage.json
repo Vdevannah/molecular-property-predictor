@@ -1,0 +1,2065 @@
+{
+  "label": "Exploratory empirical diagnostics. Observed coverage is reported; no coverage guarantee is claimed. A formally justified conformal procedure is not implemented.",
+  "assumptions": "exchangeability of scaffold groups (not established); dependence among molecules within scaffolds; residuals from different fold models",
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "nonbenzene_scaffold_cv_spearman_tree_sd_vs_abs_error": 0.3910332302590774,
+  "benzene_holdout_spearman_tree_sd_vs_abs_error": 0.1301714353108813,
+  "coverage": [
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.748512585812357
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 0.9800000000000001,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.788235294117647,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 0.9714285714285713,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.7867507886435331,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.7128205128205128,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 0.7999999999999999,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 0.9090909090909091,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.18571428571428572,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.5,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.7360824742268042,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.709433962264151,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.7542857142857143
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.7622857142857141
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.7724137931034483
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.7691428571428572
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.6845714285714286
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.834096109839817
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.8823529411764706,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 0.9904761904761905,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.8656151419558359,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.8358974358974357,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 0.9166666666666666,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 0.9545454545454546,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.2571428571428572,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.65,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.8195876288659794,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.8075471698113207,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.824
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.838857142857143
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.8712643678160921
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.8468571428571428
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.7897142857142857
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.888329519450801
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.9176470588235294,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9085173501577287,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.9025641025641027,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 0.9666666666666667,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 0.9727272727272727,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.3,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.8374999999999999,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.8762886597938144,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.8773584905660378,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.864
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.9005714285714286
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.9114942528735633
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.9085714285714286
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.8571428571428571
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.7974828375286042
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.8705882352941177,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9141955835962143,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.5692307692307691,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 0.9,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 0.9818181818181819,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.17142857142857143,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.2,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.7463917525773196,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.7377358490566037,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.9257142857142857
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.8777142857142857
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.8183908045977012
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.7714285714285715
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.5942857142857142
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.8935926773455377
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.9882352941176471,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9564668769716088,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.7743589743589744,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.35714285714285715,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.3375,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.8783505154639174,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.8726415094339622,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.974857142857143
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.9508571428571428
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.9172413793103448
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.8937142857142858
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.7314285714285714
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.9498855835240275
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9684542586750788,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.9076923076923077,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.9,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.6125,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.9402061855670102,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.9481132075471698,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.9908571428571429
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.9942857142857143
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.9620689655172414
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.9451428571428571
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.8571428571428571
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.7990846681922197
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 0.9800000000000001,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.8352941176470587,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 0.9619047619047618,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9009463722397477,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.7128205128205127,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 0.9,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.21428571428571427,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.2625,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.7463917525773196,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.7358490566037735,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.9257142857142857
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.8708571428571429
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.8103448275862069
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.7611428571428571
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.6274285714285714
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.8949656750572083
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 0.9647058823529411,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 0.9904761904761905,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9507886435331231,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.9025641025641025,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.2857142857142857,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.375,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.8680412371134021,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.8773584905660378,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.9679999999999999
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.9508571428571428
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.9103448275862067
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.8891428571428572
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.7565714285714285
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "overall",
+      "n": 874,
+      "observed_coverage": 0.9471395881006864
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:C1CCCCC1",
+      "n": 10,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:O=C1C=C2CCC3C4CCCC4CCC3C2CC1",
+      "n": 17,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:O=C1CC(=O)NC(=O)N1",
+      "n": 21,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:acyclic",
+      "n": 317,
+      "observed_coverage": 0.9690851735015773,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ccc(-c2ccccc2)cc1",
+      "n": 39,
+      "observed_coverage": 0.9487179487179487,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ccc(Cc2ccccc2)cc1",
+      "n": 12,
+      "observed_coverage": 1.0,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ccc2ccccc2c1",
+      "n": 22,
+      "observed_coverage": 1.0,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ccncc1",
+      "n": 14,
+      "observed_coverage": 0.8571428571428571,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ncncn1",
+      "n": 16,
+      "observed_coverage": 0.55,
+      "descriptive_only": true
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:cyclic_singletons",
+      "n": 194,
+      "observed_coverage": 0.924742268041237,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:cyclic_small_groups",
+      "n": 212,
+      "observed_coverage": 0.9500000000000001,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 175,
+      "observed_coverage": 0.9874285714285715
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 175,
+      "observed_coverage": 0.9977142857142857
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 174,
+      "observed_coverage": 0.9494252873563218
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 175,
+      "observed_coverage": 0.9428571428571428
+    },
+    {
+      "protocol": "nonbenzene_scaffold_cv",
+      "method": "cross_fold_residual",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 175,
+      "observed_coverage": 0.8582857142857142
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.7480314960629921
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.7480314960629921,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.7647058823529411
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.7254901960784313
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.68
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.8076923076923077
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.76
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.8503937007874016
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.8503937007874016,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.803921568627451
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.8627450980392157
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.82
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.9038461538461539
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.86
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.905511811023622
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.905511811023622,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.9019607843137255
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.9215686274509803
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.88
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.9038461538461539
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "tree_spread",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.92
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.7637795275590551
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.7637795275590551,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.8627450980392157
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.803921568627451
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.78
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.7884615384615384
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.58
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.8976377952755905
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.8976377952755905,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.9215686274509803
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.9411764705882353
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.94
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.9038461538461539
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.78
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.9724409448818898
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.9724409448818898,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.9411764705882353
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 1.0
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 1.0
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.9807692307692307
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "random_forest_reference",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.94
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.7598425196850394
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.7598425196850394,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 0.8431372549019608
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.7254901960784313
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.76
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.7884615384615384
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.8,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.68
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.9173228346456693
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.9173228346456693,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 1.0
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.8431372549019608
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.94
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 0.9423076923076923
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.9,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.86
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "overall",
+      "n": 254,
+      "observed_coverage": 0.9803149606299213
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "family:c1ccccc1",
+      "n": 254,
+      "observed_coverage": 0.9803149606299213,
+      "descriptive_only": false
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:1",
+      "n": 51,
+      "observed_coverage": 1.0
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:2",
+      "n": 51,
+      "observed_coverage": 0.9607843137254902
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:3",
+      "n": 50,
+      "observed_coverage": 0.96
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:4",
+      "n": 52,
+      "observed_coverage": 1.0
+    },
+    {
+      "protocol": "benzene_holdout",
+      "method": "shift_check_cross_fold",
+      "model": "xgboost",
+      "level": 0.95,
+      "group": "distance_quintile:5",
+      "n": 50,
+      "observed_coverage": 0.98
+    }
+  ]
+}

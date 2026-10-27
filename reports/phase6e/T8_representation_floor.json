@@ -1,0 +1,406 @@
+{
+  "definition": "For rows grouped by identical six-descriptor vectors (rounded to 6 decimals), floor RMSE = sqrt(sum of within-group squared deviations from the group mean target / 1128). It is the lowest RMSE any function of these six descriptors could reach on this dataset.",
+  "scope_statement": "A dataset-specific limitation of the six-descriptor representation of ESOL. It is not a universal irreducible error of aqueous solubility and not an estimate of measurement noise.",
+  "rows_sharing_descriptor_vector": 304,
+  "groups_sharing_descriptor_vector": 115,
+  "floor_rmse": 0.14399468090673567,
+  "measurement_noise": "not estimated: identity duplicates are not treated as independent replicates (6 of 10 non-conflicting pairs have identical values, suggesting repeated entries)",
+  "group_target_sd": [
+    0.9642169534567068,
+    0.9616652224137042,
+    0.8011519830843585,
+    0.7778174593052021,
+    0.7707463914933367,
+    0.7566042558696059,
+    0.728319984622144,
+    0.7107742257566744,
+    0.7046512139586033,
+    0.6788225099390857,
+    0.6765599258996449,
+    0.6723615099037122,
+    0.6293250352560277,
+    0.6293250352560273,
+    0.5701169470672954,
+    0.5550675634551164,
+    0.5518517312950404,
+    0.5504240789306613,
+    0.5367345047334192,
+    0.5197114584074514,
+    0.5173329037798904,
+    0.4454585652261427,
+    0.4354537862965483,
+    0.398371685740842,
+    0.3672002178648591,
+    0.3323401871576775,
+    0.3181980515339465,
+    0.3181718613160715,
+    0.31490030168292943,
+    0.31112698372208086,
+    0.3087555667514352,
+    0.30615900008546765,
+    0.30405591591021525,
+    0.29289759302527574,
+    0.2800595174839331,
+    0.24846193538112293,
+    0.24515301344262536,
+    0.24041630560342606,
+    0.24041630560342606,
+    0.23334523779156066,
+    0.22839549032325449,
+    0.22367386973001563,
+    0.21639085008382403,
+    0.21617122842783681,
+    0.21571586249817915,
+    0.21213203435596428,
+    0.20784609690826533,
+    0.20550750189064476,
+    0.19798989873223316,
+    0.19425069712444612,
+    0.18610033136277151,
+    0.18475208614068014,
+    0.14849242404917465,
+    0.14502873278538053,
+    0.14364307617610167,
+    0.13784532394438814,
+    0.13000000000000006,
+    0.1272792206135787,
+    0.12553220038433713,
+    0.12020815280171303,
+    0.115325625946708,
+    0.10969655114602886,
+    0.10606601717798207,
+    0.10606601717798207,
+    0.10606601717798175,
+    0.10572093769290296,
+    0.100166528008778,
+    0.09899494936611673,
+    0.09609023536933047,
+    0.09192388155425119,
+    0.08485281374238578,
+    0.08485281374238562,
+    0.08185352771872455,
+    0.07778174593052013,
+    0.07778174593052013,
+    0.07505553499465142,
+    0.07071067811865513,
+    0.07071067811865482,
+    0.07071067811865482,
+    0.07071067811865482,
+    0.07071067811865477,
+    0.0636396103067893,
+    0.06363961030678926,
+    0.06363961030678918,
+    0.05656854249492385,
+    0.05656854249492385,
+    0.05507570547286102,
+    0.04949747468305829,
+    0.049497474683058214,
+    0.043840620433565826,
+    0.04242640687119289,
+    0.042426406871192576,
+    0.03535533905932737,
+    0.03464101615137756,
+    0.0288675134594817,
+    0.028284271247461926,
+    0.028284271247461926,
+    0.025166114784235735,
+    0.0212132034355966,
+    0.021213203435596444,
+    0.021213203435596368,
+    0.021213203435596288,
+    0.014142135623731277,
+    0.014142135623730649,
+    0.007071067811865638,
+    0.007071067811865638,
+    0.007071067811865324,
+    0.007071067811865324,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "top_groups": [
+    {
+      "n": 3,
+      "target_sd": 0.9642169534567068,
+      "target_range": 1.8739999999999997,
+      "compounds": [
+        "Chrysene",
+        "Napthacene",
+        "Triphenylene"
+      ],
+      "smiles": [
+        "c1ccc2c(c1)ccc3c4ccccc4ccc23",
+        "c1ccc2cc3cc4ccccc4cc3cc2c1",
+        "c1ccc2c(c1)c3ccccc3c4ccccc24"
+      ],
+      "targets": [
+        -8.057,
+        -8.6,
+        -6.726
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.9616652224137042,
+      "target_range": 1.3599999999999994,
+      "compounds": [
+        "Benzo(b)fluorene",
+        "Benzo(a)fluorene"
+      ],
+      "smiles": [
+        "C1c2ccccc2c3cc4ccccc4cc13",
+        "C1c2ccccc2c3ccc4ccccc4c13"
+      ],
+      "targets": [
+        -8.04,
+        -6.68
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.8011519830843585,
+      "target_range": 1.1330000000000002,
+      "compounds": [
+        "Theophylline",
+        "theobromine"
+      ],
+      "smiles": [
+        "Cn1c(=O)n(C)c2nc[nH]c2c1=O",
+        "Cn1cnc2n(C)c(=O)[nH]c(=O)c12"
+      ],
+      "targets": [
+        -1.39,
+        -2.523
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.7778174593052021,
+      "target_range": 1.0999999999999996,
+      "compounds": [
+        "1,2,4-tribromobenzene",
+        "1,3,5-Tribromobenzene"
+      ],
+      "smiles": [
+        "c1(Br)c(Br)cc(Br)cc1",
+        "Brc1cc(Br)cc(Br)c1"
+      ],
+      "targets": [
+        -4.5,
+        -5.6
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.7707463914933367,
+      "target_range": 1.0899999999999999,
+      "compounds": [
+        "Phenanthrene",
+        "Anthracene"
+      ],
+      "smiles": [
+        "c1ccc2c(c1)ccc3ccccc32",
+        "c1ccc2cc3ccccc3cc2c1"
+      ],
+      "targets": [
+        -5.26,
+        -6.35
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.7566042558696059,
+      "target_range": 1.07,
+      "compounds": [
+        "Ethyl hexanoate",
+        "Ethyl butyrate"
+      ],
+      "smiles": [
+        "CCCCCC(=O)OCC",
+        "CCCCCOC(=O)CC"
+      ],
+      "targets": [
+        -2.35,
+        -1.28
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.728319984622144,
+      "target_range": 1.03,
+      "compounds": [
+        "mannitol",
+        "Sorbitol"
+      ],
+      "smiles": [
+        "OCC(O)C(O)C(O)C(O)CO",
+        "OCC(O)C(O)C(O)C(O)CO"
+      ],
+      "targets": [
+        0.06,
+        1.09
+      ]
+    },
+    {
+      "n": 3,
+      "target_sd": 0.7107742257566744,
+      "target_range": 1.2599999999999998,
+      "compounds": [
+        "Propyl acetate",
+        "Propyl butyrate",
+        "Ethyl propionate"
+      ],
+      "smiles": [
+        "CCCOC(=O)C",
+        "CCCC(=O)OC",
+        "CCOC(=O)CC"
+      ],
+      "targets": [
+        -0.72,
+        -1.92,
+        -0.66
+      ]
+    },
+    {
+      "n": 3,
+      "target_sd": 0.7046512139586033,
+      "target_range": 1.3599999999999999,
+      "compounds": [
+        "m-Methylaniline",
+        "p-Methylaniline ",
+        "o-Toluidine"
+      ],
+      "smiles": [
+        "Cc1cccc(N)c1",
+        "Cc1ccc(N)cc1",
+        "Cc1ccccc1N"
+      ],
+      "targets": [
+        -0.85,
+        -1.21,
+        -2.21
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.6788225099390857,
+      "target_range": 0.96,
+      "compounds": [
+        "2-Bromotoluene",
+        "4-Bromotoluene"
+      ],
+      "smiles": [
+        "Cc1ccccc1Br",
+        "Cc1ccc(Br)cc1"
+      ],
+      "targets": [
+        -2.23,
+        -3.19
+      ]
+    },
+    {
+      "n": 3,
+      "target_sd": 0.6765599258996449,
+      "target_range": 1.2799999999999994,
+      "compounds": [
+        "2,2',3,4,4',5',6-PCB",
+        "2,2',3,4,5,5',6-PCB",
+        "2,3,3',4,4'6-PCB"
+      ],
+      "smiles": [
+        "Clc1ccc(c(Cl)c1)c2c(Cl)c(Cl)c(Cl)c(Cl)c2Cl",
+        "Clc1ccc(Cl)c(c1)c2c(Cl)c(Cl)c(Cl)c(Cl)c2Cl",
+        "Clc1ccc(c(Cl)c1Cl)c2c(Cl)cc(Cl)c(Cl)c2Cl"
+      ],
+      "targets": [
+        -7.92,
+        -8.94,
+        -7.66
+      ]
+    },
+    {
+      "n": 5,
+      "target_sd": 0.6723615099037122,
+      "target_range": 1.3499999999999996,
+      "compounds": [
+        "2,2'-PCB",
+        "2,4'-PCB",
+        "4,4'-PCB",
+        "3,4-PCB",
+        "2,6-PCB"
+      ],
+      "smiles": [
+        "Clc1ccccc1c2ccccc2Cl",
+        "Clc1ccc(cc1)c2ccccc2Cl",
+        "Clc1ccc(cc1)c2ccc(Cl)cc2",
+        "Clc1ccc(cc1Cl)c2ccccc2",
+        "Clc1cccc(Cl)c1c2ccccc2"
+      ],
+      "targets": [
+        -5.27,
+        -5.28,
+        -6.56,
+        -6.39,
+        -5.21
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.6293250352560277,
+      "target_range": 0.8900000000000006,
+      "compounds": [
+        "Ethyl nonanoate",
+        "Methyl decanoate"
+      ],
+      "smiles": [
+        "CCCCCCCCC(=O)OCC",
+        "CCCCCCCCCC(=O)OC"
+      ],
+      "targets": [
+        -3.8,
+        -4.69
+      ]
+    },
+    {
+      "n": 2,
+      "target_sd": 0.6293250352560273,
+      "target_range": 0.8900000000000001,
+      "compounds": [
+        "Acridine",
+        "phenanthridine"
+      ],
+      "smiles": [
+        "c3ccc2nc1ccccc1cc2c3",
+        "c1ccc2c(c1)cnc3ccccc23"
+      ],
+      "targets": [
+        -3.67,
+        -2.78
+      ]
+    },
+    {
+      "n": 3,
+      "target_sd": 0.5701169470672954,
+      "target_range": 1.1,
+      "compounds": [
+        "1,4-Dinitrobenzene",
+        "1,3-Dinitrobenzene",
+        "1,2-Dinitrobenzene"
+      ],
+      "smiles": [
+        "O=N(=O)c1ccc(cc1)N(=O)=O",
+        "O=N(=O)c1cccc(c1)N(=O)=O",
+        "O=N(=O)c1ccccc1N(=O)=O"
+      ],
+      "targets": [
+        -3.39,
+        -2.29,
+        -3.1
+      ]
+    }
+  ]
+}

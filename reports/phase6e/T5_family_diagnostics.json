@@ -1,0 +1,931 @@
+{
+  "policy": "n < 20: molecule-level tables and descriptive statistics only; no intervals, no claims of established effects",
+  "uncertainty_note": "families with n < 20 receive no intervals and no inferential statements",
+  "esol_equation_role": "in-sample descriptive comparator: the ESOL equation was fitted on this dataset, so its errors are optimistic and it is not independent validation",
+  "families": {
+    "c1ccccc1": {
+      "protocol": "benzene_holdout",
+      "n": 254,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.7827129951964125,
+          "mean_signed_error": -0.02045856883656641,
+          "rmse_ci": [
+            0.7114590413823382,
+            0.8515673007154577
+          ],
+          "mean_signed_error_ci": [
+            -0.11644828970206876,
+            0.07599103467151787
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.7846823436703707,
+          "mean_signed_error": -0.026868850194861127,
+          "rmse_ci": [
+            0.7161781256155856,
+            0.8511168055190677
+          ],
+          "mean_signed_error_ci": [
+            -0.12261631551999759,
+            0.07017443920140055
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.7447945483979043,
+          "mean_signed_error": -0.05726110801452727,
+          "rmse_ci": [
+            0.6802526282720347,
+            0.8060530222759206
+          ],
+          "mean_signed_error_ci": [
+            -0.14963557876578465,
+            0.035718780812973076
+          ]
+        },
+        "lasso": {
+          "rmse": 0.886532589255022,
+          "mean_signed_error": -0.28034574859574757,
+          "rmse_ci": [
+            0.8082899333711182,
+            0.9645974074187775
+          ],
+          "mean_signed_error_ci": [
+            -0.38565457064016395,
+            -0.1761704858023731
+          ]
+        },
+        "baseline": {
+          "rmse": 1.4705273045245366,
+          "mean_signed_error": -0.2529199174759906,
+          "rmse_ci": [
+            1.345109323082636,
+            1.5921340799032193
+          ],
+          "mean_signed_error_ci": [
+            -0.42707493716102995,
+            -0.07342828361772306
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 0.8922511490210869,
+          "mean_signed_error": -0.2922704355994535,
+          "rmse_ci": [
+            0.8135911013798099,
+            0.970376325885219
+          ],
+          "mean_signed_error_ci": [
+            -0.39860809387046003,
+            -0.18617069255874555
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.807707741250256,
+        "mean_signed_error": -0.354
+      },
+      "shared_bias_sign": "all negative",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.08267716535433071,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -2.854133858267717,
+        "sd": 1.451473893745451,
+        "min": -6.98,
+        "max": 0.81
+      }
+    },
+    "c1ccc(-c2ccccc2)cc1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 39,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 1.1965042222457185,
+          "mean_signed_error": 0.20943778374338828,
+          "rmse_ci": [
+            0.8698884779226951,
+            1.5761933592798851
+          ],
+          "mean_signed_error_ci": [
+            -0.14711810606900433,
+            0.5883693414451238
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 1.139818309810601,
+          "mean_signed_error": 0.19851580400029156,
+          "rmse_ci": [
+            0.7941150989879368,
+            1.5377718991543776
+          ],
+          "mean_signed_error_ci": [
+            -0.1343339160551482,
+            0.5663066810973022
+          ]
+        },
+        "xgboost": {
+          "rmse": 1.0229663238964002,
+          "mean_signed_error": 0.11727503752097096,
+          "rmse_ci": [
+            0.6748803885149827,
+            1.4294755793428797
+          ],
+          "mean_signed_error_ci": [
+            -0.1679405838709612,
+            0.4560659952224828
+          ]
+        },
+        "lasso": {
+          "rmse": 0.6760275293139045,
+          "mean_signed_error": 0.35976238597155696,
+          "rmse_ci": [
+            0.5441916706361936,
+            0.8083969280083783
+          ],
+          "mean_signed_error_ci": [
+            0.18147938952267834,
+            0.5368542005641495
+          ]
+        },
+        "baseline": {
+          "rmse": 4.320570069125797,
+          "mean_signed_error": 3.9654056354854585,
+          "rmse_ci": [
+            3.809857686563091,
+            4.843600959720864
+          ],
+          "mean_signed_error_ci": [
+            3.419117173946997,
+            4.510424866254689
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 0.6715275566494233,
+          "mean_signed_error": 0.3458759180454171,
+          "rmse_ci": [
+            0.5401174883061174,
+            0.8037781024564365
+          ],
+          "mean_signed_error_ci": [
+            0.1670177284624782,
+            0.5241997476289876
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.8176404607631175,
+        "mean_signed_error": 0.6284358974358975
+      },
+      "shared_bias_sign": "all positive",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.046153846153846156,
+        "below_knn_min_target": 0.07179487179487179,
+        "logp_above_training_max": 0.015384615384615387,
+        "any_descriptor_out_of_range": 0.015384615384615387
+      },
+      "target": {
+        "mean": -6.903205128205127,
+        "sd": 1.7377634170557337,
+        "min": -11.6,
+        "max": -2.7
+      }
+    },
+    "c1ccc2ccccc2c1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 22,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.4259877281109434,
+          "mean_signed_error": -0.13507906764069635,
+          "rmse_ci": [
+            0.31217096418427265,
+            0.5319815233453998
+          ],
+          "mean_signed_error_ci": [
+            -0.30147898273810025,
+            0.02362779127434754
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.396457982635921,
+          "mean_signed_error": -0.13173959794532955,
+          "rmse_ci": [
+            0.285800916478384,
+            0.5019598381679121
+          ],
+          "mean_signed_error_ci": [
+            -0.28478422414532334,
+            0.014417026311482109
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.3546285441933175,
+          "mean_signed_error": -0.0936630141518333,
+          "rmse_ci": [
+            0.26623742591273064,
+            0.43637869873747037
+          ],
+          "mean_signed_error_ci": [
+            -0.22847729462493552,
+            0.04419140072302382
+          ]
+        },
+        "lasso": {
+          "rmse": 0.71822586862668,
+          "mean_signed_error": 0.4135521117021209,
+          "rmse_ci": [
+            0.5885396938821892,
+            0.8494701420839434
+          ],
+          "mean_signed_error_ci": [
+            0.1521996144294147,
+            0.6489546202832442
+          ]
+        },
+        "baseline": {
+          "rmse": 1.1303394703546878,
+          "mean_signed_error": 0.7985339215873318,
+          "rmse_ci": [
+            0.9599375793819169,
+            1.287827731921748
+          ],
+          "mean_signed_error_ci": [
+            0.4369827852236955,
+            1.1098975579509682
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 0.7177213869283676,
+          "mean_signed_error": 0.41215123959349265,
+          "rmse_ci": [
+            0.5879523561081368,
+            0.849153515918815
+          ],
+          "mean_signed_error_ci": [
+            0.1505651772479902,
+            0.64744109486411
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.41353882965975947,
+        "mean_signed_error": -0.04500000000000005
+      },
+      "shared_bias_sign": "mixed",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.009090909090909092,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -3.853318181818182,
+        "sd": 0.8176381424778519,
+        "min": -4.89,
+        "max": -1.92
+      }
+    },
+    "O=C1CC(=O)NC(=O)N1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 21,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.38824749732171004,
+          "mean_signed_error": -0.14140434841270005,
+          "rmse_ci": [
+            0.29473570379440056,
+            0.4763839447586557
+          ],
+          "mean_signed_error_ci": [
+            -0.288873851190477,
+            0.0018780422902470817
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.38023158837507826,
+          "mean_signed_error": -0.1299724130340017,
+          "rmse_ci": [
+            0.2938454010022008,
+            0.45967248969773755
+          ],
+          "mean_signed_error_ci": [
+            -0.274956392439049,
+            0.013283997559568736
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.48356902986584166,
+          "mean_signed_error": -0.07814572754360383,
+          "rmse_ci": [
+            0.3592594846007311,
+            0.6177568815457023
+          ],
+          "mean_signed_error_ci": [
+            -0.25975692765485675,
+            0.12823711529118664
+          ]
+        },
+        "lasso": {
+          "rmse": 0.5069913875162679,
+          "mean_signed_error": 0.16389827102627694,
+          "rmse_ci": [
+            0.34668939519492875,
+            0.6576246702420401
+          ],
+          "mean_signed_error_ci": [
+            -0.03241655354035312,
+            0.37405962054202174
+          ]
+        },
+        "baseline": {
+          "rmse": 1.0688724865400532,
+          "mean_signed_error": -0.9712177990595421,
+          "rmse_ci": [
+            0.857324422967701,
+            1.2686166198205602
+          ],
+          "mean_signed_error_ci": [
+            -1.1666570847738278,
+            -0.785974941916685
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 0.5010120617830411,
+          "mean_signed_error": 0.1416136485829577,
+          "rmse_ci": [
+            0.3449348580585447,
+            0.6480305377151939
+          ],
+          "mean_signed_error_ci": [
+            -0.055616660357560015,
+            0.35266799855994485
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.5072394475421418,
+        "mean_signed_error": 0.3294761904761905
+      },
+      "shared_bias_sign": "mixed",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.009523809523809525,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -2.1292857142857136,
+        "sd": 0.4558154388408912,
+        "min": -2.766,
+        "max": -1.16
+      }
+    },
+    "O=C1C=C2CCC3C4CCCC4CCC3C2CC1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 17,
+      "descriptive_only": true,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.6690938093250125,
+          "mean_signed_error": -0.12876957135854444
+        },
+        "random_forest_tuned": {
+          "rmse": 0.6558637721983581,
+          "mean_signed_error": -0.12944033428045873
+        },
+        "xgboost": {
+          "rmse": 0.6874287994722352,
+          "mean_signed_error": -0.16849900728113504
+        },
+        "lasso": {
+          "rmse": 0.8246964269468873,
+          "mean_signed_error": -0.4966052466628195
+        },
+        "baseline": {
+          "rmse": 1.5296412919091853,
+          "mean_signed_error": 1.3192963774138744
+        },
+        "linear_regression_reference": {
+          "rmse": 0.8297491964653817,
+          "mean_signed_error": -0.5033280504105412
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.7952038584354255,
+        "mean_signed_error": 0.47129411764705886
+      },
+      "shared_bias_sign": "mixed",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.08235294117647059,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -4.334941176470588,
+        "sd": 0.7975723690195953,
+        "min": -5.66,
+        "max": -3.09
+      }
+    },
+    "c1ncncn1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 16,
+      "descriptive_only": true,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 1.72513419742162,
+          "mean_signed_error": 1.5289939558531738
+        },
+        "random_forest_tuned": {
+          "rmse": 1.6213569754795583,
+          "mean_signed_error": 1.4717820229662655
+        },
+        "xgboost": {
+          "rmse": 1.7304010471278846,
+          "mean_signed_error": 1.5205834244191645
+        },
+        "lasso": {
+          "rmse": 1.5753297892429976,
+          "mean_signed_error": 1.3843588396107274
+        },
+        "baseline": {
+          "rmse": 0.8373407362373934,
+          "mean_signed_error": 0.41947068467995785
+        },
+        "linear_regression_reference": {
+          "rmse": 1.5853735629300942,
+          "mean_signed_error": 1.3949766487768898
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.7938230281366243,
+        "mean_signed_error": 0.287625
+      },
+      "shared_bias_sign": "all positive",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.3875,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -3.5090624999999998,
+        "sd": 0.7483202940586337,
+        "min": -4.55,
+        "max": -2.084
+      }
+    },
+    "c1ccncc1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 14,
+      "descriptive_only": true,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 1.325717451945323,
+          "mean_signed_error": -1.1653798348897126
+        },
+        "random_forest_tuned": {
+          "rmse": 1.3520246287103603,
+          "mean_signed_error": -1.1870995264852617
+        },
+        "xgboost": {
+          "rmse": 1.3165287691696381,
+          "mean_signed_error": -1.071387106708118
+        },
+        "lasso": {
+          "rmse": 1.7728215411593615,
+          "mean_signed_error": -1.5486749980478283
+        },
+        "baseline": {
+          "rmse": 3.3743809514474576,
+          "mean_signed_error": -2.803091815320042
+        },
+        "linear_regression_reference": {
+          "rmse": 1.77106243704438,
+          "mean_signed_error": -1.546310059034099
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 2.0940130303865283,
+        "mean_signed_error": -1.811857142857143
+      },
+      "shared_bias_sign": "all negative",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.0,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -0.2864999999999999,
+        "sd": 1.9494561273103048,
+        "min": -5.67,
+        "max": 1.02
+      }
+    },
+    "c1ccc(Cc2ccccc2)cc1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 12,
+      "descriptive_only": true,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.5412146953663205,
+          "mean_signed_error": -0.2363217056034245
+        },
+        "random_forest_tuned": {
+          "rmse": 0.5459301682421809,
+          "mean_signed_error": -0.23105704517717995
+        },
+        "xgboost": {
+          "rmse": 0.5716893253691292,
+          "mean_signed_error": -0.27948262182871497
+        },
+        "lasso": {
+          "rmse": 0.7536757454417828,
+          "mean_signed_error": -0.17907478988212744
+        },
+        "baseline": {
+          "rmse": 2.8069908322068544,
+          "mean_signed_error": 2.2876052009432866
+        },
+        "linear_regression_reference": {
+          "rmse": 0.7561751924949959,
+          "mean_signed_error": -0.18475919044245995
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.8104875590244021,
+        "mean_signed_error": 0.08758333333333379
+      },
+      "shared_bias_sign": "mixed",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.016666666666666666,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -5.30325,
+        "sd": 1.6988241454820237,
+        "min": -7.2,
+        "max": -2.55
+      }
+    },
+    "C1CCCCC1": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 10,
+      "descriptive_only": true,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.33824488190252766,
+          "mean_signed_error": 0.05326222357142851
+        },
+        "random_forest_tuned": {
+          "rmse": 0.36857309230101687,
+          "mean_signed_error": 0.04579675899201004
+        },
+        "xgboost": {
+          "rmse": 0.5110970213928823,
+          "mean_signed_error": 0.14770360547304145
+        },
+        "lasso": {
+          "rmse": 1.1518899730601304,
+          "mean_signed_error": 0.675670343807591
+        },
+        "baseline": {
+          "rmse": 1.642570509652493,
+          "mean_signed_error": -0.03750351334525641
+        },
+        "linear_regression_reference": {
+          "rmse": 1.1534687859683919,
+          "mean_signed_error": 0.6790814330714785
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.8563562342857088,
+        "mean_signed_error": 0.31179999999999997
+      },
+      "shared_bias_sign": "all positive",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.02,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.0
+      },
+      "target": {
+        "mean": -3.0629999999999997,
+        "sd": 1.730536525666727,
+        "min": -4.64,
+        "max": 0.35
+      }
+    },
+    "acyclic": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 317,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.6793997686698102,
+          "mean_signed_error": -0.09731114421481106,
+          "rmse_ci": [
+            0.5482321798984637,
+            0.8093294344695604
+          ],
+          "mean_signed_error_ci": [
+            -0.171457334457981,
+            -0.027477759941485505
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.6962748136007325,
+          "mean_signed_error": -0.10362729303338854,
+          "rmse_ci": [
+            0.5629024653365149,
+            0.8306709679302161
+          ],
+          "mean_signed_error_ci": [
+            -0.18067224637946316,
+            -0.031708424525437214
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.6936557203234486,
+          "mean_signed_error": -0.10928034089178972,
+          "rmse_ci": [
+            0.5751983758050327,
+            0.8136968053034409
+          ],
+          "mean_signed_error_ci": [
+            -0.18501346836599644,
+            -0.03844861911790128
+          ]
+        },
+        "lasso": {
+          "rmse": 0.9881878888807217,
+          "mean_signed_error": -0.14847637033679223,
+          "rmse_ci": [
+            0.8972227207941883,
+            1.082833843828698
+          ],
+          "mean_signed_error_ci": [
+            -0.2581671402588246,
+            -0.04056061754582671
+          ]
+        },
+        "baseline": {
+          "rmse": 2.1438417428826315,
+          "mean_signed_error": -1.1270832919241742,
+          "rmse_ci": [
+            2.0105931912222483,
+            2.276698730088728
+          ],
+          "mean_signed_error_ci": [
+            -1.328583906843778,
+            -0.9234887910217274
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 0.9872469987112003,
+          "mean_signed_error": -0.1429895754722422,
+          "rmse_ci": [
+            0.8965710943030185,
+            1.0813844802700752
+          ],
+          "mean_signed_error_ci": [
+            -0.25228136800779727,
+            -0.034990931785691855
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.790159830894751,
+        "mean_signed_error": -0.018570977917981065
+      },
+      "shared_bias_sign": "all negative",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.037223974763406935,
+        "logp_above_training_max": 0.0031545741324921135,
+        "any_descriptor_out_of_range": 0.008832807570977918
+      },
+      "target": {
+        "mean": -1.912485804416404,
+        "sd": 1.825128650906872,
+        "min": -8.4,
+        "max": 1.58
+      }
+    },
+    "cyclic_small_groups": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 212,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.8690501969754411,
+          "mean_signed_error": 0.11404474852935288,
+          "rmse_ci": [
+            0.7444651054684087,
+            0.9896815081707596
+          ],
+          "mean_signed_error_ci": [
+            -0.06867801190614807,
+            0.2947350661893631
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.8693477462598068,
+          "mean_signed_error": 0.13183003548736333,
+          "rmse_ci": [
+            0.7436037762218134,
+            0.9899696453985891
+          ],
+          "mean_signed_error_ci": [
+            -0.05071085207557575,
+            0.31230247291781466
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.8477398618551045,
+          "mean_signed_error": 0.13357544233683355,
+          "rmse_ci": [
+            0.7393123056845524,
+            0.9582189551317716
+          ],
+          "mean_signed_error_ci": [
+            -0.03746579842911148,
+            0.306942958923114
+          ]
+        },
+        "lasso": {
+          "rmse": 1.0022127659058786,
+          "mean_signed_error": 0.16293593991627534,
+          "rmse_ci": [
+            0.8749760298927663,
+            1.135556617115061
+          ],
+          "mean_signed_error_ci": [
+            -0.0345865700094543,
+            0.3673167819681922
+          ]
+        },
+        "baseline": {
+          "rmse": 2.08983395811189,
+          "mean_signed_error": 0.4288527428648476,
+          "rmse_ci": [
+            1.772693699542423,
+            2.3938530816851666
+          ],
+          "mean_signed_error_ci": [
+            -0.10280976169285208,
+            0.9604361380959807
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 1.0011286733137483,
+          "mean_signed_error": 0.16117868025188772,
+          "rmse_ci": [
+            0.8742926424096278,
+            1.1343167745177907
+          ],
+          "mean_signed_error_ci": [
+            -0.036195161164168384,
+            0.3651711710983762
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 0.9260131702678067,
+        "mean_signed_error": 0.23445754716981132
+      },
+      "shared_bias_sign": "all positive",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.0,
+        "below_knn_min_target": 0.12452830188679245,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.009433962264150943
+      },
+      "target": {
+        "mean": -3.47286320754717,
+        "sd": 2.0449058901774806,
+        "min": -8.402000000000001,
+        "max": 1.1
+      }
+    },
+    "cyclic_singletons": {
+      "protocol": "nonbenzene_scaffold_cv",
+      "n": 194,
+      "descriptive_only": false,
+      "models": {
+        "random_forest_reference": {
+          "rmse": 0.9039459834264079,
+          "mean_signed_error": 0.11948746094094315,
+          "rmse_ci": [
+            0.7943168703632072,
+            1.0198377827277465
+          ],
+          "mean_signed_error_ci": [
+            -0.0012976045781553662,
+            0.2429954268382432
+          ]
+        },
+        "random_forest_tuned": {
+          "rmse": 0.8912843543714324,
+          "mean_signed_error": 0.12702334519711528,
+          "rmse_ci": [
+            0.7820664585816575,
+            1.0049127856409446
+          ],
+          "mean_signed_error_ci": [
+            0.008837469421923956,
+            0.25026562042442146
+          ]
+        },
+        "xgboost": {
+          "rmse": 0.9063333008013174,
+          "mean_signed_error": 0.15358344640151705,
+          "rmse_ci": [
+            0.8072708782885359,
+            1.0030738743705558
+          ],
+          "mean_signed_error_ci": [
+            0.0343950851354429,
+            0.27620713907642097
+          ]
+        },
+        "lasso": {
+          "rmse": 1.2524726094632206,
+          "mean_signed_error": 0.3243665475405552,
+          "rmse_ci": [
+            1.0937074492167478,
+            1.409081658861702
+          ],
+          "mean_signed_error_ci": [
+            0.15783960344384854,
+            0.4953218975172414
+          ]
+        },
+        "baseline": {
+          "rmse": 2.227018064186313,
+          "mean_signed_error": 0.8063854697994576,
+          "rmse_ci": [
+            1.9722618926223359,
+            2.4758038596690404
+          ],
+          "mean_signed_error_ci": [
+            0.5187213900184269,
+            1.1020319709527115
+          ]
+        },
+        "linear_regression_reference": {
+          "rmse": 1.2525753367552614,
+          "mean_signed_error": 0.322020655801357,
+          "rmse_ci": [
+            1.0935961907222498,
+            1.409804957821395
+          ],
+          "mean_signed_error_ci": [
+            0.15531925577737365,
+            0.4930099962333729
+          ]
+        }
+      },
+      "esol_equation_in_sample": {
+        "rmse": 1.1493513163752882,
+        "mean_signed_error": 0.4849329896907216
+      },
+      "shared_bias_sign": "all positive",
+      "extrapolation_fraction_of_predictions": {
+        "below_training_min_target": 0.002061855670103093,
+        "below_knn_min_target": 0.11649484536082474,
+        "logp_above_training_max": 0.0,
+        "any_descriptor_out_of_range": 0.013402061855670104
+      },
+      "target": {
+        "mean": -3.846536082474227,
+        "sd": 2.0792600171451774,
+        "min": -9.332,
+        "max": 1.07
+      }
+    }
+  },
+  "esol_equation_overall_in_sample": {
+    "nonbenzene_scaffold_cv": {
+      "rmse": 0.9378031037095319,
+      "mean_signed_error": 0.18278032036613273,
+      "n": 874
+    },
+    "benzene_holdout": {
+      "rmse": 0.807707741250256,
+      "mean_signed_error": -0.354,
+      "n": 254
+    }
+  }
+}

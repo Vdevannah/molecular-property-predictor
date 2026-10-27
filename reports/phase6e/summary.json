@@ -1,0 +1,50 @@
+{
+  "run_id": "20261027T190303Z_e5e48d78",
+  "config_md5": "e5e48d78ee4b7c9d4bca2830edbf24e6",
+  "phase6d_run": "results/phase6d/20261027T154454Z_d02c301c",
+  "runtime_seconds": 101.23559750011191,
+  "n_jobs": -1,
+  "checks": {
+    "fold_assignments_match_phase6d": true,
+    "refit_max_abs_difference": {
+      "random_forest_reference": 1.7763568394002505e-15,
+      "random_forest_tuned": 8.881784197001252e-16,
+      "xgboost": 1.7763568394002505e-15,
+      "lasso": 1.7763568394002505e-15
+    },
+    "neighbour_statistics_max_abs_difference": 2.886579864025407e-15
+  },
+  "protected_files_verified": 52,
+  "figures": [
+    "F01_observed_vs_predicted.png",
+    "F02_calibration.png",
+    "F03_residual_distributions.png",
+    "F04_residual_vs_predicted_and_observed.png",
+    "F05_bias_by_descriptor.png",
+    "F06_descriptor_correlations.png",
+    "F07_permutation_importance.png",
+    "F08_drop_column_importance.png",
+    "F09_importance_method_comparison.png",
+    "F10_ale_curves.png",
+    "F11_family_forest_plot.png",
+    "F12_family_residuals.png",
+    "F13_logs_vs_logp_families.png",
+    "F14_biphenyl_residual_vs_logp.png",
+    "F15_similarity_acyclic_vs_cyclic.png",
+    "F16_distance_reliability.png",
+    "F17_representation_floor.png",
+    "F18_interval_coverage.png",
+    "F19_production_model_importance.png"
+  ],
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.03.6",
+    "platform": "macOS-26.5.1-arm64-arm-64bit"
+  },
+  "role": "Diagnostic and descriptive only. No model selection, no confirmatory tests, and no revision of Phase 6D decision labels."
+}

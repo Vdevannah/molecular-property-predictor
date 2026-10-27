@@ -1,0 +1,203 @@
+{
+  "label": "Random-split diagnostics of the deployed model; not evidence of scaffold generalization",
+  "test_rmse": 0.8349452807229858,
+  "n_test": 226,
+  "permutation": {
+    "feature:MolWt": {
+      "pooled_importance": 0.284672054518087,
+      "sd_over_permutations": 0.03088973395890868,
+      "ci_molecule_bootstrap": [
+        0.2137693832352607,
+        0.366049620158963
+      ]
+    },
+    "feature:LogP": {
+      "pooled_importance": 2.0056886938346086,
+      "sd_over_permutations": 0.08473142360601393,
+      "ci_molecule_bootstrap": [
+        1.8281082642793558,
+        2.1906945042372667
+      ]
+    },
+    "feature:TPSA": {
+      "pooled_importance": 0.0735537091237334,
+      "sd_over_permutations": 0.02101389900276938,
+      "ci_molecule_bootstrap": [
+        0.02559496257245497,
+        0.1259619766423014
+      ]
+    },
+    "feature:HBD": {
+      "pooled_importance": -0.0006859421471093862,
+      "sd_over_permutations": 0.0034291275759534058,
+      "ci_molecule_bootstrap": [
+        -0.012284027830883348,
+        0.010131169083791776
+      ]
+    },
+    "feature:HBA": {
+      "pooled_importance": 0.016767343596416552,
+      "sd_over_permutations": 0.00755779950333459,
+      "ci_molecule_bootstrap": [
+        0.0006176085532267873,
+        0.032701207860176724
+      ]
+    },
+    "feature:RotBonds": {
+      "pooled_importance": 0.02111787670398057,
+      "sd_over_permutations": 0.006180535812547318,
+      "ci_molecule_bootstrap": [
+        0.003148074413294864,
+        0.038127062718837194
+      ]
+    },
+    "primary:polarity_hbonding": {
+      "pooled_importance": 0.12957593809686008,
+      "sd_over_permutations": 0.02432123313439075,
+      "ci_molecule_bootstrap": [
+        0.06787317481144418,
+        0.19951691486021433
+      ]
+    },
+    "primary:size_flexibility": {
+      "pooled_importance": 0.26783005979750646,
+      "sd_over_permutations": 0.03683172290189674,
+      "ci_molecule_bootstrap": [
+        0.1962617479021912,
+        0.34954626453679666
+      ]
+    },
+    "primary:lipophilicity": {
+      "pooled_importance": 1.9981363885431036,
+      "sd_over_permutations": 0.09081656354038567,
+      "ci_molecule_bootstrap": [
+        1.8215400591867654,
+        2.181194467157687
+      ]
+    },
+    "sensitivity:size_lipophilicity": {
+      "pooled_importance": 2.0853441764849587,
+      "sd_over_permutations": 0.1097585802614721,
+      "ci_molecule_bootstrap": [
+        1.9005045179622795,
+        2.2797896699831988
+      ]
+    },
+    "sensitivity:polarity_hbonding": {
+      "pooled_importance": 0.12439969154975843,
+      "sd_over_permutations": 0.023580155105706473,
+      "ci_molecule_bootstrap": [
+        0.06419823053249347,
+        0.19277259958732754
+      ]
+    },
+    "sensitivity:flexibility": {
+      "pooled_importance": 0.021535497394226617,
+      "sd_over_permutations": 0.007720419673511908,
+      "ci_molecule_bootstrap": [
+        0.003040866729211825,
+        0.038763953291913456
+      ]
+    }
+  },
+  "drop_column": {
+    "feature:MolWt": {
+      "pooled_importance": 0.0329924259210167,
+      "ci_molecule_bootstrap": [
+        0.0033752676079476713,
+        0.06371232934483397
+      ]
+    },
+    "feature:LogP": {
+      "pooled_importance": 0.2498120639219903,
+      "ci_molecule_bootstrap": [
+        0.1415233562406213,
+        0.3569830565264196
+      ]
+    },
+    "feature:TPSA": {
+      "pooled_importance": 0.014712797897898477,
+      "ci_molecule_bootstrap": [
+        -0.0043633636878982335,
+        0.03413437788532775
+      ]
+    },
+    "feature:HBD": {
+      "pooled_importance": -0.00327510441494816,
+      "ci_molecule_bootstrap": [
+        -0.011357917825560749,
+        0.00453796835561369
+      ]
+    },
+    "feature:HBA": {
+      "pooled_importance": -0.0017600707578663277,
+      "ci_molecule_bootstrap": [
+        -0.014070480566675972,
+        0.010839752306789968
+      ]
+    },
+    "feature:RotBonds": {
+      "pooled_importance": 0.007416246401751869,
+      "ci_molecule_bootstrap": [
+        -0.004557984251597397,
+        0.019344420232617583
+      ]
+    },
+    "primary:polarity_hbonding": {
+      "pooled_importance": 0.02305424907340925,
+      "ci_molecule_bootstrap": [
+        -0.0056667473784815115,
+        0.05406067189380566
+      ]
+    },
+    "primary:size_flexibility": {
+      "pooled_importance": 0.05105266722282209,
+      "ci_molecule_bootstrap": [
+        0.020327023855556313,
+        0.08461651277840695
+      ]
+    },
+    "primary:lipophilicity": {
+      "pooled_importance": 0.2498120639219903,
+      "ci_molecule_bootstrap": [
+        0.1415233562406213,
+        0.3569830565264196
+      ]
+    },
+    "sensitivity:size_lipophilicity": {
+      "pooled_importance": 1.0323687379493605,
+      "ci_molecule_bootstrap": [
+        0.8466983202047178,
+        1.2218446830896723
+      ]
+    },
+    "sensitivity:polarity_hbonding": {
+      "pooled_importance": 0.02305424907340925,
+      "ci_molecule_bootstrap": [
+        -0.0056667473784815115,
+        0.05406067189380566
+      ]
+    },
+    "sensitivity:flexibility": {
+      "pooled_importance": 0.007416246401751869,
+      "ci_molecule_bootstrap": [
+        -0.004557984251597397,
+        0.019344420232617583
+      ]
+    }
+  },
+  "impurity": {
+    "MolWt": 0.10435872667316622,
+    "LogP": 0.8192981409864717,
+    "TPSA": 0.045305007191786276,
+    "HBD": 0.007199919312614101,
+    "HBA": 0.010816579197077111,
+    "RotBonds": 0.013021626638884556
+  },
+  "tree_spread_observed_coverage": {
+    "0.8": 0.6991150442477876,
+    "0.9": 0.8185840707964602,
+    "0.95": 0.8805309734513275
+  },
+  "spearman_tree_sd_vs_abs_error": 0.35909492572147766
+}

@@ -1,0 +1,27 @@
+{
+  "refit_and_gate_seconds": 24.527883750153705,
+  "one_cv_fold_seconds": 7.20159091684036,
+  "holdout_fold_seconds": 7.920815541874617,
+  "analysis_and_figures_allowance_seconds": 60.0,
+  "estimated_serial_minutes": 4.541474536883955,
+  "approval_threshold_minutes": 60,
+  "within_threshold": true,
+  "refit_max_abs_difference": {
+    "random_forest_reference": 1.7763568394002505e-15,
+    "random_forest_tuned": 8.881784197001252e-16,
+    "xgboost": 1.7763568394002505e-15,
+    "lasso": 1.7763568394002505e-15
+  },
+  "config_md5": "e5e48d78ee4b7c9d4bca2830edbf24e6",
+  "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "xgboost": "3.4.1",
+    "rdkit": "2026.03.6",
+    "platform": "macOS-26.5.1-arm64-arm-64bit"
+  },
+  "run_at_utc": "2026-10-27T19:15:09.251314+00:00"
+}

@@ -1,0 +1,1358 @@
+{
+  "acyclic_vs_cyclic_similarity_bins": [
+    {
+      "ring_status": "acyclic",
+      "similarity_bin": "[0.0, 0.4)",
+      "n": 58,
+      "random_forest_reference": {
+        "rmse": 1.1772855446152435,
+        "ci": [
+          0.7758121308389364,
+          1.5331918787262104
+        ]
+      },
+      "xgboost": {
+        "rmse": 1.1535203717594418,
+        "ci": [
+          0.7777568444522425,
+          1.4936889276378384
+        ]
+      },
+      "lasso": {
+        "rmse": 1.2381499997013052,
+        "ci": [
+          0.8877448656241196,
+          1.5597861740487415
+        ]
+      }
+    },
+    {
+      "ring_status": "acyclic",
+      "similarity_bin": "[0.4, 0.6)",
+      "n": 141,
+      "random_forest_reference": {
+        "rmse": 0.5333843848616789,
+        "ci": [
+          0.4443753410803786,
+          0.6276514070660868
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.5905229584777316,
+        "ci": [
+          0.5135458941372727,
+          0.665950342123408
+        ]
+      },
+      "lasso": {
+        "rmse": 0.9178945173850149,
+        "ci": [
+          0.8308241570484941,
+          1.0005626409841362
+        ]
+      }
+    },
+    {
+      "ring_status": "acyclic",
+      "similarity_bin": "[0.6, 0.8)",
+      "n": 53,
+      "random_forest_reference": {
+        "rmse": 0.43918072268804437,
+        "ci": [
+          0.3175670101578538,
+          0.5602363361362328
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.4495262505871205,
+        "ci": [
+          0.3487922612101933,
+          0.5509664354957338
+        ]
+      },
+      "lasso": {
+        "rmse": 0.7835182940702146,
+        "ci": [
+          0.6807925707967247,
+          0.8803905480482994
+        ]
+      }
+    },
+    {
+      "ring_status": "acyclic",
+      "similarity_bin": "[0.8, 1.0)",
+      "n": 26,
+      "random_forest_reference": {
+        "rmse": 0.28783570307233813,
+        "ci": [
+          0.2016151427438993,
+          0.376905951825899
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.30798442610730264,
+        "ci": [
+          0.21967699606517133,
+          0.3901430840538653
+        ]
+      },
+      "lasso": {
+        "rmse": 0.8141365746966175,
+        "ci": [
+          0.6727965820336315,
+          0.9475227747882641
+        ]
+      }
+    },
+    {
+      "ring_status": "acyclic",
+      "similarity_bin": "exactly 1.0",
+      "n": 39,
+      "random_forest_reference": {
+        "rmse": 0.58710537024012,
+        "ci": [
+          0.41829506765815744,
+          0.7512845849724163
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.5774957983902497,
+        "ci": [
+          0.41452394860046354,
+          0.7540507119990619
+        ]
+      },
+      "lasso": {
+        "rmse": 1.1555180006340047,
+        "ci": [
+          0.9129907726088006,
+          1.3809845613053457
+        ]
+      }
+    },
+    {
+      "ring_status": "cyclic",
+      "similarity_bin": "[0.0, 0.4)",
+      "n": 214,
+      "random_forest_reference": {
+        "rmse": 1.0504889670237312,
+        "ci": [
+          0.864434604212029,
+          1.217180768490791
+        ]
+      },
+      "xgboost": {
+        "rmse": 1.048308832679294,
+        "ci": [
+          0.8718299965957801,
+          1.2119274742542987
+        ]
+      },
+      "lasso": {
+        "rmse": 1.117588888379552,
+        "ci": [
+          0.9583834551237532,
+          1.2588311148546885
+        ]
+      }
+    },
+    {
+      "ring_status": "cyclic",
+      "similarity_bin": "[0.4, 0.6)",
+      "n": 248,
+      "random_forest_reference": {
+        "rmse": 0.8373169722536015,
+        "ci": [
+          0.7264626529667332,
+          0.9537470287593279
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.8031890286305636,
+        "ci": [
+          0.703212627771111,
+          0.9177766110694042
+        ]
+      },
+      "lasso": {
+        "rmse": 1.0022593200381344,
+        "ci": [
+          0.8556763578906047,
+          1.1774115046581215
+        ]
+      }
+    },
+    {
+      "ring_status": "cyclic",
+      "similarity_bin": "[0.6, 0.8)",
+      "n": 67,
+      "random_forest_reference": {
+        "rmse": 0.8074357751892282,
+        "ci": [
+          0.6089104740931873,
+          0.9589435398813911
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.7773268759689154,
+        "ci": [
+          0.6207188736450988,
+          0.9010575546842567
+        ]
+      },
+      "lasso": {
+        "rmse": 1.2440589163874538,
+        "ci": [
+          0.990124125610644,
+          1.5523442525022304
+        ]
+      }
+    },
+    {
+      "ring_status": "cyclic",
+      "similarity_bin": "[0.8, 1.0)",
+      "n": 16,
+      "random_forest_reference": {
+        "rmse": 0.7900659790084001,
+        "ci": [
+          0.5066265505001368,
+          1.0403044347814685
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.6740624970551874,
+        "ci": [
+          0.45838707383254684,
+          0.8706369312399291
+        ]
+      },
+      "lasso": {
+        "rmse": 1.3114460984957235,
+        "ci": [
+          1.0546617374327083,
+          1.560808798563403
+        ]
+      }
+    },
+    {
+      "ring_status": "cyclic",
+      "similarity_bin": "exactly 1.0",
+      "n": 12,
+      "random_forest_reference": {
+        "rmse": 0.4492084673417659,
+        "ci": [
+          0.29438214400776463,
+          0.6148603013564243
+        ]
+      },
+      "xgboost": {
+        "rmse": 0.5794932882929688,
+        "ci": [
+          0.3587201777603553,
+          0.8065991588705339
+        ]
+      },
+      "lasso": {
+        "rmse": 1.2769384285786034,
+        "ci": [
+          0.9636758703487085,
+          1.714420309778175
+        ]
+      }
+    }
+  ],
+  "acyclic_fingerprint_collisions": [
+    {
+      "compound_id": "Tetradecane",
+      "smiles": "CCCCCCCCCCCCCC",
+      "observed": -7.96,
+      "nearest_compound": "hexacosane",
+      "nearest_smiles": "CCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "nearest_observed": -8.334,
+      "abs_target_difference": 0.37399999999999967
+    },
+    {
+      "compound_id": "2-Undecanol",
+      "smiles": "CCCCCCCCCC(C)O",
+      "observed": -2.94,
+      "nearest_compound": "2-Nonanol",
+      "nearest_smiles": "CCCCCCCC(C)O",
+      "nearest_observed": -2.74,
+      "abs_target_difference": 0.19999999999999973
+    },
+    {
+      "compound_id": "1-Heptanol",
+      "smiles": "CCCCCCCO",
+      "observed": -1.81,
+      "nearest_compound": "1-Hexanol",
+      "nearest_smiles": "CCCCCCO",
+      "nearest_observed": -1.24,
+      "abs_target_difference": 0.5700000000000001
+    },
+    {
+      "compound_id": "Methyl octanoate",
+      "smiles": "CCCCCCCC(=O)OC",
+      "observed": -3.17,
+      "nearest_compound": "Methyl decanoate",
+      "nearest_smiles": "CCCCCCCCCC(=O)OC",
+      "nearest_observed": -4.69,
+      "abs_target_difference": 1.5200000000000005
+    },
+    {
+      "compound_id": "1-Decene",
+      "smiles": "CCCCCCCCC=C",
+      "observed": -5.51,
+      "nearest_compound": "1-Octene ",
+      "nearest_smiles": "CCCCCCC=C",
+      "nearest_observed": -4.44,
+      "abs_target_difference": 1.0699999999999994
+    },
+    {
+      "compound_id": "1-Bromoheptane",
+      "smiles": "CCCCCCCBr",
+      "observed": -4.43,
+      "nearest_compound": "1-Bromohexane",
+      "nearest_smiles": "CCCCCCBr",
+      "nearest_observed": -3.81,
+      "abs_target_difference": 0.6199999999999997
+    },
+    {
+      "compound_id": "trans-2-Pentene ",
+      "smiles": "CC/C=C/C",
+      "observed": -2.54,
+      "nearest_compound": "cis-2-Pentene",
+      "nearest_smiles": "CC/C=C\\C",
+      "nearest_observed": -2.54,
+      "abs_target_difference": 0.0
+    },
+    {
+      "compound_id": "1-Hexanol",
+      "smiles": "CCCCCCO",
+      "observed": -1.24,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 0.5700000000000001
+    },
+    {
+      "compound_id": "Ethyl nonanoate",
+      "smiles": "CCCCCCCCC(=O)OCC",
+      "observed": -3.8,
+      "nearest_compound": "Ethyl decanoate",
+      "nearest_smiles": "CCCCCCCCCC(=O)OCC",
+      "nearest_observed": -4.1,
+      "abs_target_difference": 0.2999999999999998
+    },
+    {
+      "compound_id": "2-Decanone",
+      "smiles": "CCCCCCCCC(=O)C",
+      "observed": -3.3,
+      "nearest_compound": "2-Nonanone",
+      "nearest_smiles": "CCCCCCCC(=O)C",
+      "nearest_observed": -2.58,
+      "abs_target_difference": 0.7199999999999998
+    },
+    {
+      "compound_id": "hexacosane",
+      "smiles": "CCCCCCCCCCCCCCCCCCCCCCCCCC",
+      "observed": -8.334,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 0.37399999999999967
+    },
+    {
+      "compound_id": "1-Hexadecanol",
+      "smiles": "CCCCCCCCCCCCCCCCO",
+      "observed": -7.0,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 5.1899999999999995
+    },
+    {
+      "compound_id": "Ethyl decanoate",
+      "smiles": "CCCCCCCCCC(=O)OCC",
+      "observed": -4.1,
+      "nearest_compound": "Ethyl nonanoate",
+      "nearest_smiles": "CCCCCCCCC(=O)OCC",
+      "nearest_observed": -3.8,
+      "abs_target_difference": 0.2999999999999998
+    },
+    {
+      "compound_id": "1-Octene ",
+      "smiles": "CCCCCCC=C",
+      "observed": -4.44,
+      "nearest_compound": "1-Decene",
+      "nearest_smiles": "CCCCCCCCC=C",
+      "nearest_observed": -5.51,
+      "abs_target_difference": 1.0699999999999994
+    },
+    {
+      "compound_id": "2-Nonanol",
+      "smiles": "CCCCCCCC(C)O",
+      "observed": -2.74,
+      "nearest_compound": "2-Undecanol",
+      "nearest_smiles": "CCCCCCCCCC(C)O",
+      "nearest_observed": -2.94,
+      "abs_target_difference": 0.19999999999999973
+    },
+    {
+      "compound_id": "1-Octanol",
+      "smiles": "CCCCCCCCO",
+      "observed": -2.39,
+      "nearest_compound": "1-Hexanol",
+      "nearest_smiles": "CCCCCCO",
+      "nearest_observed": -1.24,
+      "abs_target_difference": 1.1500000000000001
+    },
+    {
+      "compound_id": "1-Nonene ",
+      "smiles": "CCCCCCCC=C",
+      "observed": -5.05,
+      "nearest_compound": "1-Decene",
+      "nearest_smiles": "CCCCCCCCC=C",
+      "nearest_observed": -5.51,
+      "abs_target_difference": 0.45999999999999996
+    },
+    {
+      "compound_id": "Methyl decanoate",
+      "smiles": "CCCCCCCCCC(=O)OC",
+      "observed": -4.69,
+      "nearest_compound": "Methyl octanoate",
+      "nearest_smiles": "CCCCCCCC(=O)OC",
+      "nearest_observed": -3.17,
+      "abs_target_difference": 1.5200000000000005
+    },
+    {
+      "compound_id": "1-Bromohexane",
+      "smiles": "CCCCCCBr",
+      "observed": -3.81,
+      "nearest_compound": "1-Bromoheptane",
+      "nearest_smiles": "CCCCCCCBr",
+      "nearest_observed": -4.43,
+      "abs_target_difference": 0.6199999999999997
+    },
+    {
+      "compound_id": "Ethyl octanoate",
+      "smiles": "CCCCCCCC(=O)OCC",
+      "observed": -3.39,
+      "nearest_compound": "Ethyl nonanoate",
+      "nearest_smiles": "CCCCCCCCC(=O)OCC",
+      "nearest_observed": -3.8,
+      "abs_target_difference": 0.4099999999999997
+    },
+    {
+      "compound_id": "1-Nonanol",
+      "smiles": "CCCCCCCCCO",
+      "observed": -3.01,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 1.1999999999999997
+    },
+    {
+      "compound_id": "Nonane",
+      "smiles": "CCCCCCCCC",
+      "observed": -5.88,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 2.08
+    },
+    {
+      "compound_id": "Heptane",
+      "smiles": "CCCCCCC",
+      "observed": -4.53,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 3.4299999999999997
+    },
+    {
+      "compound_id": "Octane",
+      "smiles": "CCCCCCCC",
+      "observed": -5.24,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 2.7199999999999998
+    },
+    {
+      "compound_id": "1-Tetradecanol",
+      "smiles": "CCCCCCCCCCCCCCO",
+      "observed": -5.84,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 4.029999999999999
+    },
+    {
+      "compound_id": "1-Octadecanol",
+      "smiles": "CCCCCCCCCCCCCCCCCCO",
+      "observed": -8.4,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 6.59
+    },
+    {
+      "compound_id": "methyl laurate",
+      "smiles": "CCCCCCCCCCCC(=O)OC",
+      "observed": -4.69,
+      "nearest_compound": "Methyl octanoate",
+      "nearest_smiles": "CCCCCCCC(=O)OC",
+      "nearest_observed": -3.17,
+      "abs_target_difference": 1.5200000000000005
+    },
+    {
+      "compound_id": "Ethyl heptanoate",
+      "smiles": "CCCCCCC(=O)OCC",
+      "observed": -2.74,
+      "nearest_compound": "Ethyl nonanoate",
+      "nearest_smiles": "CCCCCCCCC(=O)OCC",
+      "nearest_observed": -3.8,
+      "abs_target_difference": 1.0599999999999996
+    },
+    {
+      "compound_id": "1-Dodecanol",
+      "smiles": "CCCCCCCCCCCCO",
+      "observed": -4.8,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 2.9899999999999998
+    },
+    {
+      "compound_id": "2-Nonanone",
+      "smiles": "CCCCCCCC(=O)C",
+      "observed": -2.58,
+      "nearest_compound": "2-Decanone",
+      "nearest_smiles": "CCCCCCCCC(=O)C",
+      "nearest_observed": -3.3,
+      "abs_target_difference": 0.7199999999999998
+    },
+    {
+      "compound_id": "1-Pentadecanol",
+      "smiles": "CCCCCCCCCCCCCCCO",
+      "observed": -6.35,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 4.539999999999999
+    },
+    {
+      "compound_id": "Hexadecane",
+      "smiles": "CCCCCCCCCCCCCCCC",
+      "observed": -8.4,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 0.4400000000000004
+    },
+    {
+      "compound_id": "2-Octanone",
+      "smiles": "CCCCCCC(=O)C",
+      "observed": -2.05,
+      "nearest_compound": "2-Decanone",
+      "nearest_smiles": "CCCCCCCCC(=O)C",
+      "nearest_observed": -3.3,
+      "abs_target_difference": 1.25
+    },
+    {
+      "compound_id": "Methyl nonanoate",
+      "smiles": "CCCCCCCCC(=O)OC",
+      "observed": -3.38,
+      "nearest_compound": "Methyl octanoate",
+      "nearest_smiles": "CCCCCCCC(=O)OC",
+      "nearest_observed": -3.17,
+      "abs_target_difference": 0.20999999999999996
+    },
+    {
+      "compound_id": "1-Bromooctane",
+      "smiles": "CCCCCCCCBr",
+      "observed": -5.06,
+      "nearest_compound": "1-Bromoheptane",
+      "nearest_smiles": "CCCCCCCBr",
+      "nearest_observed": -4.43,
+      "abs_target_difference": 0.6299999999999999
+    },
+    {
+      "compound_id": "1-Decanol",
+      "smiles": "CCCCCCCCCCO",
+      "observed": -3.63,
+      "nearest_compound": "1-Heptanol",
+      "nearest_smiles": "CCCCCCCO",
+      "nearest_observed": -1.81,
+      "abs_target_difference": 1.8199999999999998
+    },
+    {
+      "compound_id": "cis-2-Pentene",
+      "smiles": "CC/C=C\\C",
+      "observed": -2.54,
+      "nearest_compound": "trans-2-Pentene ",
+      "nearest_smiles": "CC/C=C/C",
+      "nearest_observed": -2.54,
+      "abs_target_difference": 0.0
+    },
+    {
+      "compound_id": "Eicosane",
+      "smiles": "CCCCCCCCCCCCCCCCCCCC",
+      "observed": -8.172,
+      "nearest_compound": "Tetradecane",
+      "nearest_smiles": "CCCCCCCCCCCCCC",
+      "nearest_observed": -7.96,
+      "abs_target_difference": 0.21200000000000063
+    },
+    {
+      "compound_id": "2-Octanol",
+      "smiles": "CCCCCCC(C)O",
+      "observed": -2.09,
+      "nearest_compound": "2-Undecanol",
+      "nearest_smiles": "CCCCCCCCCC(C)O",
+      "nearest_observed": -2.94,
+      "abs_target_difference": 0.8500000000000001
+    }
+  ],
+  "acyclic_n": 317,
+  "acyclic_nearest_neighbour_ch2_homologues": 109,
+  "similarity_summary": {
+    "acyclic": {
+      "mean": 0.5880941608032518,
+      "median": 0.5384615384615384,
+      "fraction_exactly_1": 0.12302839116719243
+    },
+    "cyclic": {
+      "mean": 0.4600301692904791,
+      "median": 0.4468027210884354,
+      "fraction_exactly_1": 0.02154398563734291
+    }
+  },
+  "distance_reliability": {
+    "nonbenzene_scaffold_cv": {
+      "quintiles": [
+        {
+          "quintile": 1,
+          "distance_range": [
+            0.0,
+            0.07962388182976153
+          ],
+          "n": 175,
+          "random_forest_reference": {
+            "rmse": 0.5084159385869965,
+            "rmse_ci": [
+              0.42581722997784044,
+              0.5886708562377683
+            ],
+            "mean_signed_error": 0.03390150305118652
+          },
+          "xgboost": {
+            "rmse": 0.5554274484586476,
+            "rmse_ci": [
+              0.47184592802901015,
+              0.6432308355553619
+            ],
+            "mean_signed_error": 0.07656666906488793
+          },
+          "lasso": {
+            "rmse": 1.1713520585356554,
+            "rmse_ci": [
+              1.0453509362269748,
+              1.2995549643918942
+            ],
+            "mean_signed_error": 0.2527785604391224
+          }
+        },
+        {
+          "quintile": 2,
+          "distance_range": [
+            0.08010566363662928,
+            0.24235533984993754
+          ],
+          "n": 175,
+          "random_forest_reference": {
+            "rmse": 0.5873705734706638,
+            "rmse_ci": [
+              0.46072640781835256,
+              0.7210598280201931
+            ],
+            "mean_signed_error": -0.03238061930834256
+          },
+          "xgboost": {
+            "rmse": 0.5893335331501565,
+            "rmse_ci": [
+              0.48736444386781,
+              0.6944928781529173
+            ],
+            "mean_signed_error": -0.03684195245144621
+          },
+          "lasso": {
+            "rmse": 0.9792991314766888,
+            "rmse_ci": [
+              0.8333820716707858,
+              1.1354492846550233
+            ],
+            "mean_signed_error": -0.07407123345060346
+          }
+        },
+        {
+          "quintile": 3,
+          "distance_range": [
+            0.24258086556655445,
+            0.44398935657511424
+          ],
+          "n": 174,
+          "random_forest_reference": {
+            "rmse": 0.777060147904848,
+            "rmse_ci": [
+              0.6541173638551679,
+              0.8993447193078505
+            ],
+            "mean_signed_error": -0.10108721507175779
+          },
+          "xgboost": {
+            "rmse": 0.7837852452576125,
+            "rmse_ci": [
+              0.6639572165279266,
+              0.9042126976937824
+            ],
+            "mean_signed_error": -0.10087220705459
+          },
+          "lasso": {
+            "rmse": 0.8932026715255372,
+            "rmse_ci": [
+              0.7712897302756553,
+              1.0167246919676376
+            ],
+            "mean_signed_error": -0.028863743695770487
+          }
+        },
+        {
+          "quintile": 4,
+          "distance_range": [
+            0.4446623349924005,
+            0.6370807240437443
+          ],
+          "n": 175,
+          "random_forest_reference": {
+            "rmse": 0.8601630313177538,
+            "rmse_ci": [
+              0.7374592190084783,
+              0.980377599946062
+            ],
+            "mean_signed_error": 0.12160499608144099
+          },
+          "xgboost": {
+            "rmse": 0.8602342285141252,
+            "rmse_ci": [
+              0.747300013741883,
+              0.9823040222612517
+            ],
+            "mean_signed_error": 0.13792274619050326
+          },
+          "lasso": {
+            "rmse": 0.9363633579645411,
+            "rmse_ci": [
+              0.795315916047972,
+              1.0891640209076712
+            ],
+            "mean_signed_error": 0.11185149878733082
+          }
+        },
+        {
+          "quintile": 5,
+          "distance_range": [
+            0.6378045958020488,
+            5.148270016988642
+          ],
+          "n": 175,
+          "random_forest_reference": {
+            "rmse": 1.2473608839723285,
+            "rmse_ci": [
+              1.0545913524672899,
+              1.417910763207584
+            ],
+            "mean_signed_error": 0.10534671582691152
+          },
+          "xgboost": {
+            "rmse": 1.1911929960523253,
+            "rmse_ci": [
+              1.0088459028115084,
+              1.3532274872268166
+            ],
+            "mean_signed_error": 0.08797445137585916
+          },
+          "lasso": {
+            "rmse": 1.2570895877915471,
+            "rmse_ci": [
+              1.0673997687525714,
+              1.4461814147897554
+            ],
+            "mean_signed_error": 0.1587518194849085
+          }
+        }
+      ],
+      "selective_prediction": {
+        "random_forest_reference": [
+          {
+            "fraction": 0.1,
+            "n": 88,
+            "rmse": 0.4698164766264167
+          },
+          {
+            "fraction": 0.2,
+            "n": 175,
+            "rmse": 0.5084159385869966
+          },
+          {
+            "fraction": 0.3,
+            "n": 263,
+            "rmse": 0.5152222129703684
+          },
+          {
+            "fraction": 0.4,
+            "n": 350,
+            "rmse": 0.5493136431896414
+          },
+          {
+            "fraction": 0.5,
+            "n": 437,
+            "rmse": 0.573394244949892
+          },
+          {
+            "fraction": 0.6,
+            "n": 525,
+            "rmse": 0.6340038508152062
+          },
+          {
+            "fraction": 0.7,
+            "n": 612,
+            "rmse": 0.6428487400603765
+          },
+          {
+            "fraction": 0.8,
+            "n": 700,
+            "rmse": 0.7002668187653911
+          },
+          {
+            "fraction": 0.9,
+            "n": 787,
+            "rmse": 0.7730928027541258
+          },
+          {
+            "fraction": 1.0,
+            "n": 874,
+            "rmse": 0.8370969849472617
+          }
+        ],
+        "xgboost": [
+          {
+            "fraction": 0.1,
+            "n": 88,
+            "rmse": 0.5453414667245733
+          },
+          {
+            "fraction": 0.2,
+            "n": 175,
+            "rmse": 0.5554274484586476
+          },
+          {
+            "fraction": 0.3,
+            "n": 263,
+            "rmse": 0.5458738159194876
+          },
+          {
+            "fraction": 0.4,
+            "n": 350,
+            "rmse": 0.5726314974730827
+          },
+          {
+            "fraction": 0.5,
+            "n": 437,
+            "rmse": 0.5982662084663449
+          },
+          {
+            "fraction": 0.6,
+            "n": 525,
+            "rmse": 0.6502735166318946
+          },
+          {
+            "fraction": 0.7,
+            "n": 612,
+            "rmse": 0.6592637620747255
+          },
+          {
+            "fraction": 0.8,
+            "n": 700,
+            "rmse": 0.7120799656026002
+          },
+          {
+            "fraction": 0.9,
+            "n": 787,
+            "rmse": 0.7744772106836895
+          },
+          {
+            "fraction": 1.0,
+            "n": 874,
+            "rmse": 0.8281890692791611
+          }
+        ],
+        "lasso": [
+          {
+            "fraction": 0.1,
+            "n": 88,
+            "rmse": 1.2132820150778505
+          },
+          {
+            "fraction": 0.2,
+            "n": 175,
+            "rmse": 1.1713520585356556
+          },
+          {
+            "fraction": 0.3,
+            "n": 263,
+            "rmse": 1.1093673601745961
+          },
+          {
+            "fraction": 0.4,
+            "n": 350,
+            "rmse": 1.0796046577212222
+          },
+          {
+            "fraction": 0.5,
+            "n": 437,
+            "rmse": 1.0257933342825598
+          },
+          {
+            "fraction": 0.6,
+            "n": 525,
+            "rmse": 1.020532956718749
+          },
+          {
+            "fraction": 0.7,
+            "n": 612,
+            "rmse": 0.983042169206035
+          },
+          {
+            "fraction": 0.8,
+            "n": 700,
+            "rmse": 1.0020687837566489
+          },
+          {
+            "fraction": 0.9,
+            "n": 787,
+            "rmse": 1.0093965821871569
+          },
+          {
+            "fraction": 1.0,
+            "n": 874,
+            "rmse": 1.0571453194095684
+          }
+        ]
+      },
+      "range_flag_prediction_level": {
+        "random_forest_reference": {
+          "flagged": {
+            "n_predictions": 40,
+            "n_molecules": 15,
+            "rmse": 1.1530062929980134
+          },
+          "unflagged": {
+            "n_predictions": 4330,
+            "rmse": 0.8336207666174573
+          }
+        },
+        "xgboost": {
+          "flagged": {
+            "n_predictions": 40,
+            "n_molecules": 15,
+            "rmse": 1.1496363925041224
+          },
+          "unflagged": {
+            "n_predictions": 4330,
+            "rmse": 0.8246356777278069
+          }
+        },
+        "lasso": {
+          "flagged": {
+            "n_predictions": 40,
+            "n_molecules": 15,
+            "rmse": 1.9942615442537366
+          },
+          "unflagged": {
+            "n_predictions": 4330,
+            "rmse": 1.044576617866777
+          }
+        }
+      },
+      "spearman_distance_vs_abs_error": {
+        "random_forest_reference": 0.35806986036661176,
+        "xgboost": 0.30505608779895227,
+        "lasso": -0.08939878166672974
+      }
+    },
+    "benzene_holdout": {
+      "quintiles": [
+        {
+          "quintile": 1,
+          "distance_range": [
+            0.02203360602455923,
+            0.11049008078831048
+          ],
+          "n": 51,
+          "random_forest_reference": {
+            "rmse": 0.7179639066176168,
+            "rmse_ci": [
+              0.48095015540347147,
+              0.9362368179905814
+            ],
+            "mean_signed_error": -0.05319965527120006
+          },
+          "xgboost": {
+            "rmse": 0.5326121119240694,
+            "rmse_ci": [
+              0.41923609370438014,
+              0.6341922535619896
+            ],
+            "mean_signed_error": -0.20907786593717684
+          },
+          "lasso": {
+            "rmse": 0.8399748510219212,
+            "rmse_ci": [
+              0.6720689476808981,
+              0.9948137382658263
+            ],
+            "mean_signed_error": -0.19381336413869343
+          }
+        },
+        {
+          "quintile": 2,
+          "distance_range": [
+            0.11256426958026168,
+            0.20278695799607518
+          ],
+          "n": 51,
+          "random_forest_reference": {
+            "rmse": 0.6983626912880865,
+            "rmse_ci": [
+              0.554707357334344,
+              0.8316477105126436
+            ],
+            "mean_signed_error": -0.2116792712559773
+          },
+          "xgboost": {
+            "rmse": 0.7969777913549899,
+            "rmse_ci": [
+              0.62697621615246,
+              0.9521836309624241
+            ],
+            "mean_signed_error": -0.3305396304738287
+          },
+          "lasso": {
+            "rmse": 1.0512053361095859,
+            "rmse_ci": [
+              0.8900470775711619,
+              1.198183792300863
+            ],
+            "mean_signed_error": -0.5312121621600292
+          }
+        },
+        {
+          "quintile": 3,
+          "distance_range": [
+            0.20563791103748047,
+            0.40590912805400337
+          ],
+          "n": 50,
+          "random_forest_reference": {
+            "rmse": 0.7329102572176724,
+            "rmse_ci": [
+              0.6003646223248194,
+              0.8565646605691819
+            ],
+            "mean_signed_error": 0.10710537913419894
+          },
+          "xgboost": {
+            "rmse": 0.7613489325645237,
+            "rmse_ci": [
+              0.6171768808432491,
+              0.9069462489351593
+            ],
+            "mean_signed_error": 0.12606566940307617
+          },
+          "lasso": {
+            "rmse": 0.7721626061458922,
+            "rmse_ci": [
+              0.6338138462508733,
+              0.9018338763167951
+            ],
+            "mean_signed_error": -0.1803457329245637
+          }
+        },
+        {
+          "quintile": 4,
+          "distance_range": [
+            0.4091826979002515,
+            0.6234816383955392
+          ],
+          "n": 52,
+          "random_forest_reference": {
+            "rmse": 0.7588234036941109,
+            "rmse_ci": [
+              0.635579427258677,
+              0.8835037031099529
+            ],
+            "mean_signed_error": -0.12509300736069578
+          },
+          "xgboost": {
+            "rmse": 0.7068725954732719,
+            "rmse_ci": [
+              0.5880043599405015,
+              0.823253473111367
+            ],
+            "mean_signed_error": -0.013971505330159176
+          },
+          "lasso": {
+            "rmse": 0.9104088487800188,
+            "rmse_ci": [
+              0.6751404161908225,
+              1.1423618466149321
+            ],
+            "mean_signed_error": -0.4722826477247998
+          }
+        },
+        {
+          "quintile": 5,
+          "distance_range": [
+            0.6266437691585709,
+            1.4763462048154055
+          ],
+          "n": 50,
+          "random_forest_reference": {
+            "rmse": 0.9761967738327918,
+            "rmse_ci": [
+              0.8302953174504824,
+              1.1109417206096297
+            ],
+            "mean_signed_error": 0.18923832388888825
+          },
+          "xgboost": {
+            "rmse": 0.8839898445398705,
+            "rmse_ci": [
+              0.7507836198720865,
+              1.0066608569716307
+            ],
+            "mean_signed_error": 0.1479881137657166
+          },
+          "lasso": {
+            "rmse": 0.829180324936412,
+            "rmse_ci": [
+              0.6804250533346224,
+              0.9783261857802225
+            ],
+            "mean_signed_error": -0.013110679483344647
+          }
+        }
+      ],
+      "selective_prediction": {
+        "random_forest_reference": [
+          {
+            "fraction": 0.1,
+            "n": 26,
+            "rmse": 0.8718790277572043
+          },
+          {
+            "fraction": 0.2,
+            "n": 51,
+            "rmse": 0.7179639066176168
+          },
+          {
+            "fraction": 0.3,
+            "n": 77,
+            "rmse": 0.7227621160916562
+          },
+          {
+            "fraction": 0.4,
+            "n": 102,
+            "rmse": 0.7082311133340476
+          },
+          {
+            "fraction": 0.5,
+            "n": 127,
+            "rmse": 0.6866163232896252
+          },
+          {
+            "fraction": 0.6,
+            "n": 153,
+            "rmse": 0.7289563894833275
+          },
+          {
+            "fraction": 0.7,
+            "n": 178,
+            "rmse": 0.7280120579634222
+          },
+          {
+            "fraction": 0.8,
+            "n": 204,
+            "rmse": 0.7274804076657477
+          },
+          {
+            "fraction": 0.9,
+            "n": 229,
+            "rmse": 0.7504728876251213
+          },
+          {
+            "fraction": 1.0,
+            "n": 254,
+            "rmse": 0.7827129951964124
+          }
+        ],
+        "xgboost": [
+          {
+            "fraction": 0.1,
+            "n": 26,
+            "rmse": 0.5236037442456304
+          },
+          {
+            "fraction": 0.2,
+            "n": 51,
+            "rmse": 0.5326121119240694
+          },
+          {
+            "fraction": 0.3,
+            "n": 77,
+            "rmse": 0.6232350271178347
+          },
+          {
+            "fraction": 0.4,
+            "n": 102,
+            "rmse": 0.6778086978201501
+          },
+          {
+            "fraction": 0.5,
+            "n": 127,
+            "rmse": 0.6700568957616448
+          },
+          {
+            "fraction": 0.6,
+            "n": 153,
+            "rmse": 0.7154973462975143
+          },
+          {
+            "fraction": 0.7,
+            "n": 178,
+            "rmse": 0.7109522484701803
+          },
+          {
+            "fraction": 0.8,
+            "n": 204,
+            "rmse": 0.7065058429383204
+          },
+          {
+            "fraction": 0.9,
+            "n": 229,
+            "rmse": 0.7221143569975329
+          },
+          {
+            "fraction": 1.0,
+            "n": 254,
+            "rmse": 0.7447945483979043
+          }
+        ],
+        "lasso": [
+          {
+            "fraction": 0.1,
+            "n": 26,
+            "rmse": 0.8866718509948707
+          },
+          {
+            "fraction": 0.2,
+            "n": 51,
+            "rmse": 0.8399748510219209
+          },
+          {
+            "fraction": 0.3,
+            "n": 77,
+            "rmse": 0.8815603305194781
+          },
+          {
+            "fraction": 0.4,
+            "n": 102,
+            "rmse": 0.9514700229157421
+          },
+          {
+            "fraction": 0.5,
+            "n": 127,
+            "rmse": 0.9024522752935217
+          },
+          {
+            "fraction": 0.6,
+            "n": 153,
+            "rmse": 0.9214187458665096
+          },
+          {
+            "fraction": 0.7,
+            "n": 178,
+            "rmse": 0.9254057909210694
+          },
+          {
+            "fraction": 0.8,
+            "n": 204,
+            "rmse": 0.9000320460443028
+          },
+          {
+            "fraction": 0.9,
+            "n": 229,
+            "rmse": 0.8852199760724215
+          },
+          {
+            "fraction": 1.0,
+            "n": 254,
+            "rmse": 0.8865325892550219
+          }
+        ]
+      },
+      "range_flag_prediction_level": {
+        "random_forest_reference": {
+          "flagged": {
+            "n_predictions": 0,
+            "n_molecules": 0,
+            "rmse": null
+          },
+          "unflagged": {
+            "n_predictions": 254,
+            "rmse": 0.7827129951964125
+          }
+        },
+        "xgboost": {
+          "flagged": {
+            "n_predictions": 0,
+            "n_molecules": 0,
+            "rmse": null
+          },
+          "unflagged": {
+            "n_predictions": 254,
+            "rmse": 0.7447945483979043
+          }
+        },
+        "lasso": {
+          "flagged": {
+            "n_predictions": 0,
+            "n_molecules": 0,
+            "rmse": null
+          },
+          "unflagged": {
+            "n_predictions": 254,
+            "rmse": 0.886532589255022
+          }
+        }
+      },
+      "spearman_distance_vs_abs_error": {
+        "random_forest_reference": 0.26259184050999856,
+        "xgboost": 0.2510883917078397,
+        "lasso": -0.018304566174737837
+      }
+    }
+  },
+  "phase6d_neighbour_statistics_max_abs_difference": 2.886579864025407e-15
+}
